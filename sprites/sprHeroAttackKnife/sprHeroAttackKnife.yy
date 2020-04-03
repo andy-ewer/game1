@@ -2,7 +2,7 @@
     "id": "088e54da-38f4-481e-9f8f-b0a8ac678532",
     "modelName": "GMSprite",
     "mvc": "1.12",
-    "name": "sprHeroAtttackKnife",
+    "name": "sprHeroAttackKnife",
     "For3D": false,
     "HTile": false,
     "VTile": false,

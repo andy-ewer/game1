@@ -1,6 +1,6 @@
 //SETTINGS
 
-//animation frames
+//idle animation frames
 #macro idleRegular 0 
 #macro idleSmile 2 
 #macro idleLeft 4
@@ -33,5 +33,7 @@ image_index = idleRegular;
 image_xscale = scale;
 image_yscale = scale;
 
-//controller updates this value
+//controller updates these values
 isMoving = false;
+isAttacking = false;
+

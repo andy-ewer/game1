@@ -2,7 +2,7 @@
 var secondsPassed = delta_time/1000000;
 var moveSpeedFrame = moveSpeed*secondsPassed;
 
-//get 8 directions from WASD
+//get movement in 8 directions from WASD
 var moveXInput = 0;
 var moveYInput = 0;
 for (var i = 0; i < array_length_1d(heroKey); i++) 
@@ -16,7 +16,13 @@ for (var i = 0; i < array_length_1d(heroKey); i++)
     }
 }
 
-//tell target to play appropriate animation
+//attack key action
+if keyboard_check(heroKeyAttack)
+{
+	target.isAttacking = true;
+}
+
+//update target state for animation
 target.isMoving = ( point_distance(0,0,moveXInput,moveYInput) > 0 );
 
 //apply movement to instance

@@ -42,7 +42,7 @@
             "Key": "088e54da-38f4-481e-9f8f-b0a8ac678532",
             "Value": {
                 "id": "6ada0be9-4f21-4d60-bfbb-8a19428a9dc1",
-                "resourcePath": "sprites\\sprHeroAtttackKnife\\sprHeroAtttackKnife.yy",
+                "resourcePath": "sprites\\sprHeroAttackKnife\\sprHeroAttackKnife.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -106,7 +106,7 @@
             "Key": "53f802e7-752a-4fc0-a014-8fb3113612d6",
             "Value": {
                 "id": "b423c2d0-8e9e-4999-881e-ef4200375e0e",
-                "resourcePath": "sprites\\sprHeroAtttackHammer\\sprHeroAtttackHammer.yy",
+                "resourcePath": "sprites\\sprHeroAttackHammer\\sprHeroAttackHammer.yy",
                 "resourceType": "GMSprite"
             }
         },

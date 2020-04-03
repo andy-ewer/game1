@@ -2,7 +2,7 @@
     "id": "53f802e7-752a-4fc0-a014-8fb3113612d6",
     "modelName": "GMSprite",
     "mvc": "1.12",
-    "name": "sprHeroAtttackHammer",
+    "name": "sprHeroAttackHammer",
     "For3D": false,
     "HTile": false,
     "VTile": false,
