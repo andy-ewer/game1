@@ -65,8 +65,10 @@ if keyboard_check(heroKeyAttack)
 //apply movement to instance
 if(moveSpeed > 0)
 {	
-    target.x += (lengthdir_x(moveSpeedFrame, moveDir));
-    target.y += (lengthdir_y(moveSpeedFrame, moveDir));
+    targetX += (lengthdir_x(moveSpeedFrame, moveDir));
+    targetY += (lengthdir_y(moveSpeedFrame, moveDir));
+	target.x = round(targetX);
+	target.y = round(targetY);
 	show_debug_message(string(lengthdir_x(moveSpeedFrame, moveDir)) + ", " + string(lengthdir_y(moveSpeedFrame, moveDir)));
 }	
 
