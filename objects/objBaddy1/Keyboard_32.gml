@@ -1,0 +1,1 @@
+image_blend = make_colour_hsv(random(255), random(255), 255);
