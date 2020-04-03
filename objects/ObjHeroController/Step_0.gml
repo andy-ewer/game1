@@ -65,8 +65,9 @@ if keyboard_check(heroKeyAttack)
 //apply movement to instance
 if(moveSpeed > 0)
 {	
-    target.x += lengthdir_x(moveSpeedFrame, moveDir);
-    target.y += lengthdir_y(moveSpeedFrame, moveDir);
+    target.x += (lengthdir_x(moveSpeedFrame, moveDir));
+    target.y += (lengthdir_y(moveSpeedFrame, moveDir));
+	show_debug_message(string(lengthdir_x(moveSpeedFrame, moveDir)) + ", " + string(lengthdir_y(moveSpeedFrame, moveDir)));
 }	
 
 //target animation doesn't stop moving until braking completed
