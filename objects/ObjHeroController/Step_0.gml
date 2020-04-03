@@ -18,7 +18,7 @@ for (var i = 0; i < array_length_1d(heroKey); i++)
 var isMovePressed = (point_distance(0, 0, moveXInput, moveYInput) > 0);
 
 if(isMovePressed)
-{
+{	
 	//regular walking
 	if(!target.isAttacking)
 	{
@@ -65,13 +65,15 @@ if keyboard_check(heroKeyAttack)
 //apply movement to instance
 if(moveSpeed > 0)
 {	
-    targetX += (lengthdir_x(moveSpeedFrame, moveDir));
-    targetY += (lengthdir_y(moveSpeedFrame, moveDir));
-	target.x = round(targetX);
-	target.y = round(targetY);
-	show_debug_message(string(lengthdir_x(moveSpeedFrame, moveDir)) + ", " + string(lengthdir_y(moveSpeedFrame, moveDir)));
+    target.x += (lengthdir_x(moveSpeedFrame, moveDir));
+    target.y += (lengthdir_y(moveSpeedFrame, moveDir));
 }	
 
+//move camera
+centerX = (target.x - cameraWidth/2);
+centerY = (target.y - cameraHeight/2);	
+camera_set_view_pos(view_camera[0], centerX, centerY);	
+	
 //target animation doesn't stop moving until braking completed
 target.isMoving = (moveSpeed > 0);
 
