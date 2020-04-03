@@ -1,66 +1,40 @@
-//scale movement to time
-var secondsPassed = delta_time/1000000;
-var moveSpeedFrame = moveSpeed*secondsPassed;
-
-//get 8 directions from WASD
-var moveXInput = 0;
-var moveYInput = 0;
-for (var i = 0; i < array_length_1d(heroKey); i++) 
+if(isMoving)
+{	
+	sprite_index = sprHeroWalk; //keep walking
+} 
+else
 {
-    var this_key = heroKey[i];
-    if keyboard_check(this_key) 
-	{
-        var this_angle = i*90;
-        moveXInput += lengthdir_x(1, this_angle);
-        moveYInput += lengthdir_y(1, this_angle);
-    }
-}
- 
-var isMoving = ( point_distance(0,0,moveXInput,moveYInput) > 0 );
-
-
-if(!isMoving) //idle 
-{
-	if(sprite_index != sprHeroIdle) //fresh idle state, reset
+	if(sprite_index != sprHeroIdle) //fresh idle state, reset values
 	{		
 		sprite_index = sprHeroIdle;
+		image_index = idleRegular;		
 		blinkCounter = initBlinkCounter;
 		poseCounter = initPoseCounter;
-		image_index = idleRegular;		
 	}
 	else //continue idle state
 	{	
-		//increment stuff
+		//counting down
 		blinkCounter--;
 		poseCounter--;
 
 		//start blink
 		if(blinkCounter == 0)
 		{
-			image_index += 1;	
+			image_index++;	//matching blink frame is always +1 of current idle frame.
 		}
 
 		//end blink
 		else if(blinkCounter < (0-blinkLength))
 		{
-			image_index -= 1;
+			image_index--;
 			blinkCounter = irandom(blinkRandom)+blinkRandomPlus;
 		}
 
-		//change pose status if not currently blinking
+		//change pose status, unless blinking. will happen after blink.
 		if(blinkCounter > 0 and poseCounter < 0)
 		{
-			image_index = choose(idleRegular, idleSmile, idleLeft, idleRight, idleDown);
+			image_index = choose(idleRegular, idleSmile, idleLeft, idleRight, idleDown); //random pose
 			poseCounter = irandom(poseRandom)+poseRandomPlus;
 		}
 	}
 }
-else //moving
-{
-	//do move
-	sprite_index = sprHeroWalk;
-    var moveDir = point_direction(0,0,moveXInput,moveYInput);
-    x += lengthdir_x(moveSpeedFrame, moveDir);
-    y += lengthdir_y(moveSpeedFrame, moveDir);
-	depth = -y;
-} 

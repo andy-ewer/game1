@@ -1,5 +1,4 @@
-//sprite size
-var scale = 4;
+//SETTINGS
 
 //animation frames
 #macro idleRegular 0 
@@ -20,19 +19,19 @@ var scale = 4;
 //initial values for idle animations
 #macro initBlinkCounter 100;
 #macro initPoseCounter 300;
+
+//sprite size
+var scale = 4;
+
+
+//INIT
+
+//set values
 blinkCounter = initBlinkCounter;
 poseCounter = initPoseCounter;
 image_index = idleRegular;
-
-//sprite scaling
 image_xscale = scale;
 image_yscale = scale;
 
-//movement
-moveSpeed = 60;
-heroKey[0] = ord("D");
-heroKey[1] = ord("W");
-heroKey[2] = ord("A");
-heroKey[3] = ord("S");
-
-depth = -y;
+//controller updates this value
+isMoving = false;
