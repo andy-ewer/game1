@@ -71,23 +71,30 @@ if(moveSpeed > 0)
 	//apply movement to instance
     target.x += deltaX;
     target.y += deltaY;
+	
+	target.x = min( max(target.x, roomBorderBlocking), (room_width - roomBorderBlocking));
+	target.y = min( max(target.y, roomBorderBlocking), (room_height - roomBorderBlocking));	
 
 	//get camera center
 	centerCameraX = (cameraX + cameraWidth/2);
 	centerCameraY = (cameraY + cameraHeight/2);
 
 	//if target outside middle area, camera follows
-	if(abs(target.y - centerCameraY) > cameraXBorder)
+	if(abs(target.x - centerCameraX) > cameraXBorder)
 	{
-		cameraY	+= (lengthdir_y(moveSpeedFrame, moveDir));
+		cameraX	+= deltaX;
 	}
-	if(abs(target.x - centerCameraX) > cameraYBorder)
+	if(abs(target.y - centerCameraY) > cameraYBorder)
 	{
-		cameraX	+= (lengthdir_x(moveSpeedFrame, moveDir));
+		cameraY	+= deltaY;
 	}
 
-	//actually move the camera
-	camera_set_view_pos(view_camera[0], cameraX, cameraY);	
+	//limit camera to room
+	var limitedCameraX = min( max(cameraX, 0), (room_width-cameraWidth));
+	var limitedCameraY = min( max(cameraY, 0), (room_height-cameraHeight));
+
+    //actually move the camera
+	camera_set_view_pos(view_camera[0], limitedCameraX, limitedCameraY);	
 }
 
 //target animation doesn't stop moving until braking completed
