@@ -1,6 +1,6 @@
 //scale movement to time
-var secondsPassed = delta_time/1000000;
-var moveSpeedFrame = moveSpeed*secondsPassed;
+var secondsPassed = delta_time / 1000000;
+var moveSpeedFrame = moveSpeed * secondsPassed;
 
 //get movement in 8 directions from WASD
 var moveXInput = 0;
@@ -62,18 +62,34 @@ if keyboard_check(heroKeyAttack)
 	target.isAttacking = true;
 }
 
-//apply movement to instance
 if(moveSpeed > 0)
 {	
-    target.x += (lengthdir_x(moveSpeedFrame, moveDir));
-    target.y += (lengthdir_y(moveSpeedFrame, moveDir));
-}	
-
-//move camera
-centerX = (target.x - cameraWidth/2);
-centerY = (target.y - cameraHeight/2);	
-camera_set_view_pos(view_camera[0], centerX, centerY);	
+	//calculate movement
+	var deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
+	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 	
+	//apply movement to instance
+    target.x += deltaX;
+    target.y += deltaY;
+
+	//get camera center
+	centerCameraX = (cameraX + cameraWidth/2);
+	centerCameraY = (cameraY + cameraHeight/2);
+
+	//if target outside middle area, camera follows
+	if(abs(target.y - centerCameraY) > cameraXBorder)
+	{
+		cameraY	+= (lengthdir_y(moveSpeedFrame, moveDir));
+	}
+	if(abs(target.x - centerCameraX) > cameraYBorder)
+	{
+		cameraX	+= (lengthdir_x(moveSpeedFrame, moveDir));
+	}
+
+	//actually move the camera
+	camera_set_view_pos(view_camera[0], cameraX, cameraY);	
+}
+
 //target animation doesn't stop moving until braking completed
 target.isMoving = (moveSpeed > 0);
 
