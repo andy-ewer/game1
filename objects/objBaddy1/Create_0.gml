@@ -1,5 +1,5 @@
 //sprite size
-var scale  = 4;
+var scale  = 1;
 
 //sprite scaling
 image_xscale = scale;

@@ -21,7 +21,7 @@
 #macro initPoseCounter 300;
 
 //sprite size
-var scale = 4;
+var scale = 1;
 
 
 //INIT
