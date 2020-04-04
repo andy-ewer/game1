@@ -47,6 +47,14 @@
             }
         },
         {
+            "Key": "11a64f17-4f07-459a-b8c9-26c3491fd53d",
+            "Value": {
+                "id": "5c5aec19-377b-4821-869b-4d8b2d701d7f",
+                "resourcePath": "tilesets\\tsBlocking\\tsBlocking.yy",
+                "resourceType": "GMTileSet"
+            }
+        },
+        {
             "Key": "188b9832-c7c3-466e-86a0-3e865261c679",
             "Value": {
                 "id": "7d9acc15-3d3f-4fe6-b165-ba90090d281a",
@@ -90,7 +98,7 @@
             "Key": "3cb8c1fd-722c-4a05-9e31-d48bc923b515",
             "Value": {
                 "id": "dc2e9681-5ef3-4adf-a046-657f59410b3b",
-                "resourcePath": "objects\\objBaddy1\\objBaddy1.yy",
+                "resourcePath": "objects\\objBaddy\\objBaddy.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -100,6 +108,14 @@
                 "id": "ab9c4b67-1f0a-40ec-a935-254faa783155",
                 "resourcePath": "views\\4e6ce064-4686-4f94-9b87-c5b5c366e9e8.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "52828850-6970-47b6-9818-ddeff88026c5",
+            "Value": {
+                "id": "98225d83-2ac6-4a78-9013-1656627d973e",
+                "resourcePath": "sprites\\sprBlocking\\sprBlocking.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -252,6 +268,14 @@
                 "id": "1033a2f3-606e-4bdc-9e69-f78bdbb04471",
                 "resourcePath": "views\\df3e43ce-8fc4-4c82-9ce3-cc2e2f9b87f9.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "eb5aaa4f-baf1-4366-bd6d-de46495c3694",
+            "Value": {
+                "id": "2fc8e6fa-2249-443d-b217-82423af2c625",
+                "resourcePath": "objects\\objBaddyController\\objBaddyController.yy",
+                "resourceType": "GMObject"
             }
         },
         {

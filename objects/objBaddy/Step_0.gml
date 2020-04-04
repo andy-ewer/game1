@@ -37,7 +37,7 @@ if(mouthCounter<0)
 mp_linear_step(objHero.x, objHero.y, 0.5, false);
 
 //keep the herd spread out a bit
-var collision = collision_point(x, y, objBaddy1, false, true);
+var collision = collision_point(x, y, objBaddy, false, true);
 if(collision) {
 	var dir = point_direction(x, y, collision.x, collision.y);
 	var dist = point_distance(x, y, collision.x, collision.y);

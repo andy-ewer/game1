@@ -10,6 +10,8 @@
 #macro walkPlus 400
 #macro mouthRandom 100
 #macro mouthPlus 10
+#macro stepRandom 20
+#macro stepPlus 5
 
 
 //sprite size

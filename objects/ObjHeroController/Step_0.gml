@@ -68,10 +68,18 @@ if(moveSpeed > 0)
 	var deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 	
-	//apply movement to instance
-    target.x += deltaX;
-    target.y += deltaY;
+	var layerId = layer_get_id("tilesBlocking");
+	var mapId = layer_tilemap_get_id(layerId);
 	
+	//tile layer collision	
+	if(!tilemap_get_at_pixel(mapId, target.x + deltaX, target.y + deltaY)) 
+	{
+		//apply movement to instance
+	    target.x += deltaX;
+	    target.y += deltaY;
+	}
+	
+	//edge collision
 	target.x = min( max(target.x, roomBorderBlocking), (room_width - roomBorderBlocking));
 	target.y = min( max(target.y, roomBorderBlocking), (room_height - roomBorderBlocking));	
 
