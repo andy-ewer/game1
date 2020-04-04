@@ -67,10 +67,7 @@ if(moveSpeed > 0)
 	//calculate movement
 	var deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
-	
-	var layerId = layer_get_id("tilesBlocking");
-	var mapId = layer_tilemap_get_id(layerId);
-	
+
 	//tile layer collision	
 	if(!tilemap_get_at_pixel(mapId, target.x + deltaX, target.y + deltaY)) 
 	{

@@ -16,8 +16,6 @@
 
 //sprite size
 var scale  = 1;
-
-//sprite scaling
 image_xscale = scale;
 image_yscale = scale;
 
@@ -27,5 +25,12 @@ image_blend = make_colour_hsv(random(255), random(255), 255);
 //inits for tracking animations
 stepCounter=0;
 mouthCounter=0;
+
+//walking speed
+moveSpeed = 30;
+
+//blocking layer
+layerId = layer_get_id("tilesBlocking");
+mapId = layer_tilemap_get_id(layerId);
 
 depth = -y;

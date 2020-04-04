@@ -1,3 +1,6 @@
+//scale movement to time
+var secondsPassed = delta_time / 1000000;
+var moveSpeedFrame = moveSpeed * secondsPassed;
 
 //steps are erratic
 stepCounter--;
@@ -33,23 +36,40 @@ if(mouthCounter<0)
 	
 }
 
-//temporary chase mechanic
-mp_linear_step(objHero.x, objHero.y, 0.5, false);
+
+//CHASE HERO
+
+//get potential move point 
+var dir = point_direction(x, y, objHero.x, objHero.y);
+var deltaX = (lengthdir_x(moveSpeedFrame, dir));
+var deltaY = (lengthdir_y(0.5, dir));
+	
+//tile layer collision	
+if(!tilemap_get_at_pixel(mapId, x + deltaX, y + deltaY))
+{
+	//apply move
+	x += deltaX;	
+	y += deltaY;	
+}
 
 //keep the herd spread out a bit
-var collision = collision_point(x, y, objBaddy, false, true);
-if(collision) {
-	var dir = point_direction(x, y, collision.x, collision.y);
-	var dist = point_distance(x, y, collision.x, collision.y);
+var bump = collision_point(x, y, objBaddy, false, true);
+if(bump) {
+	var dir = point_direction(x, y, bump.x, bump.y);
+	var dist = point_distance(x, y, bump.x, bump.y);
 
 	//calculate movement
 	//var moveSpeedFrame = dist * secondsPassed;
 	var deltaX = (lengthdir_x(dist/herdDensityFactor, dir));
 	var deltaY = (lengthdir_y(dist/herdDensityFactor, dir)); 
 	
-	//apply movement to instance
-	collision.x += deltaX;
-	collision.y += deltaY;
+	//tile layer collision	
+	if(!tilemap_get_at_pixel(mapId, bump.x + deltaX, bump.y + deltaY))
+	{
+		//apply movement to instance
+		bump.x += deltaX;
+		bump.y += deltaY;
+	}
 }
 
 depth = -y;
