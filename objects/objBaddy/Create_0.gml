@@ -26,11 +26,12 @@ image_blend = make_colour_hsv(random(255), random(255), 255);
 stepCounter=0;
 mouthCounter=0;
 
-//walking speed
-moveSpeed = 30;
+//speeds
+moveSpeed = 20;
+bumpSpeed = 20;
 
 //blocking layer
-layerId = layer_get_id("tilesBlocking");
-mapId = layer_tilemap_get_id(layerId);
+blockingLayerId = layer_get_id("tilesBlocking");
+blockingMapId = layer_tilemap_get_id(blockingLayerId);
 
-depth = -y;
+depth = round(-y);
