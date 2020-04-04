@@ -7,14 +7,17 @@ var bumpSpeedFrame = bumpSpeed * secondsPassed;
 stepCounter--;
 if(stepCounter<0)
 {
-	image_index++;
 	if(image_index == walkEnd)
 	{
-		image_index = walkStart;		
-	} 
-	else if(image_index == walkStart)
+		image_index = walkStart;
+	}
+	else if(image_index == mouthEnd)
 	{
 		image_index = mouthStart;
+	}	
+	else
+	{
+		image_index++;
 	}
 	stepCounter = irandom(stepRandom)+stepPlus;
 }
@@ -23,27 +26,27 @@ if(stepCounter<0)
 mouthCounter--;
 if(mouthCounter<0)
 {
-
-	if(image_index < walkEnd)
+	if(image_index <= walkEnd)
 	{
-		image_index+= walkEnd;
-		mouthCounter = irandom(walkRandom)+walkPlus; //open	
+		image_index+= 4;
+		moveSpeed = mouthSpeed;
+		mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;	
 	}
 	else
 	{
 		image_index-= 4;
-		mouthCounter = irandom(mouthRandom)+mouthPlus;	//closed
+		moveSpeed = regularSpeed;
+		mouthCounter = irandom(mouthClosedRandom)+mouthClosedPlus; 	
 	}
 	
 }
-
 
 //CHASE HERO
 
 //get potential move point 
 var dir = point_direction(x, y, objHero.x, objHero.y);
 var deltaX = (lengthdir_x(moveSpeedFrame, dir));
-var deltaY = (lengthdir_y(0.5, dir));
+var deltaY = (lengthdir_y(moveSpeedFrame, dir));
 	
 //tile layer collision	
 if(!tilemap_get_at_pixel(blockingMapId, x + deltaX, y + deltaY))
@@ -102,5 +105,9 @@ for(var i=0; i<qtyBumps; ++i) {
 	}
 }
 ds_list_destroy(list);
+
+//edge collision
+x = min( max(x, roomBorderBlocking), (room_width - roomBorderBlocking));
+y = min( max(y, roomBorderBlocking), (room_height - roomBorderBlocking));	
 
 depth = -y;

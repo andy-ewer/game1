@@ -1,15 +1,17 @@
-#macro herdDensityFactor 4
+#macro roomBorderBlocking 10
 
 //animation frames
 #macro walkStart 0 
-#macro walkEnd 4 
-#macro mouthStart 5
+#macro walkEnd 3 
+#macro mouthStart 4
+#macro mouthEnd 7
 
 //animation random timings
-#macro walkRandom 400
-#macro walkPlus 400
-#macro mouthRandom 100
-#macro mouthPlus 10
+#macro mouthClosedRandom 300
+#macro mouthClosedPlus 100
+#macro mouthOpenRandom 200
+#macro mouthOpenPlus 50
+
 #macro stepRandom 20
 #macro stepPlus 5
 
@@ -27,11 +29,16 @@ stepCounter=0;
 mouthCounter=0;
 
 //speeds
-moveSpeed = 20;
-bumpSpeed = 20;
+#macro regularSpeed 20
+#macro mouthSpeed 40
+moveSpeed = regularSpeed;
+bumpSpeed = 10;
 
 //blocking layer
 blockingLayerId = layer_get_id("tilesBlocking");
 blockingMapId = layer_tilemap_get_id(blockingLayerId);
 
 depth = round(-y);
+
+
+image_index = mouthStart;

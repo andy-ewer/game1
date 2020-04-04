@@ -3,7 +3,7 @@ blockingLayerId = layer_get_id("tilesBlocking");
 blockingMapId = layer_tilemap_get_id(blockingLayerId);
 
 
-for(i=0; i<200; i++)
+for(i=0; i<100; i++)
 {
 	var tryX = irandom(room_width/10);
 	var tryY = irandom(room_height/10);

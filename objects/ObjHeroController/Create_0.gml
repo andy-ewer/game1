@@ -5,7 +5,7 @@
 #macro moveSpeedMaxAttack 20
 #macro moveSpeedAcceleration 4
 #macro moveSpeedBraking 2
-#macro roomBorderBlocking 10
+
 //camera
 #macro cameraWidth 480
 #macro cameraHeight 270
