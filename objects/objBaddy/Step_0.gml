@@ -86,7 +86,7 @@ else
 		y += deltaY;	
 	}
 	
-	//try to slide intto an empty or destroyed tile
+	//try to slide into an empty or destroyed tile
 	else 
 	{
 		var tryX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);

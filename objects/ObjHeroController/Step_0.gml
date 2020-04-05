@@ -68,23 +68,36 @@ if(moveSpeed > 0)
 	var deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
+	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y + deltaY);
+	var isDestroyed = ((tileData+1) mod 5 == 0);
+		
 	//tile layer collision	
-	if(!tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y + deltaY)) 
+	if(!tileData || isDestroyed) 
 	{
 		//apply movement to instance
 	    target.x += deltaX;
 	    target.y += deltaY;
 	}
-	else if(!tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y))
+
+	//try to slide into an empty or destroyed tile
+	else 
 	{
-		//apply move
-		target.x += deltaX;	
+		var tryX = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y);
+		var isDestroyedX = ((tryX+1) mod 5 == 0);
+		var tryY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
+		var isDestroyedY = ((tryY+1) mod 5 == 0);
+				
+		if(!tryX || isDestroyedX)
+		{
+			//apply move
+			target.x += deltaX;	
+		}
+		else if(!tryY || isDestroyedY)
+		{
+			//apply move
+			target.y += deltaY;	
+		}
 	}
-	else if(!tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY))
-	{
-		//apply move
-		target.y += deltaY;	
-	}	
 	
 	//edge collision
 	target.x = min( max(target.x, roomBorderBlocking), (room_width - roomBorderBlocking));
