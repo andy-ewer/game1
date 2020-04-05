@@ -2,7 +2,7 @@
     "id": "6068d116-153c-4b9a-aa76-490d24bdb83a",
     "modelName": "GMTileSet",
     "mvc": "1.11",
-    "name": "tilSuburb",
+    "name": "tsSuburb",
     "auto_tile_sets": [
         
     ],

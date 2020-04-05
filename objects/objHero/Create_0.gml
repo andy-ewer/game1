@@ -1,24 +1,24 @@
 //SETTINGS
 
 //idle animation frames
-#macro idleRegular 0 
-#macro idleSmile 2 
-#macro idleLeft 4
-#macro idleRight 6
-#macro idleDown 8
+#macro heroIdleRegular 0 
+#macro heroIdleSmile 2 
+#macro heroIdleLeft 4
+#macro heroIdleRight 6
+#macro heroIdleDown 8
 
 //blink settings
-#macro blinkLength 6
-#macro blinkRandom 400
-#macro blinkRandomPlus 20
+#macro heroBlinkLength 6
+#macro heroBlinkRandom 400
+#macro heroBlinkRandomPlus 20
 
 //pose settings
-#macro poseRandom 1000
-#macro poseRandomPlus 60
+#macro heroPoseRandom 1000
+#macro heroPoseRandomPlus 60
 
 //initial values for idle animations
-#macro initBlinkCounter 100;
-#macro initPoseCounter 300;
+#macro heroInitBlinkCounter 100;
+#macro heroInitPoseCounter 300;
 
 //sprite size
 var scale = 1;
@@ -27,9 +27,9 @@ var scale = 1;
 //INIT
 
 //set values
-blinkCounter = initBlinkCounter;
-poseCounter = initPoseCounter;
-image_index = idleRegular;
+blinkCounter = heroInitBlinkCounter;
+poseCounter = heroInitPoseCounter;
+image_index = heroIdleRegular;
 image_xscale = scale;
 image_yscale = scale;
 

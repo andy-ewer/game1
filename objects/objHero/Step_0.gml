@@ -35,9 +35,9 @@ else
 	if(sprite_index != sprHeroIdle) 
 	{		
 		sprite_index = sprHeroIdle;
-		image_index = idleRegular;		
-		blinkCounter = initBlinkCounter;
-		poseCounter = initPoseCounter;
+		image_index = heroIdleRegular;		
+		blinkCounter = heroInitBlinkCounter;
+		poseCounter = heroInitPoseCounter;
 	}
 	
 	//continue existing idle state
@@ -54,17 +54,17 @@ else
 		}
 
 		//end blink
-		else if(blinkCounter < (0-blinkLength))
+		else if(blinkCounter < (0-heroBlinkLength))
 		{
 			image_index--;
-			blinkCounter = irandom(blinkRandom)+blinkRandomPlus;
+			blinkCounter = irandom(heroBlinkRandom)+heroBlinkRandomPlus;
 		}
 
 		//change pose status, unless blinking. will happen after blink.
 		if(blinkCounter > 0 and poseCounter < 0)
 		{
-			image_index = choose(idleRegular, idleSmile, idleLeft, idleRight, idleDown); //random pose
-			poseCounter = irandom(poseRandom)+poseRandomPlus;
+			image_index = choose(heroIdleRegular, heroIdleSmile, heroIdleLeft, heroIdleRight, heroIdleDown); //random pose
+			poseCounter = irandom(heroPoseRandom)+heroPoseRandomPlus;
 		}
 	}
 }

@@ -23,26 +23,26 @@ if(isMovePressed)
 	if(!target.isAttacking)
 	{
 		//apply acceleration
-	    moveSpeed += moveSpeedAcceleration;
-		moveSpeed = min(moveSpeed, moveSpeedMax);		
+	    moveSpeed += heroMoveSpeedAcceleration;
+		moveSpeed = min(moveSpeed, heroMoveSpeedMax);		
 	}
 	
 	//walking while attacking
 	else 
 	{		
 		//too fast
-		if(moveSpeed > moveSpeedMaxAttack) 
+		if(moveSpeed > heroMoveSpeedMaxAttack) 
 		{
 			//woah there slow down buddy
-			moveSpeed -= moveSpeedBraking;
+			moveSpeed -= heroMoveSpeedBraking;
 		}
 		
 		//at or under speed limit
 		else 
 		{
 			//apply acceleration
-		    moveSpeed += moveSpeedAcceleration;
-			moveSpeed = min(moveSpeed, moveSpeedMaxAttack);
+		    moveSpeed += heroMoveSpeedAcceleration;
+			moveSpeed = min(moveSpeed, heroMoveSpeedMaxAttack);
 		}
 	}
 	
@@ -52,8 +52,8 @@ if(isMovePressed)
 else
 {
 	//apply braking
-	moveSpeed -= moveSpeedBraking;
-	moveSpeed = max(moveSpeed, moveSpeedMin);
+	moveSpeed -= heroMoveSpeedBraking;
+	moveSpeed = max(moveSpeed, heroMoveSpeedMin);
 }
 
 //attack key action
@@ -69,7 +69,7 @@ if(moveSpeed > 0)
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
 	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y + deltaY);
-	var isDestroyed = ((tileData+1) mod 5 == 0);
+	var isDestroyed = ((tileData+1) mod blockingTilesetWidth == 0);
 		
 	//tile layer collision	
 	if(!tileData || isDestroyed) 
@@ -83,9 +83,9 @@ if(moveSpeed > 0)
 	else 
 	{
 		var tryX = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y);
-		var isDestroyedX = ((tryX+1) mod 5 == 0);
+		var isDestroyedX = ((tryX+1) mod blockingTilesetWidth == 0);
 		var tryY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
-		var isDestroyedY = ((tryY+1) mod 5 == 0);
+		var isDestroyedY = ((tryY+1) mod blockingTilesetWidth == 0);
 				
 		if(!tryX || isDestroyedX)
 		{

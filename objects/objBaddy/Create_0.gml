@@ -14,6 +14,7 @@
 
 #macro stepRandom 20
 #macro stepPlus 5
+#macro distMultiplierMax 10
 
 
 //sprite size

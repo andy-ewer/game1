@@ -1,10 +1,10 @@
 //SETTINGS
 //movement
-#macro moveSpeedMin 0
-#macro moveSpeedMax 50
-#macro moveSpeedMaxAttack 20
-#macro moveSpeedAcceleration 4
-#macro moveSpeedBraking 2
+#macro heroMoveSpeedMin 0
+#macro heroMoveSpeedMax 50
+#macro heroMoveSpeedMaxAttack 20
+#macro heroMoveSpeedAcceleration 4
+#macro heroMoveSpeedBraking 2
 
 //camera
 #macro cameraWidth 480
@@ -23,7 +23,7 @@ heroKey[3] = ord("S");
 heroKeyAttack = ord(" ");
 
 //init
-moveSpeed = moveSpeedMin;
+moveSpeed = heroMoveSpeedMin;
 target.depth = -target.y;
 moveDir = point_direction(0, 0, 0, 0);
 

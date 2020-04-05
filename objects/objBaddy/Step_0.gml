@@ -76,7 +76,7 @@ if(!tileData)
 else
 {
 	var tileIndex = tile_get_index(tileData);
-	isDestroyed = ((tileIndex+1) mod 5 == 0);
+	isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
 
 	//destroyed tiles are passable
 	if(isDestroyed)
@@ -90,9 +90,9 @@ else
 	else 
 	{
 		var tryX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
-		var isDestroyedX = ((tryX+1) mod 5 == 0);
+		var isDestroyedX = ((tryX+1) mod blockingTilesetWidth == 0);
 		var tryY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
-		var isDestroyedY = ((tryY+1) mod 5 == 0);
+		var isDestroyedY = ((tryY+1) mod blockingTilesetWidth == 0);
 				
 		if(!tryX || isDestroyedX)
 		{
@@ -123,7 +123,7 @@ for(var i=0; i<qtyBumps; ++i) {
 	var bump = list[| i];
 	var dir = point_direction(x, y, bump.x, bump.y);
 	var dist = point_distance(x, y, bump.x, bump.y);
-	var distMultiplier = 10-max(min(dist, 10),1);
+	var distMultiplier = distMultiplierMax-max(min(dist, distMultiplierMax),1);
 				
 	//calculate attempted shove
 	var deltaX = (lengthdir_x(bumpSpeedFrame * distMultiplier, dir));
@@ -143,8 +143,8 @@ for(var i=0; i<qtyBumps; ++i) {
 	{
 		//tile damage
 		var tileIndex = tile_get_index(tileData);
-		var isDestroyed = ((tileIndex+1) mod 5 == 0);
-		var isIndestructable = ((tileIndex) mod 5 == 0);
+		var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
+		var isIndestructable = ((tileIndex) mod blockingTilesetWidth == 0);
 		var gridX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 		var gridY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 			
@@ -162,19 +162,22 @@ for(var i=0; i<qtyBumps; ++i) {
 			//apply damage
 			if(!isIndestructable) {	
 				
-				if(++tileController.tileDamage[# gridX, gridY] >= 100)
+				var tileDamage = tileController.tileDamage[# gridX, gridY];
+				tileDamage[tileCurrentDamage]++;
+				if(tileDamage[tileCurrentDamage] >= tileDamage[tileMaxDamage])
 				{
 					tileData = tile_set_index(tileData, tileIndex+1);	
-					tileController.tileDamage[# gridX, gridY] = 0;
+					tileDamage[tileCurrentDamage] = 0;
 				}
 				tileData = tilemap_set(tileController.blockingMapId, tileData, gridX, gridY);
+				tileController.tileDamage[# gridX, gridY] = tileDamage;
 			}
 			
 			//try to slide either way through empty or destroyed tile
 			var tryX = tilemap_get_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y);
-			var isDestroyedX = ((tryX+1) mod 5 == 0);
+			var isDestroyedX = ((tryX+1) mod blockingTilesetWidth == 0);
 			var tryY = tilemap_get_at_pixel(tileController.blockingMapId, bump.x, bump.y + deltaY);
-			var isDestroyedY = ((tryY+1) mod 5 == 0);
+			var isDestroyedY = ((tryY+1) mod blockingTilesetWidth == 0);
 				
 			if(!tryX || isDestroyedX)
 			{

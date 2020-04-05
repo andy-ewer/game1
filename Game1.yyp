@@ -130,7 +130,7 @@
             "Key": "6068d116-153c-4b9a-aa76-490d24bdb83a",
             "Value": {
                 "id": "c75535e9-91c4-4980-b593-3509e6573064",
-                "resourcePath": "tilesets\\tilSuburb\\tilSuburb.yy",
+                "resourcePath": "tilesets\\tsSuburb\\tsSuburb.yy",
                 "resourceType": "GMTileSet"
             }
         },

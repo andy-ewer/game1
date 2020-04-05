@@ -1,3 +1,8 @@
+#macro blockingTilesetWidth 5
+
+//damage values per node
+#macro tileCurrentDamage 0
+#macro tileMaxDamage 1
 
 //blocking layer
 blockingLayerId = layer_get_id("tilesBlocking");
@@ -14,11 +19,9 @@ for(var i=0; i< tilemap_get_width(blockingMapId); i++)
 {
 	for(var j=0; j< tilemap_get_height(blockingMapId); j++)
 	{
-		tileDamage[# i,j] = 0;
-		
-		var tileData = tilemap_get(blockingMapId, i, j);
-		var tileIndex = tile_get_index(tileData);
-		
-
+		var damageItem;
+		damageItem[tileCurrentDamage] = 0;
+		damageItem[tileMaxDamage] = 100;
+		tileDamage[# i,j] = damageItem;
 	}	
 }
