@@ -207,6 +207,14 @@
             }
         },
         {
+            "Key": "adb08f26-a16b-4341-82ae-5c2c17556c6e",
+            "Value": {
+                "id": "8d6ece55-9ce6-4a87-acc0-5fbd68110d3e",
+                "resourcePath": "objects\\objTileController\\objTileController.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "b7b24785-1692-4a88-9960-b2c477e56df6",
             "Value": {
                 "id": "cbc6f13e-3664-4a94-a819-e658cbbe9a09",

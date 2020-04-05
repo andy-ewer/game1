@@ -32,13 +32,8 @@ mouthCounter=0;
 #macro regularSpeed 20
 #macro mouthSpeed 40
 moveSpeed = regularSpeed;
-bumpSpeed = 10;
-
-//blocking layer
-blockingLayerId = layer_get_id("tilesBlocking");
-blockingMapId = layer_tilemap_get_id(blockingLayerId);
+bumpSpeed = 20;
 
 depth = round(-y);
-
 
 image_index = mouthStart;

@@ -69,18 +69,18 @@ if(moveSpeed > 0)
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
 	//tile layer collision	
-	if(!tilemap_get_at_pixel(blockingMapId, target.x + deltaX, target.y + deltaY)) 
+	if(!tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y + deltaY)) 
 	{
 		//apply movement to instance
 	    target.x += deltaX;
 	    target.y += deltaY;
 	}
-	else if(!tilemap_get_at_pixel(blockingMapId, target.x + deltaX, target.y))
+	else if(!tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y))
 	{
 		//apply move
 		target.x += deltaX;	
 	}
-	else if(!tilemap_get_at_pixel(blockingMapId, target.x, target.y + deltaY))
+	else if(!tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY))
 	{
 		//apply move
 		target.y += deltaY;	
