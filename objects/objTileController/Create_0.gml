@@ -14,14 +14,25 @@ tileDamage = ds_grid_create(
 	tilemap_get_height(blockingMapId)
 );
 
-//init tile damage grids
+maxDamageByRow[0] = 2000;
+maxDamageByRow[1] = 100;
+
+//init tile damage grid
 for(var i=0; i< tilemap_get_width(blockingMapId); i++)
 {
 	for(var j=0; j< tilemap_get_height(blockingMapId); j++)
 	{
-		var damageItem;
+		//set value for tracking damage
+		var damageItem = array_create(1);
 		damageItem[tileCurrentDamage] = 0;
-		damageItem[tileMaxDamage] = 100;
+		
+		//set value for max damage 
+		var tileData = tilemap_get(blockingMapId, i, j);
+		var tileIndex = tile_get_index(tileData);
+		var row = tileIndex div 5;
+		damageItem[tileMaxDamage] = maxDamageByRow[row];
+
+		//apply to grid
 		tileDamage[# i,j] = damageItem;
 	}	
 }

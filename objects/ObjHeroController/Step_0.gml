@@ -69,7 +69,8 @@ if(moveSpeed > 0)
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
 	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y + deltaY);
-	var isDestroyed = ((tileData+1) mod blockingTilesetWidth == 0);
+	var tileIndex = tile_get_index(tileData);
+	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
 		
 	//tile layer collision	
 	if(!tileData || isDestroyed) 
@@ -82,17 +83,20 @@ if(moveSpeed > 0)
 	//try to slide into an empty or destroyed tile
 	else 
 	{
-		var tryX = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y);
-		var isDestroyedX = ((tryX+1) mod blockingTilesetWidth == 0);
-		var tryY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
-		var isDestroyedY = ((tryY+1) mod blockingTilesetWidth == 0);
+		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y);
+		var tileIndex = tile_get_index(tileDataX);
+		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
+
+		var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
+		var tileIndex = tile_get_index(tileDataY);
+		var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
-		if(!tryX || isDestroyedX)
+		if(!tileDataX || isDestroyedX)
 		{
 			//apply move
 			target.x += deltaX;	
 		}
-		else if(!tryY || isDestroyedY)
+		else if(!tileDataY || isDestroyedY)
 		{
 			//apply move
 			target.y += deltaY;	

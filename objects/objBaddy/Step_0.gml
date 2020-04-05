@@ -89,17 +89,20 @@ else
 	//try to slide into an empty or destroyed tile
 	else 
 	{
-		var tryX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
-		var isDestroyedX = ((tryX+1) mod blockingTilesetWidth == 0);
-		var tryY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
-		var isDestroyedY = ((tryY+1) mod blockingTilesetWidth == 0);
+		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
+		var tileIndex = tile_get_index(tileDataX);
+		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
+		
+		var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
+		var tileIndex = tile_get_index(tileDataY);
+		var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
-		if(!tryX || isDestroyedX)
+		if(!tileDataX || isDestroyedX)
 		{
 			//apply move
 			x += deltaX;	
 		}
-		else if(!tryY || isDestroyedY)
+		else if(!tileDataY || isDestroyedY)
 		{
 			//apply move
 			y += deltaY;	
@@ -145,8 +148,6 @@ for(var i=0; i<qtyBumps; ++i) {
 		var tileIndex = tile_get_index(tileData);
 		var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
 		var isIndestructable = ((tileIndex) mod blockingTilesetWidth == 0);
-		var gridX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
-		var gridY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 			
 		//no tile
 		if(isDestroyed)
@@ -161,30 +162,55 @@ for(var i=0; i<qtyBumps; ++i) {
 		{
 			//apply damage
 			if(!isIndestructable) {	
+
+				//get grid position of tile
+				var gridX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+				var gridY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 				
+				//get the damage and increment
 				var tileDamage = tileController.tileDamage[# gridX, gridY];
 				tileDamage[tileCurrentDamage]++;
+
+				//if we have gone over max damage, increment to next damage step and reset damage done to 0.
 				if(tileDamage[tileCurrentDamage] >= tileDamage[tileMaxDamage])
 				{
-					tileData = tile_set_index(tileData, tileIndex+1);	
+					tileIndex++;
+					tileData = tile_set_index(tileData, tileIndex);	
+					
+					//if this is the final destroyed step
+					if((tileIndex+1) mod blockingTilesetWidth == 0)
+					{
+						//randomly flips rubble texture for more variety
+						if(irandom(1)==0)
+						{
+							tileData = tile_set_flip(tileData, true);
+						}
+					}
 					tileDamage[tileCurrentDamage] = 0;
 				}
+				
+				//apply changes to the tile
 				tileData = tilemap_set(tileController.blockingMapId, tileData, gridX, gridY);
+				
+				//apply change to the damage on this tile
 				tileController.tileDamage[# gridX, gridY] = tileDamage;
 			}
 			
 			//try to slide either way through empty or destroyed tile
-			var tryX = tilemap_get_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y);
-			var isDestroyedX = ((tryX+1) mod blockingTilesetWidth == 0);
-			var tryY = tilemap_get_at_pixel(tileController.blockingMapId, bump.x, bump.y + deltaY);
-			var isDestroyedY = ((tryY+1) mod blockingTilesetWidth == 0);
+			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y);
+			var tileIndex = tile_get_index(tileDataX);
+			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
+			
+			var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, bump.x, bump.y + deltaY);
+			var tileIndex = tile_get_index(tileDataY);
+			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
-			if(!tryX || isDestroyedX)
+			if(!tileDataX || isDestroyedX)
 			{
 				//apply move
 				bump.x += deltaX;	
 			}
-			else if(!tryY || isDestroyedY)
+			else if(!tileDataY || isDestroyedY)
 			{
 				//apply move
 				bump.y += deltaY;	
