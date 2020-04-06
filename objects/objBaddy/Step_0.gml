@@ -4,7 +4,6 @@
 
 //scale movement to time
 var secondsPassed = delta_time / 1000000;
-var moveSpeedFrame = moveSpeed * secondsPassed;
 var bumpSpeedFrame = bumpSpeed * secondsPassed;
 
 //**********************
@@ -15,7 +14,11 @@ var bumpSpeedFrame = bumpSpeed * secondsPassed;
 stepCounter--;
 if(stepCounter<0)
 {
-	if(image_index == walkEnd)
+	if(image_index == idleEnd)
+	{
+		image_index = idleStart;
+	}
+	else if(image_index == walkEnd)
 	{
 		image_index = walkStart;
 	}
@@ -30,23 +33,34 @@ if(stepCounter<0)
 	stepCounter = irandom(stepRandom)+stepPlus;
 }
 
+//idle state - scan for the hero to chase	
 if(mood == baddyMoodIdle)
 {
-	
+	//get this and the heros grid position
 	var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
 	var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
 	var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
 	var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
 
+	//check the distance against the sight range for this badddy
 	var dist = point_distance(thisX, thisY, heroX, heroY);
 	if(dist<=sightDistance)
 	{
+		//we are within range, check to see if anything is blocking our view
 		var sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
 		if(sightClear) {
+			//can see the hero - give chase
 			mood = baddyMoodChase;
 		}
 	}
+	
+	//get potential move point 
+	var moveSpeedFrame = idleSpeed * secondsPassed;
+	var deltaX = (lengthdir_x(moveSpeedFrame, idleDirection));
+	var deltaY = (lengthdir_y(moveSpeedFrame, idleDirection));
 }
+
+//chase state
 else
 {
 	//mouth opens and closes
@@ -56,73 +70,82 @@ else
 		if(image_index <= walkEnd)
 		{
 			image_index+= 4;
-			moveSpeed = mouthSpeed;
-			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;	
+			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
 		}
 		else
 		{
 			image_index-= 4;
-			moveSpeed = regularSpeed;
 			mouthCounter = irandom(mouthClosedRandom)+mouthClosedPlus; 	
 		}	
 	}
-
-	//**********************
-	//CHASE HERO
-	//**********************
-
 	//get potential move point 
+	
+	var moveSpeedFrame;
+	if(image_index <= walkEnd)
+	{
+		moveSpeedFrame = walkSpeed * secondsPassed;
+	}
+	else
+	{
+		moveSpeedFrame = mouthSpeed * secondsPassed; //zmobies with mouths open move faster
+	}		
 	var dir = point_direction(x, y, objHero.x, objHero.y);
 	var deltaX = (lengthdir_x(moveSpeedFrame, dir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, dir));
-	
-	//tile layer collision	
-	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
-	var isDestroyed = false;
+}
 
-	//no tile
-	if(!tileData)
+
+//**********************
+//CHASE HERO
+//**********************
+
+	
+//tile layer collision	
+var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
+var isDestroyed = false;
+
+//no tile
+if(!tileData)
+{
+	//apply move
+	x += deltaX;	
+	y += deltaY;	
+}
+
+//there is a tile
+else
+{
+	var tileIndex = tile_get_index(tileData);
+	isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
+
+	//destroyed tiles are passable
+	if(isDestroyed)
 	{
 		//apply move
 		x += deltaX;	
 		y += deltaY;	
 	}
-
-	//there is a tile
-	else
+	
+	//try to slide into an empty or destroyed tile
+	else 
 	{
-		var tileIndex = tile_get_index(tileData);
-		isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-
-		//destroyed tiles are passable
-		if(isDestroyed)
+		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
+		var tileIndex = tile_get_index(tileDataX);
+		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
+		
+		var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
+		var tileIndex = tile_get_index(tileDataY);
+		var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
+				
+		if(!tileDataX || isDestroyedX)
 		{
 			//apply move
 			x += deltaX;	
-			y += deltaY;	
 		}
-	
-		//try to slide into an empty or destroyed tile
-		else 
+		else if(!tileDataY || isDestroyedY)
 		{
-			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
-			var tileIndex = tile_get_index(tileDataX);
-			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		
-			var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
-			var tileIndex = tile_get_index(tileDataY);
-			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
-				
-			if(!tileDataX || isDestroyedX)
-			{
-				//apply move
-				x += deltaX;	
-			}
-			else if(!tileDataY || isDestroyedY)
-			{
-				//apply move
-				y += deltaY;	
-			}
+			//apply move
+			y += deltaY;	
 		}
 	}
 }

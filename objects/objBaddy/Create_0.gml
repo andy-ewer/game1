@@ -1,10 +1,12 @@
 #macro roomBorderBlocking 10
 
 //animation frames
-#macro walkStart 0 
-#macro walkEnd 3 
-#macro mouthStart 4
-#macro mouthEnd 7
+#macro idleStart 0 
+#macro idleEnd 3
+#macro walkStart 4
+#macro walkEnd 7 
+#macro mouthStart 8
+#macro mouthEnd 11
 
 //animation random timings
 #macro mouthClosedRandom 300
@@ -21,7 +23,8 @@
 #macro baddyMoodChase 1
 
 mood = baddyMoodIdle;
-sightDistance = 5; //in blocking tile grid units
+sightDistance = 6; //in blocking tile grid units
+idleDirection = irandom(360);
 
 //color filter
 image_blend = make_colour_hsv(random(255), random(255), 255);
@@ -31,11 +34,11 @@ stepCounter=0;
 mouthCounter=0;
 
 //speeds
-#macro regularSpeed 20
+#macro walkSpeed 20
 #macro mouthSpeed 40
-moveSpeed = regularSpeed;
-bumpSpeed = 20;
+#macro bumpSpeed 20
+#macro idleSpeed 10
+
 
 depth = round(-y);
 
-image_index = walkStart;
