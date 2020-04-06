@@ -7,7 +7,6 @@ var secondsPassed = delta_time / 1000000;
 var moveSpeedFrame = moveSpeed * secondsPassed;
 var bumpSpeedFrame = bumpSpeed * secondsPassed;
 
-
 //**********************
 //ANIMATE
 //**********************
@@ -31,85 +30,102 @@ if(stepCounter<0)
 	stepCounter = irandom(stepRandom)+stepPlus;
 }
 
-//mouth opens and closes
-mouthCounter--;
-if(mouthCounter<0)
+if(mood == baddyMoodIdle)
 {
-	if(image_index <= walkEnd)
-	{
-		image_index+= 4;
-		moveSpeed = mouthSpeed;
-		mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;	
-	}
-	else
-	{
-		image_index-= 4;
-		moveSpeed = regularSpeed;
-		mouthCounter = irandom(mouthClosedRandom)+mouthClosedPlus; 	
-	}
 	
+	var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
+	var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
+	var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+	var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+
+	var dist = point_distance(thisX, thisY, heroX, heroY);
+	if(dist<=sightDistance)
+	{
+		var sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
+		if(sightClear) {
+			mood = baddyMoodChase;
+		}
+	}
 }
-
-
-//**********************
-//CHASE HERO
-//**********************
-
-//get potential move point 
-var dir = point_direction(x, y, objHero.x, objHero.y);
-var deltaX = (lengthdir_x(moveSpeedFrame, dir));
-var deltaY = (lengthdir_y(moveSpeedFrame, dir));
-	
-//tile layer collision	
-var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
-var isDestroyed = false;
-
-//no tile
-if(!tileData)
-{
-	//apply move
-	x += deltaX;	
-	y += deltaY;	
-}
-
-//there is a tile
 else
 {
-	var tileIndex = tile_get_index(tileData);
-	isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
+	//mouth opens and closes
+	mouthCounter--;
+	if(mouthCounter<0)
+	{
+		if(image_index <= walkEnd)
+		{
+			image_index+= 4;
+			moveSpeed = mouthSpeed;
+			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;	
+		}
+		else
+		{
+			image_index-= 4;
+			moveSpeed = regularSpeed;
+			mouthCounter = irandom(mouthClosedRandom)+mouthClosedPlus; 	
+		}	
+	}
 
-	//destroyed tiles are passable
-	if(isDestroyed)
+	//**********************
+	//CHASE HERO
+	//**********************
+
+	//get potential move point 
+	var dir = point_direction(x, y, objHero.x, objHero.y);
+	var deltaX = (lengthdir_x(moveSpeedFrame, dir));
+	var deltaY = (lengthdir_y(moveSpeedFrame, dir));
+	
+	//tile layer collision	
+	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
+	var isDestroyed = false;
+
+	//no tile
+	if(!tileData)
 	{
 		//apply move
 		x += deltaX;	
 		y += deltaY;	
 	}
-	
-	//try to slide into an empty or destroyed tile
-	else 
+
+	//there is a tile
+	else
 	{
-		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
-		var tileIndex = tile_get_index(tileDataX);
-		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		
-		var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
-		var tileIndex = tile_get_index(tileDataY);
-		var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
-				
-		if(!tileDataX || isDestroyedX)
+		var tileIndex = tile_get_index(tileData);
+		isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
+
+		//destroyed tiles are passable
+		if(isDestroyed)
 		{
 			//apply move
 			x += deltaX;	
-		}
-		else if(!tileDataY || isDestroyedY)
-		{
-			//apply move
 			y += deltaY;	
+		}
+	
+		//try to slide into an empty or destroyed tile
+		else 
+		{
+			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
+			var tileIndex = tile_get_index(tileDataX);
+			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
+		
+			var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
+			var tileIndex = tile_get_index(tileDataY);
+			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
+				
+			if(!tileDataX || isDestroyedX)
+			{
+				//apply move
+				x += deltaX;	
+			}
+			else if(!tileDataY || isDestroyedY)
+			{
+				//apply move
+				y += deltaY;	
+			}
 		}
 	}
 }
-
 
 //**********************
 //HERD BEHAVIOUR

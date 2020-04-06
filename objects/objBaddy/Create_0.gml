@@ -16,11 +16,12 @@
 #macro stepPlus 5
 #macro distMultiplierMax 10
 
+//mood values
+#macro baddyMoodIdle 0
+#macro baddyMoodChase 1
 
-//sprite size
-var scale  = 1;
-image_xscale = scale;
-image_yscale = scale;
+mood = baddyMoodIdle;
+sightDistance = 5; //in blocking tile grid units
 
 //color filter
 image_blend = make_colour_hsv(random(255), random(255), 255);
@@ -37,4 +38,4 @@ bumpSpeed = 20;
 
 depth = round(-y);
 
-image_index = mouthStart;
+image_index = walkStart;
