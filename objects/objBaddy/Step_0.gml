@@ -4,7 +4,7 @@
 
 //scale movement to time
 var secondsPassed = delta_time / 1000000;
-var bumpSpeedFrame = bumpSpeed * secondsPassed;
+
 
 //**********************
 //ANIMATE
@@ -36,6 +36,20 @@ if(stepCounter<0)
 //idle state - scan for the hero to chase	
 if(mood == baddyMoodIdle)
 {
+	//change direction randomly
+	idleDirectionCounter--;
+	if(idleDirectionCounter < 0)
+	{
+		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
+		if (idleDirection >= 360){
+			    idleDirection -= 360;
+		}
+		if (idleDirection < 0){
+			    idleDirection += 360;
+		}
+		idleDirectionCounter = irandom(idleDirectionCounterRandom + idleDirectionCounterPlus);
+	}
+	
 	//get this and the heros grid position
 	var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
 	var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
@@ -51,6 +65,8 @@ if(mood == baddyMoodIdle)
 		if(sightClear) {
 			//can see the hero - give chase
 			mood = baddyMoodChase;
+			image_index = mouthStart;
+			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
 		}
 	}
 	
@@ -78,8 +94,8 @@ else
 			mouthCounter = irandom(mouthClosedRandom)+mouthClosedPlus; 	
 		}	
 	}
-	//get potential move point 
 	
+	//get potential move point 	
 	var moveSpeedFrame;
 	if(image_index <= walkEnd)
 	{
@@ -87,7 +103,7 @@ else
 	}
 	else
 	{
-		moveSpeedFrame = mouthSpeed * secondsPassed; //zmobies with mouths open move faster
+		moveSpeedFrame = mouthSpeed * secondsPassed; //zombies with mouths open move faster
 	}		
 	var dir = point_direction(x, y, objHero.x, objHero.y);
 	var deltaX = (lengthdir_x(moveSpeedFrame, dir));
@@ -96,7 +112,7 @@ else
 
 
 //**********************
-//CHASE HERO
+//MOVE
 //**********************
 
 	
@@ -129,23 +145,41 @@ else
 	//try to slide into an empty or destroyed tile
 	else 
 	{
-		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
-		var tileIndex = tile_get_index(tileDataX);
-		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		
-		var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
-		var tileIndex = tile_get_index(tileDataY);
-		var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
-				
-		if(!tileDataX || isDestroyedX)
+		if(mood == baddyMoodIdle)
 		{
-			//apply move
-			x += deltaX;	
+			idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
+			if (idleDirection >= 360){
+			     idleDirection -= 360;
+			}
+			if (idleDirection < 0){
+			     idleDirection += 360;
+			}
 		}
-		else if(!tileDataY || isDestroyedY)
+		else
 		{
-			//apply move
-			y += deltaY;	
+
+			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
+			var tileIndex = tile_get_index(tileDataX);
+			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
+		
+				
+			if(!tileDataX || isDestroyedX)
+			{
+				//apply move
+				x += deltaX;	
+			}
+			else 
+			{
+				var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
+				var tileIndex = tile_get_index(tileDataY);
+				var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
+				
+				if(!tileDataY || isDestroyedY)
+				{
+					//apply move
+					y += deltaY;	
+				}	
+			}
 		}
 	}
 }
@@ -161,6 +195,19 @@ var qtyBumps = instance_place_list(x, y, objBaddy, list, false);
 //iterate the bumps
 for(var i=0; i<qtyBumps; ++i) {
 
+	if(mood == baddyMoodIdle)
+	{
+		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
+		if (idleDirection >= 360)
+		{
+			    idleDirection -= 360;
+		}
+		if (idleDirection < 0)
+		{
+			    idleDirection += 360;
+		}
+	}
+
 	//get bump details
 	var bump = list[| i];
 	var dir = point_direction(x, y, bump.x, bump.y);
@@ -168,6 +215,15 @@ for(var i=0; i<qtyBumps; ++i) {
 	var distMultiplier = distMultiplierMax-max(min(dist, distMultiplierMax),1);
 				
 	//calculate attempted shove
+	var bumpSpeedFrame;
+	if(mood == baddyMoodIdle)
+	{
+		bumpSpeedFrame = idleBumpSpeed * secondsPassed;
+	}
+	else
+	{
+		bumpSpeedFrame = bumpSpeed * secondsPassed;
+	}
 	var deltaX = (lengthdir_x(bumpSpeedFrame * distMultiplier, dir));
 	var deltaY = (lengthdir_y(bumpSpeedFrame * distMultiplier, dir)); 
 	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);

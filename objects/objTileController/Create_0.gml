@@ -29,7 +29,7 @@ for(var i=0; i< tilemap_get_width(blockingMapId); i++)
 		//set value for max damage 
 		var tileData = tilemap_get(blockingMapId, i, j);
 		var tileIndex = tile_get_index(tileData);
-		var row = tileIndex div 5;
+		var row = tileIndex div blockingTilesetWidth;
 		damageItem[tileMaxDamage] = maxDamageByRow[row];
 
 		//apply to grid

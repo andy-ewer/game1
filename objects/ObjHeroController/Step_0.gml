@@ -86,20 +86,22 @@ if(moveSpeed > 0)
 		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y);
 		var tileIndex = tile_get_index(tileDataX);
 		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
-
-		var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
-		var tileIndex = tile_get_index(tileDataY);
-		var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
 		if(!tileDataX || isDestroyedX)
 		{
 			//apply move
 			target.x += deltaX;	
 		}
-		else if(!tileDataY || isDestroyedY)
+		else 
 		{
-			//apply move
-			target.y += deltaY;	
+			var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
+			var tileIndex = tile_get_index(tileDataY);
+			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
+			if(!tileDataY || isDestroyedY)
+			{
+				//apply move
+				target.y += deltaY;	
+			}
 		}
 	}
 	
