@@ -5,6 +5,14 @@
 //scale movement to time
 var secondsPassed = delta_time / 1000000;
 
+//get this and the heros grid position
+var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
+var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
+var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+
+//check the distance against the sight range for this badddy
+var dist = point_distance(thisX, thisY, heroX, heroY);
 
 //**********************
 //ANIMATE
@@ -50,14 +58,7 @@ if(mood == baddyMoodIdle)
 		idleDirectionCounter = irandom(idleDirectionCounterRandom + idleDirectionCounterPlus);
 	}
 	
-	//get this and the heros grid position
-	var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
-	var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
-	var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
-	var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
-
-	//check the distance against the sight range for this badddy
-	var dist = point_distance(thisX, thisY, heroX, heroY);
+	//look for hero
 	if(dist<=sightDistance)
 	{
 		//we are within range, check to see if anything is blocking our view
@@ -71,9 +72,8 @@ if(mood == baddyMoodIdle)
 			//make a noise
 			if(dist < voiceGridDistance)
 			{				
-				var sound = audio_play_sound(voiceSound, 5, false);
+				sound = audio_play_sound(voiceSound, 5, false);
 				audio_sound_pitch(sound, voicePitch);
-				audio_sound_gain(sound, 1-(dist/voiceGridDistance), 0);
 			}
 		}
 	}
@@ -96,21 +96,11 @@ else
 			image_index+= 4;
 			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
 
-			//get this and the heros grid position
-			var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
-			var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
-			var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
-			var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
-
-			//check the distance against the sight range for this badddy
-			var dist = point_distance(thisX, thisY, heroX, heroY);
-
 			//make a noise
 			if(dist < voiceGridDistance)
-			{				
-				var sound = audio_play_sound(voiceSound, 5, false);
+			{
+				sound = audio_play_sound(voiceSound, 5, false);
 				audio_sound_pitch(sound, voicePitch);
-				audio_sound_gain(sound, 1-(dist/voiceGridDistance), 0);
 			}
 		}
 		else
@@ -133,6 +123,13 @@ else
 	var dir = point_direction(x, y, objHero.x, objHero.y);
 	var deltaX = (lengthdir_x(moveSpeedFrame, dir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, dir));
+}
+
+
+if(audio_is_playing(sound))
+{
+	var gain = 1-(dist/voiceGridDistance);
+	audio_sound_gain(sound, gain, 0);
 }
 
 
@@ -182,12 +179,10 @@ else
 		}
 		else
 		{
-
 			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
 			var tileIndex = tile_get_index(tileDataX);
 			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		
-				
+						
 			if(!tileDataX || isDestroyedX)
 			{
 				//apply move

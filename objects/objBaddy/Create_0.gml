@@ -53,6 +53,4 @@ depth = round(-y);
 voiceGridDistance = 20;
 voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBaddy6, sndBaddy7, sndBaddy8);
 voicePitch = 0.8 + ( irandom(1)*0.6 );
-
-//image_xscale = 1 + ((irandom(20)-5)/100);
-//image_Yscale = 1 + ((irandom(30))/100);
+sound = 0;
