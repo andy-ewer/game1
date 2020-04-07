@@ -41,4 +41,5 @@ var limitedCameraY = min( max(cameraY, 0), room_height);
 camera_set_view_pos(view_camera[0], limitedCameraX, limitedCameraY);
 camera_set_view_size(view_camera[0], cameraWidth, cameraHeight);
 
-
+//
+audio_play_sound(sndDum, 1, false);

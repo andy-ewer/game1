@@ -37,3 +37,4 @@ image_yscale = scale;
 isMoving = false;
 isAttacking = false;
 
+randomize();

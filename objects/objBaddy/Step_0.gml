@@ -67,6 +67,14 @@ if(mood == baddyMoodIdle)
 			mood = baddyMoodChase;
 			image_index = mouthStart;
 			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
+			
+			//make a noise
+			if(dist < voiceGridDistance)
+			{				
+				var sound = audio_play_sound(voiceSound, 5, false);
+				audio_sound_pitch(sound, voicePitch);
+				audio_sound_gain(sound, 1-(dist/voiceGridDistance), 0);
+			}
 		}
 	}
 	
@@ -87,6 +95,23 @@ else
 		{
 			image_index+= 4;
 			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
+
+			//get this and the heros grid position
+			var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
+			var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
+			var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+			var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+
+			//check the distance against the sight range for this badddy
+			var dist = point_distance(thisX, thisY, heroX, heroY);
+
+			//make a noise
+			if(dist < voiceGridDistance)
+			{				
+				var sound = audio_play_sound(voiceSound, 5, false);
+				audio_sound_pitch(sound, voicePitch);
+				audio_sound_gain(sound, 1-(dist/voiceGridDistance), 0);
+			}
 		}
 		else
 		{
