@@ -137,7 +137,7 @@ else
 var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
 var isDestroyed = false;
 
-//keep track of velocity to apply to audio
+//keep track of velocity to apply to 3d audio
 var emitterVX = 0;
 var emitterVY = 0;
 
@@ -211,7 +211,8 @@ else
 	}
 }
 
-//audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);	
+//apply velocity for 3d audio
+audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);	
 
 //**********************
 //HERD BEHAVIOUR

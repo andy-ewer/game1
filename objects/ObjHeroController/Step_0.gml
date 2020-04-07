@@ -62,6 +62,10 @@ if keyboard_check(heroKeyAttack)
 	target.isAttacking = true;
 }
 
+//for 3d audio
+var emitterVX = 0;
+var emitterVY = 0;	
+
 if(moveSpeed > 0)
 {	
 	//calculate movement
@@ -78,6 +82,8 @@ if(moveSpeed > 0)
 		//apply movement to instance
 	    target.x += deltaX;
 	    target.y += deltaY;
+		emitterVX = deltaX;
+		emitterVY = deltaY;	
 	}
 
 	//try to slide into an empty or destroyed tile
@@ -91,6 +97,8 @@ if(moveSpeed > 0)
 		{
 			//apply move
 			target.x += deltaX;	
+			emitterVX = deltaX;
+			emitterVY = 0;	
 		}
 		else 
 		{
@@ -101,6 +109,8 @@ if(moveSpeed > 0)
 			{
 				//apply move
 				target.y += deltaY;	
+				emitterVX = 0;
+				emitterVY = deltaY;	
 			}
 		}
 	}
@@ -130,6 +140,9 @@ if(moveSpeed > 0)
     //actually move the camera
 	camera_set_view_pos(view_camera[0], limitedCameraX, limitedCameraY);	
 }
+
+//update 3d audio velocity
+audio_listener_velocity(emitterVX, emitterVY, 0);	
 
 //target animation doesn't stop moving until braking completed
 target.isMoving = (moveSpeed > 0);
