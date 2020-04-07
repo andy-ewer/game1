@@ -14,6 +14,9 @@ var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x,
 //check the distance against the sight range for this badddy
 var dist = point_distance(thisX, thisY, heroX, heroY);
 
+//update audio position
+audio_emitter_position(emitter,x,y,0);
+
 //**********************
 //ANIMATE
 //**********************
@@ -71,9 +74,8 @@ if(mood == baddyMoodIdle)
 			
 			//make a noise
 			if(dist < voiceGridDistance)
-			{				
-				sound = audio_play_sound(voiceSound, 5, false);
-				audio_sound_pitch(sound, voicePitch);
+			{	
+				audio_play_sound_on(emitter, voiceSound, 0, round(voiceGridDistance-dist));
 			}
 		}
 	}
@@ -99,8 +101,7 @@ else
 			//make a noise
 			if(dist < voiceGridDistance)
 			{
-				sound = audio_play_sound(voiceSound, 5, false);
-				audio_sound_pitch(sound, voicePitch);
+				audio_play_sound_on(emitter, voiceSound, 0, round(voiceGridDistance-dist));
 			}
 		}
 		else
@@ -123,13 +124,6 @@ else
 	var dir = point_direction(x, y, objHero.x, objHero.y);
 	var deltaX = (lengthdir_x(moveSpeedFrame, dir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, dir));
-}
-
-
-if(audio_is_playing(sound))
-{
-	var gain = 1-(dist/voiceGridDistance);
-	audio_sound_gain(sound, gain, 0);
 }
 
 

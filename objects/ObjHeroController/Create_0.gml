@@ -42,4 +42,6 @@ camera_set_view_pos(view_camera[0], limitedCameraX, limitedCameraY);
 camera_set_view_size(view_camera[0], cameraWidth, cameraHeight);
 
 //
+audio_listener_orientation(0,1,0,0,0,1);
 audio_play_sound(sndDum, 1, false);
+
