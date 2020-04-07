@@ -10,9 +10,37 @@ var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
 var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
 var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
 var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
-
-//check the distance against the sight range for this baddy
 var dist = point_distance(thisX, thisY, heroX, heroY);
+
+//update line of sight occasionally for performance
+sightCounter--;
+if(sightCounter<0)
+{
+	//don't check if out of range
+	if(
+		mood == baddyMoodIdle && dist>idleSightDistance
+		||
+		mood != baddyMoodIdle && dist>alertSightDistance
+	)
+	{
+		sightClear = false;
+	}
+
+	//in range, so check
+	else
+	{
+		sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
+		sightCounter = updateSightTicks;
+
+		//update the last seen position of the hero
+		if(sightClear)
+		{
+			lastSeenX = objHero.x;
+			lastSeenY = objHero.y;
+		}
+	}
+}
+
 
 //update audio position
 audio_emitter_position(emitter,x,y,0);
@@ -58,22 +86,17 @@ if(mood == baddyMoodIdle)
 	}
 	
 	//look for hero
-	if(dist<=sightDistance)
-	{
-		//we are within range, check to see if anything is blocking our view
-		var sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
-		if(sightClear) {
+	if(sightClear) {
 			
-			//can see the hero - give chase
-			mood = baddyMoodChase;
-			image_index = mouthStart;
-			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
+		//can see the hero - give chase
+		mood = baddyMoodChase;
+		image_index = mouthStart;
+		mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
 			
-			//make a noise
-			if(dist < voiceGridDistance)
-			{	
-				audio_play_sound_on(emitter, voiceSound, 0, round(voiceGridDistance-dist));
-			}
+		//make a noise
+		if(dist < voiceGridDistance)
+		{	
+			audio_play_sound_on(emitter, voiceSound, 0, round(voiceGridDistance-dist));
 		}
 	}
 	
@@ -84,7 +107,7 @@ if(mood == baddyMoodIdle)
 }
 
 //chase state
-if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinalLook)
+else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinalLook)
 {
 	//mouth opens and closes
 	mouthCounter--;
@@ -119,16 +142,11 @@ if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinal
 		moveSpeedFrame = mouthSpeed * secondsPassed; //zombies with mouths open move faster
 	}		
 	
-	//check line of sight to the hero
-	var sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
-	
 	//revert to chase if line of sight to hero
 	if(sightClear)
 	{		
 		mood = baddyMoodChase;	
 		var dir = point_direction(x, y, objHero.x, objHero.y);
-		lastSeenX = objHero.x;
-		lastSeenY = objHero.y;
 	}
 	
 	//can't see hero
@@ -215,7 +233,7 @@ else
 		y += deltaY;
 		emitterVX = deltaX;
 		emitterVY = deltaY;	
-}
+	}
 	
 	//try to slide into an empty or destroyed tile
 	else 

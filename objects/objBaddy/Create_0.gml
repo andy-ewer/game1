@@ -38,7 +38,8 @@
 
 //tracking baddy mood behaviour
 mood = baddyMoodIdle;
-sightDistance = 6; //in blocking tile grid units
+idleSightDistance = 6; //in blocking tile grid units
+alertSightDistance = 60; 
 idleDirection = 0;
 idleDirectionCounter = 0;
 
@@ -72,5 +73,8 @@ lastSeenX = 0;
 lastSeenY = 0;
 lastDir = 0;
 finalLookCounter = 0;
+sightClear = false;
+sightCounter = 0;
+#macro updateSightTicks 30
 
 depth = round(-y);
