@@ -26,6 +26,7 @@
 #macro idleDirectionCounterRandom 200
 #macro idleDirectionCounterPlus 10
 
+//affects randdom turning while idle
 #macro idleDirectionAngleRandom 60
 
 //tracking baddy mood behaviour
@@ -50,6 +51,7 @@ mouthCounter=0;
 
 depth = round(-y);
 
+#macro tileDamageSoundEvery 99
 voiceGridDistance = 20;
 voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBaddy6, sndBaddy7, sndBaddy8);
 emitter = audio_emitter_create();

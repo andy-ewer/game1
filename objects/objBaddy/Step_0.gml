@@ -294,8 +294,16 @@ for(var i=0; i<qtyBumps; ++i) {
 						{
 							tileData = tile_set_flip(tileData, true);
 						}
+						audio_play_sound_on(emitter, sndTileBreak, 0, round(voiceGridDistance-dist));
 					}
-					tileDamage[tileCurrentDamage] = 0;
+					tileDamage[tileCurrentDamage] = 0;					
+				}
+				else
+				{
+					if(tileDamage[tileCurrentDamage] mod tileDamageSoundEvery == 0)
+					{
+						audio_play_sound_on(emitter, sndTileDamage, 0, round(voiceGridDistance-dist));
+					}
 				}
 				
 				//apply changes to the tile
