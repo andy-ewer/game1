@@ -17,6 +17,7 @@ var dist = point_distance(thisX, thisY, heroX, heroY);
 //update audio position
 audio_emitter_position(emitter,x,y,0);
 
+
 //**********************
 //ANIMATE
 //**********************
@@ -136,12 +137,18 @@ else
 var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
 var isDestroyed = false;
 
+//keep track of velocity to apply to audio
+var emitterVX = 0;
+var emitterVY = 0;
+
 //no tile
 if(!tileData)
 {
 	//apply move
 	x += deltaX;	
 	y += deltaY;	
+	emitterVX = deltaX;
+	emitterVY = deltaY;	
 }
 
 //there is a tile
@@ -155,8 +162,10 @@ else
 	{
 		//apply move
 		x += deltaX;	
-		y += deltaY;	
-	}
+		y += deltaY;
+		emitterVX = deltaX;
+		emitterVY = deltaY;	
+}
 	
 	//try to slide into an empty or destroyed tile
 	else 
@@ -180,7 +189,9 @@ else
 			if(!tileDataX || isDestroyedX)
 			{
 				//apply move
-				x += deltaX;	
+				x += deltaX;
+				emitterVX = deltaX;
+				emitterVY = 0;	
 			}
 			else 
 			{
@@ -192,11 +203,15 @@ else
 				{
 					//apply move
 					y += deltaY;	
+					emitterVX = 0;
+					emitterVY = deltaY;	
 				}	
 			}
 		}
 	}
 }
+
+//audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);	
 
 //**********************
 //HERD BEHAVIOUR
