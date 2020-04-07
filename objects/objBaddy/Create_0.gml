@@ -1,3 +1,4 @@
+//kep back from edge of room
 #macro roomBorderBlocking 10
 
 //animation frames
@@ -21,10 +22,16 @@
 //mood values
 #macro baddyMoodIdle 0
 #macro baddyMoodChase 1
+#macro baddyMoodLastSeen 2
+#macro baddyMoodFinalLook 3
 
 //idle movement random timings
 #macro idleDirectionCounterRandom 200
 #macro idleDirectionCounterPlus 10
+
+//final look length
+#macro finalLookCounterRandom 600
+#macro finalLookCounterPlus 100
 
 //affects randdom turning while idle
 #macro idleDirectionAngleRandom 60
@@ -49,9 +56,8 @@ mouthCounter=0;
 #macro idleSpeed 5
 #macro idleBumpSpeed 5
 
-depth = round(-y);
-
-#macro tileDamageSoundEvery 99
+//audio
+#macro tileDamageSoundEvery 50
 voiceGridDistance = 20;
 voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBaddy6, sndBaddy7, sndBaddy8);
 emitter = audio_emitter_create();
@@ -59,3 +65,12 @@ audio_emitter_position(emitter,x,y,0);
 audio_emitter_falloff(emitter, 0, cameraWidth, 2);
 audio_falloff_set_model(audio_falloff_linear_distance);
 audio_emitter_pitch(emitter, 0.8 + ( irandom(1)*0.6 ));
+
+//keeping track of last position hero was visible at
+#macro lastSeenArrivedRange 60
+lastSeenX = 0;
+lastSeenY = 0;
+lastDir = 0;
+finalLookCounter = 0;
+
+depth = round(-y);

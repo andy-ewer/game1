@@ -2,7 +2,7 @@
     "id": "ce11f9ae-92b3-4ad5-9250-b0853a14b022",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "ObjHeroController",
+    "name": "objHeroController",
     "eventList": [
         {
             "id": "0a1084db-4f5c-411e-a9ea-af02ae29a660",

@@ -11,7 +11,7 @@ var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
 var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
 var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
 
-//check the distance against the sight range for this badddy
+//check the distance against the sight range for this baddy
 var dist = point_distance(thisX, thisY, heroX, heroY);
 
 //update audio position
@@ -53,12 +53,7 @@ if(mood == baddyMoodIdle)
 	if(idleDirectionCounter < 0)
 	{
 		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
-		if (idleDirection >= 360){
-			    idleDirection -= 360;
-		}
-		if (idleDirection < 0){
-			    idleDirection += 360;
-		}
+		idleDirection = fixAngle(idleDirection);
 		idleDirectionCounter = irandom(idleDirectionCounterRandom + idleDirectionCounterPlus);
 	}
 	
@@ -68,6 +63,7 @@ if(mood == baddyMoodIdle)
 		//we are within range, check to see if anything is blocking our view
 		var sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
 		if(sightClear) {
+			
 			//can see the hero - give chase
 			mood = baddyMoodChase;
 			image_index = mouthStart;
@@ -88,7 +84,7 @@ if(mood == baddyMoodIdle)
 }
 
 //chase state
-else
+if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinalLook)
 {
 	//mouth opens and closes
 	mouthCounter--;
@@ -116,13 +112,67 @@ else
 	var moveSpeedFrame;
 	if(image_index <= walkEnd)
 	{
-		moveSpeedFrame = walkSpeed * secondsPassed;
+		moveSpeedFrame = walkSpeed * secondsPassed; //regular walking speed
 	}
 	else
 	{
 		moveSpeedFrame = mouthSpeed * secondsPassed; //zombies with mouths open move faster
 	}		
-	var dir = point_direction(x, y, objHero.x, objHero.y);
+	
+	//check line of sight to the hero
+	var sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
+	
+	//revert to chase if line of sight to hero
+	if(sightClear)
+	{		
+		mood = baddyMoodChase;	
+		var dir = point_direction(x, y, objHero.x, objHero.y);
+		lastSeenX = objHero.x;
+		lastSeenY = objHero.y;
+	}
+	
+	//can't see hero
+	else
+	{
+		//baddyMoodFinalLook
+		if(mood == baddyMoodFinalLook)
+		{
+			finalLookCounter--;
+			if(finalLookCounter < 0)
+			{
+				//return to idle
+				mood = baddyMoodIdle
+				image_index = idleStart;
+				var dir = lastDir;
+			}
+			else
+			{
+				//keep going
+				var dir = lastDir;
+			}		
+		}
+		
+		//baddyMoodLastSeen
+		else
+		{		
+			//at last known location
+			if( abs(y-lastSeenY) < lastSeenArrivedRange && abs(x-lastSeenX) < lastSeenArrivedRange)
+			{
+				mood = baddyMoodFinalLook;
+				lastDir += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));
+				var dir = lastDir;
+				finalLookCounter = irandom(finalLookCounterRandom) + finalLookCounterPlus;
+			}
+		
+			//head to last known location
+			else
+			{
+				mood = baddyMoodLastSeen;	
+				var dir = point_direction(x, y, lastSeenX, lastSeenY);
+				lastDir = dir;
+			}
+		}
+	}
 	var deltaX = (lengthdir_x(moveSpeedFrame, dir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, dir));
 }
@@ -173,21 +223,29 @@ else
 		if(mood == baddyMoodIdle)
 		{
 			idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
-			if (idleDirection >= 360){
-			     idleDirection -= 360;
-			}
-			if (idleDirection < 0){
-			     idleDirection += 360;
-			}
+			idleDirection = fixAngle(idleDirection);
 		}
 		else
 		{
+
+			//try along X
+			if(deltaX < 0)
+			{
+				deltaX = (lengthdir_x(moveSpeedFrame, 180));
+			}
+			else
+			{
+				deltaX = (lengthdir_x(moveSpeedFrame, 0));
+			}				
+			
 			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
 			var tileIndex = tile_get_index(tileDataX);
 			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
 						
 			if(!tileDataX || isDestroyedX)
-			{
+			{				
+				deltaY = 0;
+	
 				//apply move
 				x += deltaX;
 				emitterVX = deltaX;
@@ -195,17 +253,37 @@ else
 			}
 			else 
 			{
+				//try along y
+				if(deltaY < 0)
+				{
+					deltaY = (lengthdir_y(moveSpeedFrame, 90));
+				}
+				else
+				{
+					deltaY = (lengthdir_y(moveSpeedFrame, 270));
+				}				
+
 				var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
 				var tileIndex = tile_get_index(tileDataY);
 				var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
 				if(!tileDataY || isDestroyedY)
 				{
+					deltaX = 0;
+					
 					//apply move
 					y += deltaY;	
 					emitterVX = 0;
 					emitterVY = deltaY;	
-				}	
+				}
+				else
+				{
+					//if stuck in a corner, give up trying to reach the spot
+					if(mood == baddyMoodLastSeen)
+					{
+						mood = baddyMoodFinalLook;	
+					}
+				}
 			}
 		}
 	}
@@ -228,14 +306,7 @@ for(var i=0; i<qtyBumps; ++i) {
 	if(mood == baddyMoodIdle)
 	{
 		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
-		if (idleDirection >= 360)
-		{
-			    idleDirection -= 360;
-		}
-		if (idleDirection < 0)
-		{
-			    idleDirection += 360;
-		}
+		idleDirection = fixAngle(idleDirection);
 	}
 
 	//get bump details

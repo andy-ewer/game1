@@ -10,7 +10,7 @@
 #macro cameraWidth 480
 #macro cameraHeight 270
 #macro cameraXBorder 40
-#macro cameraYBorder 20
+#macro cameraYBorder 10
 
 //create instance to control
 target = instance_create_layer(200, 100, "Instances", objHero);
