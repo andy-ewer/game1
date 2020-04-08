@@ -119,6 +119,14 @@
             }
         },
         {
+            "Key": "32ae99df-bb3a-49eb-ad8b-aa8b06c476d0",
+            "Value": {
+                "id": "d8f100a2-c9b9-476c-9f8e-1a77e7091e52",
+                "resourcePath": "objects\\objTimeBasedCounter\\objTimeBasedCounter.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "36ce3155-6d75-4fa3-8571-3dcf46197c56",
             "Value": {
                 "id": "36e30bf3-b5c1-4c35-b6a2-32731bb2c413",

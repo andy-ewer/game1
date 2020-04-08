@@ -2,10 +2,7 @@
 //INIT
 //**********************
 
-//scale movement to time
-var secondsPassed = delta_time / 1000000;
-
-//get this and the heros grid position
+//get this and the heroes grid position
 var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
 var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
 var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
@@ -13,7 +10,7 @@ var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x,
 var dist = point_distance(thisX, thisY, heroX, heroY);
 
 //update line of sight occasionally for performance
-sightCounter--;
+sightCounter -= timeBasedCounter.ticksPassed;
 if(sightCounter<0)
 {
 	//don't check if out of range
@@ -51,7 +48,7 @@ audio_emitter_position(emitter,x,y,0);
 //**********************
 
 //steps are erratic
-stepCounter--;
+stepCounter -= timeBasedCounter.ticksPassed;
 if(stepCounter<0)
 {
 	if(image_index == idleEnd)
@@ -77,7 +74,7 @@ if(stepCounter<0)
 if(mood == baddyMoodIdle)
 {
 	//change direction randomly
-	idleDirectionCounter--;
+	idleDirectionCounter -= timeBasedCounter.ticksPassed;
 	if(idleDirectionCounter < 0)
 	{
 		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
@@ -101,7 +98,7 @@ if(mood == baddyMoodIdle)
 	}
 	
 	//get potential move point 
-	var moveSpeedFrame = idleSpeed * secondsPassed;
+	var moveSpeedFrame = idleSpeed * timeBasedCounter.secondsPassed;
 	var deltaX = (lengthdir_x(moveSpeedFrame, idleDirection));
 	var deltaY = (lengthdir_y(moveSpeedFrame, idleDirection));
 }
@@ -110,7 +107,7 @@ if(mood == baddyMoodIdle)
 else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinalLook)
 {
 	//mouth opens and closes
-	mouthCounter--;
+	mouthCounter -= timeBasedCounter.ticksPassed;
 	if(mouthCounter<0)
 	{
 		if(image_index <= walkEnd)
@@ -135,11 +132,11 @@ else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMood
 	var moveSpeedFrame;
 	if(image_index <= walkEnd)
 	{
-		moveSpeedFrame = walkSpeed * secondsPassed; //regular walking speed
+		moveSpeedFrame = walkSpeed * timeBasedCounter.secondsPassed; //regular walking speed
 	}
 	else
 	{
-		moveSpeedFrame = mouthSpeed * secondsPassed; //zombies with mouths open move faster
+		moveSpeedFrame = mouthSpeed * timeBasedCounter.secondsPassed; //zombies with mouths open move faster
 	}		
 	
 	//revert to chase if line of sight to hero
@@ -155,7 +152,7 @@ else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMood
 		//baddyMoodFinalLook
 		if(mood == baddyMoodFinalLook)
 		{
-			finalLookCounter--;
+			finalLookCounter -= timeBasedCounter.ticksPassed;
 			if(finalLookCounter < 0)
 			{
 				//return to idle
@@ -337,11 +334,11 @@ for(var i=0; i<qtyBumps; ++i) {
 	var bumpSpeedFrame;
 	if(mood == baddyMoodIdle)
 	{
-		bumpSpeedFrame = idleBumpSpeed * secondsPassed;
+		bumpSpeedFrame = idleBumpSpeed * timeBasedCounter.secondsPassed;
 	}
 	else
 	{
-		bumpSpeedFrame = bumpSpeed * secondsPassed;
+		bumpSpeedFrame = bumpSpeed * timeBasedCounter.secondsPassed;
 	}
 	var deltaX = (lengthdir_x(bumpSpeedFrame * distMultiplier, dir));
 	var deltaY = (lengthdir_y(bumpSpeedFrame * distMultiplier, dir)); 
@@ -383,7 +380,7 @@ for(var i=0; i<qtyBumps; ++i) {
 				
 				//get the damage and increment
 				var tileDamage = tileController.tileDamage[# gridX, gridY];
-				tileDamage[tileCurrentDamage]++;
+				tileDamage[tileCurrentDamage] += timeBasedCounter.ticksPassed; //1 damage per tick at target frame rate, scaled to the actual frame rate
 
 				//if we have gone over max damage, increment to next damage step and reset damage done to 0.
 				if(tileDamage[tileCurrentDamage] >= tileDamage[tileMaxDamage])
@@ -401,14 +398,11 @@ for(var i=0; i<qtyBumps; ++i) {
 						}
 						audio_play_sound_on(emitter, sndTileBreak, 0, round(voiceGridDistance-dist));
 					}
-					tileDamage[tileCurrentDamage] = 0;					
-				}
-				else
-				{
-					if(tileDamage[tileCurrentDamage] mod tileDamageSoundEvery == 0)
+					else
 					{
 						audio_play_sound_on(emitter, sndTileDamage, 0, round(voiceGridDistance-dist));
 					}
+					tileDamage[tileCurrentDamage] = 0;					
 				}
 				
 				//apply changes to the tile

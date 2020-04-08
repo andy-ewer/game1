@@ -40,26 +40,31 @@ else
 		image_index = heroIdleRegular;		
 		blinkCounter = heroInitBlinkCounter;
 		poseCounter = heroInitPoseCounter;
+		isBlinking = false;		
 	}
 	
 	//continue existing idle state
 	else 
 	{	
 		//counting down
-		blinkCounter--;
-		poseCounter--;
+		blinkCounter -= timeBasedCounter.ticksPassed;
+		poseCounter -= timeBasedCounter.ticksPassed;
 
 		//start blink
-		if(blinkCounter == 0)
+		if(blinkCounter <= 0)
 		{
-			image_index++;	//matching blink frame is always +1 of current idle frame.
-		}
-
-		//end blink
-		else if(blinkCounter < (0-heroBlinkLength))
-		{
-			image_index--;
-			blinkCounter = irandom(heroBlinkRandom)+heroBlinkRandomPlus;
+			if(!isBlinking)
+			{
+				image_index++;	//matching blink frame is always +1 of current idle frame.
+				isBlinking = true;
+				blinkCounter = heroBlinkLength;
+			}
+			else
+			{
+				image_index--;
+				isBlinking = false;
+				blinkCounter = irandom(heroBlinkRandom)+heroBlinkRandomPlus;
+			}
 		}
 
 		//change pose status, unless blinking. will happen after blink.

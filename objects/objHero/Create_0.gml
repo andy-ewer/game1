@@ -28,6 +28,7 @@ var scale = 1;
 
 //set values
 blinkCounter = heroInitBlinkCounter;
+isBlinking = false;
 poseCounter = heroInitPoseCounter;
 image_index = heroIdleRegular;
 image_xscale = scale;

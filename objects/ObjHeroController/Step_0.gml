@@ -1,6 +1,4 @@
-//scale movement to time
-var secondsPassed = delta_time / 1000000;
-var moveSpeedFrame = moveSpeed * secondsPassed;
+
 
 //get movement in 8 directions from WASD
 var moveXInput = 0;
@@ -69,6 +67,7 @@ var emitterVY = 0;
 if(moveSpeed > 0)
 {	
 	//calculate movement
+	var moveSpeedFrame = moveSpeed * timeBasedCounter.secondsPassed;
 	var deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 

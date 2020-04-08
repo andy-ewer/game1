@@ -58,7 +58,6 @@ mouthCounter=0;
 #macro idleBumpSpeed 5
 
 //audio
-#macro tileDamageSoundEvery 50
 voiceGridDistance = 20;
 voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBaddy6, sndBaddy7, sndBaddy8);
 emitter = audio_emitter_create();
