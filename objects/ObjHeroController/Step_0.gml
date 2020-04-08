@@ -1,61 +1,46 @@
 
 
-//get movement in 8 directions from WASD
-var moveXInput = 0;
-var moveYInput = 0;
-for (var i = 0; i < array_length_1d(heroKey); i++) 
-{
-    var this_key = heroKey[i];
-    if keyboard_check(this_key) 
-	{
-        var this_angle = i * 90;
-        moveXInput += lengthdir_x(1, this_angle);
-        moveYInput += lengthdir_y(1, this_angle);
-    }
-}
-var isMovePressed = (point_distance(0, 0, moveXInput, moveYInput) > 0);
-
-if(isMovePressed)
+if(controls.isMovePressed)
 {	
 	//regular walking
 	if(!target.isAttacking)
 	{
 		//apply acceleration
-	    moveSpeed += heroMoveSpeedAcceleration;
-		moveSpeed = min(moveSpeed, heroMoveSpeedMax);		
+	    moveSpeed += heroMove_acceleration;
+		moveSpeed = min(moveSpeed, heroMove_max);		
 	}
 	
 	//walking while attacking
 	else 
 	{		
 		//too fast
-		if(moveSpeed > heroMoveSpeedMaxAttack) 
+		if(moveSpeed > heroMove_maxAttack) 
 		{
 			//woah there slow down buddy
-			moveSpeed -= heroMoveSpeedBraking;
+			moveSpeed -= heroMove_braking;
 		}
 		
 		//at or under speed limit
 		else 
 		{
 			//apply acceleration
-		    moveSpeed += heroMoveSpeedAcceleration;
-			moveSpeed = min(moveSpeed, heroMoveSpeedMaxAttack);
+		    moveSpeed += heroMove_acceleration;
+			moveSpeed = min(moveSpeed, heroMove_maxAttack);
 		}
 	}
 	
 	//only record the direction when pressed so braking/momentum continues in same direction
-	moveDir = point_direction(0, 0, moveXInput, moveYInput);	
+	moveDir = point_direction(0, 0, controls.moveXInput, controls.moveYInput);	
 }
 else
 {
 	//apply braking
-	moveSpeed -= heroMoveSpeedBraking;
-	moveSpeed = max(moveSpeed, heroMoveSpeedMin);
+	moveSpeed -= heroMove_braking;
+	moveSpeed = max(moveSpeed, heroMove_min);
 }
 
 //attack key action
-if keyboard_check(heroKeyAttack)
+if (controls.isAttackPressed)
 {
 	target.isAttacking = true;
 }
@@ -67,11 +52,11 @@ var emitterVY = 0;
 if(moveSpeed > 0)
 {	
 	//calculate movement
-	var moveSpeedFrame = moveSpeed * timeBasedCounter.secondsPassed;
-	var deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
-	var deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
+	var moveSpeedFrame = moveSpeed * timing.secondsPassed;
+	deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
+	deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
-	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y + deltaY);
+	var tileData = tilemap_get_at_pixel(blockers.blockingMapId, target.x + deltaX, target.y + deltaY);
 	var tileIndex = tile_get_index(tileData);
 	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
 		
@@ -88,7 +73,7 @@ if(moveSpeed > 0)
 	//try to slide into an empty or destroyed tile
 	else 
 	{
-		var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, target.x + deltaX, target.y);
+		var tileDataX = tilemap_get_at_pixel(blockers.blockingMapId, target.x + deltaX, target.y);
 		var tileIndex = tile_get_index(tileDataX);
 		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
@@ -101,7 +86,7 @@ if(moveSpeed > 0)
 		}
 		else 
 		{
-			var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, target.x, target.y + deltaY);
+			var tileDataY = tilemap_get_at_pixel(blockers.blockingMapId, target.x, target.y + deltaY);
 			var tileIndex = tile_get_index(tileDataY);
 			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 			if(!tileDataY || isDestroyedY)
@@ -117,27 +102,6 @@ if(moveSpeed > 0)
 	//edge collision
 	target.x = min( max(target.x, roomBorderBlocking), (room_width - roomBorderBlocking));
 	target.y = min( max(target.y, roomBorderBlocking), (room_height - roomBorderBlocking));	
-
-	//get camera center
-	centerCameraX = (cameraX + cameraWidth/2);
-	centerCameraY = (cameraY + cameraHeight/2);
-
-	//if target outside middle area, camera follows
-	if(abs(target.x - centerCameraX) > cameraXBorder)
-	{
-		cameraX	+= deltaX;
-	}
-	if(abs(target.y - centerCameraY) > cameraYBorder)
-	{
-		cameraY	+= deltaY;
-	}
-
-	//limit camera to room
-	var limitedCameraX = min( max(cameraX, 0), (room_width-cameraWidth));
-	var limitedCameraY = min( max(cameraY, 0), (room_height-cameraHeight));
-
-    //actually move the camera
-	camera_set_view_pos(view_camera[0], limitedCameraX, limitedCameraY);	
 }
 
 //update 3d audio velocity

@@ -62,7 +62,7 @@ voiceGridDistance = 20;
 voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBaddy6, sndBaddy7, sndBaddy8);
 emitter = audio_emitter_create();
 audio_emitter_position(emitter,x,y,0);
-audio_emitter_falloff(emitter, 0, cameraWidth, 2);
+audio_emitter_falloff(emitter, 0, camera_width, 2);
 audio_falloff_set_model(audio_falloff_linear_distance);
 audio_emitter_pitch(emitter, 0.8 + ( irandom(1)*0.6 ));
 

@@ -3,14 +3,14 @@
 //**********************
 
 //get this and the heroes grid position
-var thisX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, x, y);
-var thisY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, x, y);
-var heroX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
-var heroY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, objHero.x, objHero.y);
+var thisX = tilemap_get_cell_x_at_pixel(blockers.blockingMapId, x, y);
+var thisY = tilemap_get_cell_y_at_pixel(blockers.blockingMapId, x, y);
+var heroX = tilemap_get_cell_x_at_pixel(blockers.blockingMapId, objHero.x, objHero.y);
+var heroY = tilemap_get_cell_y_at_pixel(blockers.blockingMapId, objHero.x, objHero.y);
 var dist = point_distance(thisX, thisY, heroX, heroY);
 
 //update line of sight occasionally for performance
-sightCounter -= timeBasedCounter.ticksPassed;
+sightCounter -= timing.ticksPassed;
 if(sightCounter<0)
 {
 	//don't check if out of range
@@ -48,7 +48,7 @@ audio_emitter_position(emitter,x,y,0);
 //**********************
 
 //steps are erratic
-stepCounter -= timeBasedCounter.ticksPassed;
+stepCounter -= timing.ticksPassed;
 if(stepCounter<0)
 {
 	if(image_index == idleEnd)
@@ -74,7 +74,7 @@ if(stepCounter<0)
 if(mood == baddyMoodIdle)
 {
 	//change direction randomly
-	idleDirectionCounter -= timeBasedCounter.ticksPassed;
+	idleDirectionCounter -= timing.ticksPassed;
 	if(idleDirectionCounter < 0)
 	{
 		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
@@ -98,7 +98,7 @@ if(mood == baddyMoodIdle)
 	}
 	
 	//get potential move point 
-	var moveSpeedFrame = idleSpeed * timeBasedCounter.secondsPassed;
+	var moveSpeedFrame = idleSpeed * timing.secondsPassed;
 	var deltaX = (lengthdir_x(moveSpeedFrame, idleDirection));
 	var deltaY = (lengthdir_y(moveSpeedFrame, idleDirection));
 }
@@ -107,7 +107,7 @@ if(mood == baddyMoodIdle)
 else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinalLook)
 {
 	//mouth opens and closes
-	mouthCounter -= timeBasedCounter.ticksPassed;
+	mouthCounter -= timing.ticksPassed;
 	if(mouthCounter<0)
 	{
 		if(image_index <= walkEnd)
@@ -132,11 +132,11 @@ else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMood
 	var moveSpeedFrame;
 	if(image_index <= walkEnd)
 	{
-		moveSpeedFrame = walkSpeed * timeBasedCounter.secondsPassed; //regular walking speed
+		moveSpeedFrame = walkSpeed * timing.secondsPassed; //regular walking speed
 	}
 	else
 	{
-		moveSpeedFrame = mouthSpeed * timeBasedCounter.secondsPassed; //zombies with mouths open move faster
+		moveSpeedFrame = mouthSpeed * timing.secondsPassed; //zombies with mouths open move faster
 	}		
 	
 	//revert to chase if line of sight to hero
@@ -152,7 +152,7 @@ else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMood
 		//baddyMoodFinalLook
 		if(mood == baddyMoodFinalLook)
 		{
-			finalLookCounter -= timeBasedCounter.ticksPassed;
+			finalLookCounter -= timing.ticksPassed;
 			if(finalLookCounter < 0)
 			{
 				//return to idle
@@ -199,7 +199,7 @@ else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMood
 
 	
 //tile layer collision	
-var tileData = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y + deltaY);
+var tileData = tilemap_get_at_pixel(blockers.blockingMapId, x + deltaX, y + deltaY);
 var isDestroyed = false;
 
 //keep track of velocity to apply to 3d audio
@@ -253,7 +253,7 @@ else
 				deltaX = (lengthdir_x(moveSpeedFrame, 0));
 			}				
 			
-			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, x + deltaX, y);
+			var tileDataX = tilemap_get_at_pixel(blockers.blockingMapId, x + deltaX, y);
 			var tileIndex = tile_get_index(tileDataX);
 			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
 						
@@ -278,7 +278,7 @@ else
 					deltaY = (lengthdir_y(moveSpeedFrame, 270));
 				}				
 
-				var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, x, y + deltaY);
+				var tileDataY = tilemap_get_at_pixel(blockers.blockingMapId, x, y + deltaY);
 				var tileIndex = tile_get_index(tileDataY);
 				var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
@@ -334,15 +334,15 @@ for(var i=0; i<qtyBumps; ++i) {
 	var bumpSpeedFrame;
 	if(mood == baddyMoodIdle)
 	{
-		bumpSpeedFrame = idleBumpSpeed * timeBasedCounter.secondsPassed;
+		bumpSpeedFrame = idleBumpSpeed * timing.secondsPassed;
 	}
 	else
 	{
-		bumpSpeedFrame = bumpSpeed * timeBasedCounter.secondsPassed;
+		bumpSpeedFrame = bumpSpeed * timing.secondsPassed;
 	}
 	var deltaX = (lengthdir_x(bumpSpeedFrame * distMultiplier, dir));
 	var deltaY = (lengthdir_y(bumpSpeedFrame * distMultiplier, dir)); 
-	var tileData = tilemap_get_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+	var tileData = tilemap_get_at_pixel(blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 
 	//no tile, go for it
 	if(!tileData)
@@ -375,15 +375,15 @@ for(var i=0; i<qtyBumps; ++i) {
 			if(!isIndestructable) {	
 
 				//get grid position of tile
-				var gridX = tilemap_get_cell_x_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
-				var gridY = tilemap_get_cell_y_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+				var gridX = tilemap_get_cell_x_at_pixel(blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+				var gridY = tilemap_get_cell_y_at_pixel(blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 				
 				//get the damage and increment
-				var tileDamage = tileController.tileDamage[# gridX, gridY];
-				tileDamage[tileCurrentDamage] += timeBasedCounter.ticksPassed; //1 damage per tick at target frame rate, scaled to the actual frame rate
+				var tileDamage = blockers.tileDamage[# gridX, gridY];
+				tileDamage[tileInfo_currentDamage] += timing.ticksPassed; //1 damage per tick at target frame rate, scaled to the actual frame rate
 
 				//if we have gone over max damage, increment to next damage step and reset damage done to 0.
-				if(tileDamage[tileCurrentDamage] >= tileDamage[tileMaxDamage])
+				if(tileDamage[tileInfo_currentDamage] >= tileDamage[tileInfo_maxDamage])
 				{
 					tileIndex++;
 					tileData = tile_set_index(tileData, tileIndex);	
@@ -402,22 +402,22 @@ for(var i=0; i<qtyBumps; ++i) {
 					{
 						audio_play_sound_on(emitter, sndTileDamage, 0, round(voiceGridDistance-dist));
 					}
-					tileDamage[tileCurrentDamage] = 0;					
+					tileDamage[tileInfo_currentDamage] = 0;					
 				}
 				
 				//apply changes to the tile
-				tileData = tilemap_set(tileController.blockingMapId, tileData, gridX, gridY);
+				tileData = tilemap_set(blockers.blockingMapId, tileData, gridX, gridY);
 				
 				//apply change to the damage on this tile
-				tileController.tileDamage[# gridX, gridY] = tileDamage;
+				blockers.tileDamage[# gridX, gridY] = tileDamage;
 			}
 			
 			//try to slide either way through empty or destroyed tile
-			var tileDataX = tilemap_get_at_pixel(tileController.blockingMapId, bump.x + deltaX, bump.y);
+			var tileDataX = tilemap_get_at_pixel(blockers.blockingMapId, bump.x + deltaX, bump.y);
 			var tileIndex = tile_get_index(tileDataX);
 			var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
 			
-			var tileDataY = tilemap_get_at_pixel(tileController.blockingMapId, bump.x, bump.y + deltaY);
+			var tileDataY = tilemap_get_at_pixel(blockers.blockingMapId, bump.x, bump.y + deltaY);
 			var tileIndex = tile_get_index(tileDataY);
 			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				

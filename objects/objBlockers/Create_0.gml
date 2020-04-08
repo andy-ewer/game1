@@ -1,8 +1,15 @@
+//used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 5
 
 //damage values per node
-#macro tileCurrentDamage 0
-#macro tileMaxDamage 1
+#macro tileInfo_currentDamage 0
+#macro tileInfo_maxDamage 1
+#macro tileInfo_type 2
+
+//tiletype
+#macro tileType_default 0
+#macro tileType_door 1
+
 
 //blocking layer
 blockingLayerId = layer_get_id("tilesBlocking");
@@ -14,8 +21,21 @@ tileDamage = ds_grid_create(
 	tilemap_get_height(blockingMapId)
 );
 
-maxDamageByRow[0] = 2000;
+//different HP for tiles
+var maxDamageByRow = array_create(8);
+maxDamageByRow[0] = 1000;
 maxDamageByRow[1] = 100;
+maxDamageByRow[2] = 800;
+maxDamageByRow[3] = 800;
+maxDamageByRow[4] = 800;
+maxDamageByRow[5] = 800;
+maxDamageByRow[6] = 800;
+maxDamageByRow[7] = 800;
+maxDamageByRow[8] = 100;
+
+//some tiles can have special behaviour like doors
+var tileType = array_create(8, tileType_default);
+tileType[8] = tileType_door;
 
 //init tile damage grid
 for(var i=0; i< tilemap_get_width(blockingMapId); i++)
@@ -24,13 +44,16 @@ for(var i=0; i< tilemap_get_width(blockingMapId); i++)
 	{
 		//set value for tracking damage
 		var damageItem = array_create(1);
-		damageItem[tileCurrentDamage] = 0;
+		damageItem[tileInfo_currentDamage] = 0;
 		
 		//set value for max damage 
 		var tileData = tilemap_get(blockingMapId, i, j);
 		var tileIndex = tile_get_index(tileData);
 		var row = tileIndex div blockingTilesetWidth;
-		damageItem[tileMaxDamage] = maxDamageByRow[row];
+		damageItem[tileInfo_maxDamage] = maxDamageByRow[row];
+		
+		//set value for tile type
+		damageItem[tileInfo_type] = tileType[row];
 
 		//apply to grid
 		tileDamage[# i,j] = damageItem;

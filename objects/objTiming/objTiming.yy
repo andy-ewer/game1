@@ -1,18 +1,28 @@
 {
-    "id": "adb08f26-a16b-4341-82ae-5c2c17556c6e",
+    "id": "32ae99df-bb3a-49eb-ad8b-aa8b06c476d0",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "objTileController",
+    "name": "objTiming",
     "eventList": [
         {
-            "id": "e53e6b35-6e1d-432e-b88b-2cb27a2257ab",
+            "id": "3c064a72-7776-4ef2-b0fe-ca7a4061810b",
             "modelName": "GMEvent",
             "mvc": "1.0",
             "IsDnD": false,
             "collisionObjectId": "00000000-0000-0000-0000-000000000000",
             "enumb": 0,
             "eventtype": 0,
-            "m_owner": "adb08f26-a16b-4341-82ae-5c2c17556c6e"
+            "m_owner": "32ae99df-bb3a-49eb-ad8b-aa8b06c476d0"
+        },
+        {
+            "id": "ef01de39-ba8c-44d6-903e-48453bf4a720",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "32ae99df-bb3a-49eb-ad8b-aa8b06c476d0"
         }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",

@@ -45,10 +45,10 @@ else
 	
 	//continue existing idle state
 	else 
-	{	
+	{
 		//counting down
-		blinkCounter -= timeBasedCounter.ticksPassed;
-		poseCounter -= timeBasedCounter.ticksPassed;
+		blinkCounter -= timing.ticksPassed;
+		poseCounter -= timing.ticksPassed;
 
 		//start blink
 		if(blinkCounter <= 0)

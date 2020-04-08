@@ -1,10 +1,10 @@
-for(i=0; i<10; i++)
+for(i=0; i<1000; i++)
 {
 	var tryX = irandom(room_width/10);
 	var tryY = irandom(room_height/10);
 //	var tryX = room_width/5 + irandom(room_width/5);
 //	var tryY = room_height/5+ irandom(room_height/5);
-	while(tilemap_get_at_pixel(tileController.blockingMapId, tryX, tryY))
+	while(tilemap_get_at_pixel(blockers.blockingMapId, tryX, tryY))
 	{
 		tryX = irandom(room_width);
 		tryY = irandom(room_height);

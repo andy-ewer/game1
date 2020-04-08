@@ -55,6 +55,14 @@
             }
         },
         {
+            "Key": "1506dfe4-31ae-49d9-91b2-314020e0a8c6",
+            "Value": {
+                "id": "51153277-a91c-42ee-bd1a-82c2b930a9bb",
+                "resourcePath": "views\\1506dfe4-31ae-49d9-91b2-314020e0a8c6.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "17ba4539-0a6b-47a5-b51c-9263e6d6b337",
             "Value": {
                 "id": "c7e79157-46df-4eb5-800a-0696187f7085",
@@ -119,10 +127,26 @@
             }
         },
         {
+            "Key": "2ce40b7d-0465-4c43-b01d-348b351dd310",
+            "Value": {
+                "id": "2cbadf0a-c974-4ec4-975d-7e8c8fe8bf8e",
+                "resourcePath": "objects\\objControls\\objControls.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "32ae99df-bb3a-49eb-ad8b-aa8b06c476d0",
             "Value": {
                 "id": "d8f100a2-c9b9-476c-9f8e-1a77e7091e52",
-                "resourcePath": "objects\\objTimeBasedCounter\\objTimeBasedCounter.yy",
+                "resourcePath": "objects\\objTiming\\objTiming.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "35a6a3c5-33d5-42eb-b0a6-76f2968b418c",
+            "Value": {
+                "id": "6e24f18f-719c-4ba4-96fc-38ac6529b100",
+                "resourcePath": "objects\\objCamera\\objCamera.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -180,6 +204,14 @@
                 "id": "708b4618-1900-4e05-ac7d-cf6a78550bcf",
                 "resourcePath": "scripts\\gridLineOfSight\\gridLineOfSight.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "4ba8a21a-0f34-4e97-99b2-33f03b5e5908",
+            "Value": {
+                "id": "35976e0e-7498-4867-b428-3f5ed344a7e5",
+                "resourcePath": "views\\4ba8a21a-0f34-4e97-99b2-33f03b5e5908.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -314,7 +346,7 @@
             "Key": "adb08f26-a16b-4341-82ae-5c2c17556c6e",
             "Value": {
                 "id": "8d6ece55-9ce6-4a87-acc0-5fbd68110d3e",
-                "resourcePath": "objects\\objTileController\\objTileController.yy",
+                "resourcePath": "objects\\objBlockers\\objBlockers.yy",
                 "resourceType": "GMObject"
             }
         },
