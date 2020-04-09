@@ -110,7 +110,7 @@ else if(mood == b1Mood_Chase || mood == b1Mood_LastSeen || mood == b1Mood_FinalL
 			mouthCounter = irandom(b1Ani_mouthOpenRandom)+b1Ani_mouthOpenPlus;
 
 			//make a noise
-			audio_play_sound_on(emitter, voiceSound, 0, round(camera_width-dist));
+			audio_play_sound_on(emitter, voiceSound, 0, round(global.aspectViewWidth-dist));
 		}
 		else
 		{

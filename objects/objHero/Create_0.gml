@@ -42,4 +42,4 @@ isMoving = false;
 isAttacking = false;
 
 //be like, totally random
-randomize();
+//randomize();
