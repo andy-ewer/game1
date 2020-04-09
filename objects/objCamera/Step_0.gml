@@ -1,5 +1,5 @@
 
-if(heroController.moveSpeed > 0 )
+if(root.heroController.moveSpeed > 0 )
 {
 	//get camera center
 	centerCameraX = (cameraX + camera_width/2);
@@ -8,11 +8,11 @@ if(heroController.moveSpeed > 0 )
 	//if target outside middle area, camera follows
 	if(abs(target.x - centerCameraX) > camera_xBorder)
 	{
-		cameraX	+= heroController.deltaX;
+		cameraX	+= root.heroController.deltaX;
 	}
 	if(abs(target.y - centerCameraY) > camera_yBorder)
 	{
-		cameraY	+= heroController.deltaY;
+		cameraY	+= root.heroController.deltaY;
 	}
 
 	//limit camera to room

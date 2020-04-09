@@ -461,6 +461,14 @@
                 "resourcePath": "sounds\\sndBaddy3\\sndBaddy3.yy",
                 "resourceType": "GMSound"
             }
+        },
+        {
+            "Key": "f8093451-c47d-48e4-b7ce-e546e695e1a2",
+            "Value": {
+                "id": "72cc0ced-7ced-408e-8328-3bde156bae42",
+                "resourcePath": "objects\\objRoot\\objRoot.yy",
+                "resourceType": "GMObject"
+            }
         }
     ],
     "script_order": [

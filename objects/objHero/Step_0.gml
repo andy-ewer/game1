@@ -3,7 +3,7 @@
 //ATTACK
 //************
 
-if(controls.isAttackPressed || isAttacking)
+if(root.controls.isAttackPressed || isAttacking)
 {
 	if(sprite_index != sprHeroAttack)
 	{
@@ -15,13 +15,13 @@ if(controls.isAttackPressed || isAttacking)
 	}
 	else
 	{
-		heroAttackCounter -= timing.ticksPassed;
+		heroAttackCounter -= root.timing.ticksPassed;
 		if(heroAttackCounter <= 0)
 		{
 			image_index++;
 			if(image_index==1)
 			{
-				isAttacking = controls.isAttackPressed;
+				isAttacking = root.controls.isAttackPressed;
 			}
 			heroAttackCounter = heroAttack_frames;
 		}
@@ -59,8 +59,8 @@ else
 	else 
 	{
 		//counting down
-		blinkCounter -= timing.ticksPassed;
-		poseCounter -= timing.ticksPassed;
+		blinkCounter -= root.timing.ticksPassed;
+		poseCounter -= root.timing.ticksPassed;
 
 		//start blink
 		if(blinkCounter <= 0)

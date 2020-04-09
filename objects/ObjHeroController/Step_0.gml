@@ -2,7 +2,7 @@
 //CONTROLS
 //************
 
-if(controls.isMovePressed)
+if(root.controls.isMovePressed)
 {	
 	//regular walking
 	if(!target.isAttacking)
@@ -32,7 +32,7 @@ if(controls.isMovePressed)
 	}
 	
 	//only record the direction when pressed so braking/momentum continues in same direction
-	moveDir = point_direction(0, 0, controls.moveXInput, controls.moveYInput);	
+	moveDir = point_direction(0, 0, root.controls.moveXInput, root.controls.moveYInput);	
 }
 else
 {
@@ -51,11 +51,11 @@ if(moveSpeed > 0)
 	target.isMoving = true;
 	
 	//calculate movement
-	var moveSpeedFrame = moveSpeed * timing.secondsPassed;
+	var moveSpeedFrame = moveSpeed * root.timing.secondsPassed;
 	deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
-	var tileData = tilemap_get_at_pixel(blockers.blockingMapId, target.x + deltaX, target.y + deltaY);
+	var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX, target.y + deltaY);
 	var tileIndex = tile_get_index(tileData);
 	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
 		
@@ -70,7 +70,7 @@ if(moveSpeed > 0)
 	//try to slide into an empty or destroyed tile
 	else 
 	{
-		var tileDataX = tilemap_get_at_pixel(blockers.blockingMapId, target.x + deltaX, target.y);
+		var tileDataX = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX, target.y);
 		var tileIndex = tile_get_index(tileDataX);
 		var isDestroyedX = ((tileIndex+1) mod blockingTilesetWidth == 0);
 				
@@ -82,7 +82,7 @@ if(moveSpeed > 0)
 		}
 		else 
 		{
-			var tileDataY = tilemap_get_at_pixel(blockers.blockingMapId, target.x, target.y + deltaY);
+			var tileDataY = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x, target.y + deltaY);
 			var tileIndex = tile_get_index(tileDataY);
 			var isDestroyedY = ((tileIndex+1) mod blockingTilesetWidth == 0);
 			if(!tileDataY || isDestroyedY)

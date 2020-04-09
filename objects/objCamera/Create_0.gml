@@ -5,7 +5,7 @@
 #macro camera_yBorder 10
 
 //grab player object
-target = heroController.target;
+target = root.heroController.target;
 
 //view
 view_enabled = true;
