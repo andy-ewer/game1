@@ -3,23 +3,27 @@
 //ATTACK
 //************
 
-if(isAttacking)
+if(controls.isAttackPressed || isAttacking)
 {
 	if(sprite_index != sprHeroAttack)
 	{
 		//start a new attack
 		sprite_index = sprHeroAttack; 
 		image_index = 0;
+		heroAttackCounter = heroAttack_frames;
+		isAttacking = true;
 	}
 	else
 	{
-		//!!! work out the issue with calculating the perfect end point. currently detects 
-		//!!! first tick of last frame. workaround is extra frame.
-		
-		//detect final frame
-		if (image_index >= image_number-1) 
+		heroAttackCounter -= timing.ticksPassed;
+		if(heroAttackCounter <= 0)
 		{
-			isAttacking = false;
+			image_index++;
+			if(image_index==1)
+			{
+				isAttacking = controls.isAttackPressed;
+			}
+			heroAttackCounter = heroAttack_frames;
 		}
 	}	
 }

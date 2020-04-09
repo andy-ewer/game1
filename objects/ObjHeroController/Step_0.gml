@@ -40,7 +40,6 @@ else
 	moveSpeed -= heroMove_braking;
 	moveSpeed = max(moveSpeed, heroMove_min);
 }
-target.isAttacking = controls.isAttackPressed; //attack key action
 
 
 //************
