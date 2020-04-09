@@ -5,6 +5,8 @@
 #macro heroMove_acceleration 4
 #macro heroMove_braking 2
 
+#macro hero_roomBorderBlocking 10
+
 //create instance to control
 target = instance_create_layer(200, 100, "Instances", objHero);
 

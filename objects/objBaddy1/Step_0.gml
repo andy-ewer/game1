@@ -15,9 +15,9 @@ if(sightCounter<0)
 {
 	//don't check if out of range
 	if(
-		mood == baddyMoodIdle && dist>idleSightDistance
+		mood == b1Mood_Idle && dist>b1Behaviour_idleSightDistance
 		||
-		mood != baddyMoodIdle && dist>alertSightDistance
+		mood != b1Mood_Idle && dist>b1Behaviour_alertSightDistance
 	)
 	{
 		sightClear = false;
@@ -27,7 +27,7 @@ if(sightCounter<0)
 	else
 	{
 		sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
-		sightCounter = updateSightTicks;
+		sightCounter = b1Behaviour_updateSightTicks;
 
 		//update the last seen position of the hero
 		if(sightClear)
@@ -39,9 +39,6 @@ if(sightCounter<0)
 }
 
 
-//update audio position
-audio_emitter_position(emitter,x,y,0);
-
 
 //**********************
 //ANIMATE
@@ -51,113 +48,107 @@ audio_emitter_position(emitter,x,y,0);
 stepCounter -= timing.ticksPassed;
 if(stepCounter<0)
 {
-	if(image_index == idleEnd)
+	if(image_index == b1Frames_idleEnd)
 	{
-		image_index = idleStart;
+		image_index = b1Frames_idleStart;
 	}
-	else if(image_index == walkEnd)
+	else if(image_index == b1Frames_walkEnd)
 	{
-		image_index = walkStart;
+		image_index = b1Frames_walkStart;
 	}
-	else if(image_index == mouthEnd)
+	else if(image_index == b1Frames_mouthEnd)
 	{
-		image_index = mouthStart;
+		image_index = b1Frames_mouthStart;
 	}	
 	else
 	{
 		image_index++;
 	}
-	stepCounter = irandom(stepRandom)+stepPlus;
+	stepCounter = irandom(b1Ani_stepRandom)+b1Ani_stepPlus;
 }
 
 //idle state - scan for the hero to chase	
-if(mood == baddyMoodIdle)
+if(mood == b1Mood_Idle)
 {
 	//change direction randomly
 	idleDirectionCounter -= timing.ticksPassed;
 	if(idleDirectionCounter < 0)
 	{
-		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
+		idleDirection += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));	
 		idleDirection = fixAngle(idleDirection);
-		idleDirectionCounter = irandom(idleDirectionCounterRandom + idleDirectionCounterPlus);
+		idleDirectionCounter = irandom(b1Idle_directionCounterRandom + b1Idle_directionCounterPlus);
 	}
 	
 	//look for hero
 	if(sightClear) {
 			
 		//can see the hero - give chase
-		mood = baddyMoodChase;
-		image_index = mouthStart;
-		mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
+		mood = b1Mood_Chase;
+		image_index = b1Frames_mouthStart;
+		mouthCounter = irandom(b1Ani_mouthOpenRandom)+b1Ani_mouthOpenPlus;
 			
 		//make a noise
-		if(dist < voiceGridDistance)
-		{	
-			audio_play_sound_on(emitter, voiceSound, 0, round(voiceGridDistance-dist));
-		}
+		audio_play_sound_on(emitter, voiceSound, 0, round(b1Audio_falloffDist-dist));
 	}
 	
 	//get potential move point 
-	var moveSpeedFrame = idleSpeed * timing.secondsPassed;
+	var moveSpeedFrame = b1Speed_idle * timing.secondsPassed;
 	var deltaX = (lengthdir_x(moveSpeedFrame, idleDirection));
 	var deltaY = (lengthdir_y(moveSpeedFrame, idleDirection));
 }
 
 //chase state
-else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMoodFinalLook)
+else if(mood == b1Mood_Chase || mood == b1Mood_LastSeen || mood == b1Mood_FinalLook)
 {
 	//mouth opens and closes
 	mouthCounter -= timing.ticksPassed;
 	if(mouthCounter<0)
 	{
-		if(image_index <= walkEnd)
+		if(image_index <= b1Frames_walkEnd)
 		{
 			image_index+= 4;
-			mouthCounter = irandom(mouthOpenRandom)+mouthOpenPlus;
+			mouthCounter = irandom(b1Ani_mouthOpenRandom)+b1Ani_mouthOpenPlus;
 
 			//make a noise
-			if(dist < voiceGridDistance)
-			{
-				audio_play_sound_on(emitter, voiceSound, 0, round(voiceGridDistance-dist));
-			}
+			audio_play_sound_on(emitter, voiceSound, 0, round(camera_width-dist));
 		}
 		else
 		{
 			image_index-= 4;
-			mouthCounter = irandom(mouthClosedRandom)+mouthClosedPlus; 	
+			mouthCounter = irandom(b1Ani_mouthClosedRandom)+b1Ani_mouthClosedPlus; 	
 		}	
 	}
 	
 	//get potential move point 	
 	var moveSpeedFrame;
-	if(image_index <= walkEnd)
+	if(image_index <= b1Frames_walkEnd)
 	{
-		moveSpeedFrame = walkSpeed * timing.secondsPassed; //regular walking speed
+		moveSpeedFrame = b1Speed_walk * timing.secondsPassed; //regular walking speed
 	}
 	else
 	{
-		moveSpeedFrame = mouthSpeed * timing.secondsPassed; //zombies with mouths open move faster
+		moveSpeedFrame = b1Speed_mouth * timing.secondsPassed; //zombies with mouths open move faster
 	}		
 	
 	//revert to chase if line of sight to hero
 	if(sightClear)
 	{		
-		mood = baddyMoodChase;	
+		mood = b1Mood_Chase;	
 		var dir = point_direction(x, y, objHero.x, objHero.y);
 	}
 	
 	//can't see hero
 	else
 	{
-		//baddyMoodFinalLook
-		if(mood == baddyMoodFinalLook)
+		//b1Mood_FinalLook
+		if(mood == b1Mood_FinalLook)
 		{
 			finalLookCounter -= timing.ticksPassed;
 			if(finalLookCounter < 0)
 			{
 				//return to idle
-				mood = baddyMoodIdle
-				image_index = idleStart;
+				mood = b1Mood_Idle
+				image_index = b1Frames_idleStart;
 				var dir = lastDir;
 			}
 			else
@@ -167,22 +158,22 @@ else if(mood == baddyMoodChase || mood == baddyMoodLastSeen || mood == baddyMood
 			}		
 		}
 		
-		//baddyMoodLastSeen
+		//b1Mood_LastSeen
 		else
 		{		
 			//at last known location
-			if( abs(y-lastSeenY) < lastSeenArrivedRange && abs(x-lastSeenX) < lastSeenArrivedRange)
+			if( abs(y-lastSeenY) < b1Behaviour_lastSeenArrivedRange && abs(x-lastSeenX) < b1Behaviour_lastSeenArrivedRange)
 			{
-				mood = baddyMoodFinalLook;
-				lastDir += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));
+				mood = b1Mood_FinalLook;
+				lastDir += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));
 				var dir = lastDir;
-				finalLookCounter = irandom(finalLookCounterRandom) + finalLookCounterPlus;
+				finalLookCounter = irandom(b1Final_lookCounterRandom) + b1Final_lookCounterPlus;
 			}
 		
 			//head to last known location
 			else
 			{
-				mood = baddyMoodLastSeen;	
+				mood = b1Mood_LastSeen;	
 				var dir = point_direction(x, y, lastSeenX, lastSeenY);
 				lastDir = dir;
 			}
@@ -235,9 +226,9 @@ else
 	//try to slide into an empty or destroyed tile
 	else 
 	{
-		if(mood == baddyMoodIdle)
+		if(mood == b1Mood_Idle)
 		{
-			idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
+			idleDirection += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));	
 			idleDirection = fixAngle(idleDirection);
 		}
 		else
@@ -294,9 +285,9 @@ else
 				else
 				{
 					//if stuck in a corner, give up trying to reach the spot
-					if(mood == baddyMoodLastSeen)
+					if(mood == b1Mood_LastSeen)
 					{
-						mood = baddyMoodFinalLook;	
+						mood = b1Mood_FinalLook;	
 					}
 				}
 			}
@@ -304,7 +295,8 @@ else
 	}
 }
 
-//apply velocity for 3d audio
+//update audio position
+audio_emitter_position(emitter,x,y,0);
 audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);	
 
 //**********************
@@ -313,14 +305,14 @@ audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);
 
 //get bumps with other zombies
 var list = ds_list_create();
-var qtyBumps = instance_place_list(x, y, objBaddy, list, false);
+var qtyBumps = instance_place_list(x, y, objBaddy1, list, false);
 
 //iterate the bumps
 for(var i=0; i<qtyBumps; ++i) {
 
-	if(mood == baddyMoodIdle)
+	if(mood == b1Mood_Idle)
 	{
-		idleDirection += (irandom(idleDirectionAngleRandom) - (idleDirectionAngleRandom/2));	
+		idleDirection += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));	
 		idleDirection = fixAngle(idleDirection);
 	}
 
@@ -328,17 +320,17 @@ for(var i=0; i<qtyBumps; ++i) {
 	var bump = list[| i];
 	var dir = point_direction(x, y, bump.x, bump.y);
 	var dist = point_distance(x, y, bump.x, bump.y);
-	var distMultiplier = distMultiplierMax-max(min(dist, distMultiplierMax),1);
+	var distMultiplier = b1Behaviour_distMultiplierMax-max(min(dist, b1Behaviour_distMultiplierMax),1);
 				
 	//calculate attempted shove
 	var bumpSpeedFrame;
-	if(mood == baddyMoodIdle)
+	if(mood == b1Mood_Idle)
 	{
-		bumpSpeedFrame = idleBumpSpeed * timing.secondsPassed;
+		bumpSpeedFrame = b1Speed_idleBump * timing.secondsPassed;
 	}
 	else
 	{
-		bumpSpeedFrame = bumpSpeed * timing.secondsPassed;
+		bumpSpeedFrame = b1Speed_bump * timing.secondsPassed;
 	}
 	var deltaX = (lengthdir_x(bumpSpeedFrame * distMultiplier, dir));
 	var deltaY = (lengthdir_y(bumpSpeedFrame * distMultiplier, dir)); 
@@ -396,11 +388,11 @@ for(var i=0; i<qtyBumps; ++i) {
 						{
 							tileData = tile_set_flip(tileData, true);
 						}
-						audio_play_sound_on(emitter, sndTileBreak, 0, round(voiceGridDistance-dist));
+						audio_play_sound_on(emitter, sndTileBreak, 0, round(b1Audio_falloffDist-dist));
 					}
 					else
 					{
-						audio_play_sound_on(emitter, sndTileDamage, 0, round(voiceGridDistance-dist));
+						audio_play_sound_on(emitter, sndTileDamage, 0, round(b1Audio_falloffDist-dist));
 					}
 					tileDamage[tileInfo_currentDamage] = 0;					
 				}
@@ -442,7 +434,7 @@ ds_list_destroy(list);
 //**********************
 
 //edge collision
-x = min( max(x, roomBorderBlocking), (room_width - roomBorderBlocking));
-y = min( max(y, roomBorderBlocking), (room_height - roomBorderBlocking));	
+x = min( max(x, b1Behaviour_roomBorderBlocking), (room_width - b1Behaviour_roomBorderBlocking));
+y = min( max(y, b1Behaviour_roomBorderBlocking), (room_height - b1Behaviour_roomBorderBlocking));	
 
 depth = round(-y);

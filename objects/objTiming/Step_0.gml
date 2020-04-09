@@ -8,4 +8,4 @@ secondsPassed = delta_time / 1000000;
 //a value mostly used to scale for tick based timing.
 //decrement/increment counters by this value instead of 1 each step. 
 //don't use == to end counters! use any of < > <= >=
-ticksPassed = secondsPassed * targetFrameRate;
+ticksPassed = secondsPassed * timing_targetFrameRate;

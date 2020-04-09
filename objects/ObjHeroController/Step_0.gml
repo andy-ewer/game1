@@ -1,4 +1,6 @@
-
+//************
+//CONTROLS
+//************
 
 if(controls.isMovePressed)
 {	
@@ -38,19 +40,17 @@ else
 	moveSpeed -= heroMove_braking;
 	moveSpeed = max(moveSpeed, heroMove_min);
 }
+target.isAttacking = controls.isAttackPressed; //attack key action
 
-//attack key action
-if (controls.isAttackPressed)
-{
-	target.isAttacking = true;
-}
 
-//for 3d audio
-var emitterVX = 0;
-var emitterVY = 0;	
+//************
+//MOVEMENT
+//************
 
 if(moveSpeed > 0)
-{	
+{
+	target.isMoving = true;
+	
 	//calculate movement
 	var moveSpeedFrame = moveSpeed * timing.secondsPassed;
 	deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
@@ -66,8 +66,6 @@ if(moveSpeed > 0)
 		//apply movement to instance
 	    target.x += deltaX;
 	    target.y += deltaY;
-		emitterVX = deltaX;
-		emitterVY = deltaY;	
 	}
 
 	//try to slide into an empty or destroyed tile
@@ -81,8 +79,7 @@ if(moveSpeed > 0)
 		{
 			//apply move
 			target.x += deltaX;	
-			emitterVX = deltaX;
-			emitterVY = 0;	
+			deltaY = 0;
 		}
 		else 
 		{
@@ -93,21 +90,30 @@ if(moveSpeed > 0)
 			{
 				//apply move
 				target.y += deltaY;	
-				emitterVX = 0;
-				emitterVY = deltaY;	
+				deltaX = 0;
 			}
 		}
 	}
 	
 	//edge collision
-	target.x = min( max(target.x, roomBorderBlocking), (room_width - roomBorderBlocking));
-	target.y = min( max(target.y, roomBorderBlocking), (room_height - roomBorderBlocking));	
+	target.x = min( max(target.x, hero_roomBorderBlocking), (room_width - hero_roomBorderBlocking));
+	target.y = min( max(target.y, hero_roomBorderBlocking), (room_height - hero_roomBorderBlocking));	
 }
-
-//update 3d audio velocity
-audio_listener_velocity(emitterVX, emitterVY, 0);	
-
-//target animation doesn't stop moving until braking completed
-target.isMoving = (moveSpeed > 0);
-
+else 
+{
+	//target animation doesn't stop moving until braking completed	
+	target.isMoving = false;
+}
 target.depth = -target.y;
+
+
+
+//************
+//AUDIO
+//************
+
+//update 3d audio
+audio_listener_position(target.x, target.y, 0);
+audio_listener_velocity(deltaX, deltaY, 0);	
+
+
