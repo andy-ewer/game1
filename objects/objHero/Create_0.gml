@@ -15,7 +15,7 @@
 #macro heroBlink_randomPlus 20
 
 //pose settings, in ticks
-#macro heroPose_random 1000
+#macro heroPose_random 400
 #macro heroPose_randomPlus 60
 
 //attack settings, in ticks per frame

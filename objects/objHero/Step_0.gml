@@ -97,5 +97,13 @@ else
 weapon.x = x;
 weapon.y = y;
 weapon.depth = depth - 1;
-weapon.image_index = image_index;
+if(isMoving || isAttacking)
+{
+	weapon.image_index = image_index;
+}
+else
+{
+	weapon.image_index = 0;
+}
+
 weapon.isAttacking = isAttacking;
