@@ -199,6 +199,14 @@
             }
         },
         {
+            "Key": "3a42b0bf-b42f-43c4-b805-29c7727bbd3c",
+            "Value": {
+                "id": "316ff514-c60a-411f-97a8-6e27234c0816",
+                "resourcePath": "sprites\\sprBlocking1\\sprBlocking1.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "3c50288c-5374-4243-b763-08ffe709d40f",
             "Value": {
                 "id": "697bb129-865f-47f6-9724-93a48c431b2b",

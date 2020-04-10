@@ -350,7 +350,6 @@ for(var i=0; i<qtyBumps; ++i) {
 		//tile damage
 		var tileIndex = tile_get_index(tileData);
 		var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		var isIndestructable = ((tileIndex) mod blockingTilesetWidth == 0);
 			
 		//no tile
 		if(isDestroyed)
@@ -364,45 +363,43 @@ for(var i=0; i<qtyBumps; ++i) {
 		else 
 		{
 			//apply damage
-			if(!isIndestructable) {	
 
-				//get grid position of tile
-				var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
-				var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+			//get grid position of tile
+			var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+			var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 				
-				//get the damage and increment
-				var tileDamage = root.blockers.tileDamage[# gridX, gridY];
-				tileDamage[tileInfo_currentDamage] += root.timing.ticksPassed; //1 damage per tick at target frame rate, scaled to the actual frame rate
+			//get the damage and increment
+			var tileDamage = root.blockers.tileDamage[# gridX, gridY];
+			tileDamage[tileInfo_currentDamage] += root.timing.ticksPassed; //1 damage per tick at target frame rate, scaled to the actual frame rate
 
-				//if we have gone over max damage, increment to next damage step and reset damage done to 0.
-				if(tileDamage[tileInfo_currentDamage] >= tileDamage[tileInfo_maxDamage])
-				{
-					tileIndex++;
-					tileData = tile_set_index(tileData, tileIndex);	
+			//if we have gone over max damage, increment to next damage step and reset damage done to 0.
+			if(tileDamage[tileInfo_currentDamage] >= tileDamage[tileInfo_maxDamage])
+			{
+				tileIndex++;
+				tileData = tile_set_index(tileData, tileIndex);	
 					
-					//if this is the final destroyed step
-					if((tileIndex+1) mod blockingTilesetWidth == 0)
+				//if this is the final destroyed step
+				if((tileIndex+1) mod blockingTilesetWidth == 0)
+				{
+					//randomly flips rubble texture for more variety
+					if(irandom(1)==0)
 					{
-						//randomly flips rubble texture for more variety
-						if(irandom(1)==0)
-						{
-							tileData = tile_set_flip(tileData, true);
-						}
-						audio_play_sound_on(emitter, sndTileBreak, 0, round(b1Audio_falloffDist-dist));
+						tileData = tile_set_flip(tileData, true);
 					}
-					else
-					{
-						audio_play_sound_on(emitter, sndTileDamage, 0, round(b1Audio_falloffDist-dist));
-					}
-					tileDamage[tileInfo_currentDamage] = 0;					
+					audio_play_sound_on(emitter, sndTileBreak, 0, round(b1Audio_falloffDist-dist));
 				}
-				
-				//apply changes to the tile
-				tileData = tilemap_set(root.blockers.blockingMapId, tileData, gridX, gridY);
-				
-				//apply change to the damage on this tile
-				root.blockers.tileDamage[# gridX, gridY] = tileDamage;
+				else
+				{
+					audio_play_sound_on(emitter, sndTileDamage, 0, round(b1Audio_falloffDist-dist));
+				}
+				tileDamage[tileInfo_currentDamage] = 0;					
 			}
+				
+			//apply changes to the tile
+			tileData = tilemap_set(root.blockers.blockingMapId, tileData, gridX, gridY);
+				
+			//apply change to the damage on this tile
+			root.blockers.tileDamage[# gridX, gridY] = tileDamage;
 			
 			//try to slide either way through empty or destroyed tile
 			var tileDataX = tilemap_get_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y);

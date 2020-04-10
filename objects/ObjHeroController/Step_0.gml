@@ -58,9 +58,15 @@ if(moveSpeed > 0)
 	var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX, target.y + deltaY);
 	var tileIndex = tile_get_index(tileData);
 	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		
+
+
+	var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX, target.y + deltaY);
+	var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX, target.y + deltaY);
+	var tileDamage = root.blockers.tileDamage[# gridX, gridY];
+	var isDoor = ( tileDamage[tileInfo_type] ==  tileType_door);
+
 	//tile layer collision	
-	if(!tileData || isDestroyed) 
+	if(!tileData || isDestroyed || isDoor) 
 	{
 		//apply movement to instance
 	    target.x += deltaX;
