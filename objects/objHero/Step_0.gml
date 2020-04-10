@@ -12,6 +12,11 @@ if(root.controls.isAttackPressed || isAttacking)
 		image_index = 0;
 		heroAttackCounter = heroAttack_frames;
 		isAttacking = true;
+		
+		if(weapon.weaponCurrent != -1)
+		{
+			
+		}
 	}
 	else
 	{
@@ -87,3 +92,10 @@ else
 		}
 	}
 }
+
+//keep weapon object on hero
+weapon.x = x;
+weapon.y = y;
+weapon.depth = depth - 1;
+weapon.image_index = image_index;
+weapon.isAttacking = isAttacking;

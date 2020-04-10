@@ -1,3 +1,5 @@
+//this is mostly conserned with display and animation. the controller has the other stuff.
+
 //SETTINGS
 
 //idle animation frame indexes
@@ -20,8 +22,8 @@
 #macro heroAttack_frames 3
 
 //initial values for idle animations, in ticks
-#macro heroInit_blinkCounter 100;
-#macro heroInit_poseCounter 300;
+#macro heroInit_blinkCounter 100
+#macro heroInit_poseCounter 300
 
 //INIT
 
@@ -40,6 +42,9 @@ image_yscale = scale;
 //controller updates these values
 isMoving = false;
 isAttacking = false;
+
+//weapons
+weapon = instance_create_layer(0, 0, "Instances", objWeapon);
 
 //be like, totally random
 //randomize();

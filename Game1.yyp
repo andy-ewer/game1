@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "027e8a90-02bd-4415-94de-7b7d7590381e",
+            "Value": {
+                "id": "5d793cdf-a60d-400e-8284-bc1260967157",
+                "resourcePath": "sprites\\sprHeroWalkHammer\\sprHeroWalkHammer.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "088e54da-38f4-481e-9f8f-b0a8ac678532",
             "Value": {
                 "id": "6ada0be9-4f21-4d60-bfbb-8a19428a9dc1",
@@ -215,6 +223,14 @@
             }
         },
         {
+            "Key": "48471ea4-4af6-43a4-969d-73f016130b23",
+            "Value": {
+                "id": "51258f5f-5330-4813-845b-c6d85ac86803",
+                "resourcePath": "objects\\objWeapon\\objWeapon.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "4990a605-f17e-41c4-bef8-735a68d43233",
             "Value": {
                 "id": "5edfd87e-83c3-4656-9f6e-b2872b9f5d1f",
@@ -367,6 +383,14 @@
             }
         },
         {
+            "Key": "73d5bc87-dc55-4dda-af92-a6317aeae317",
+            "Value": {
+                "id": "6c21701c-9f49-4f83-97e3-9d5d3814f601",
+                "resourcePath": "views\\73d5bc87-dc55-4dda-af92-a6317aeae317.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "7405c12b-9fd9-43dd-adb8-1159a3cadd2e",
             "Value": {
                 "id": "29f85c72-253a-451e-a7e5-41afd8807431",
@@ -388,6 +412,14 @@
                 "id": "81979c3e-5eb9-4e33-9090-c0602223ae58",
                 "resourcePath": "sprites\\sprMenuTitle\\sprMenuTitle.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "83b6d4dd-0bb0-4922-901f-40987c4bfe74",
+            "Value": {
+                "id": "336dd51d-8aec-4f05-a894-98d0db5e56a4",
+                "resourcePath": "views\\83b6d4dd-0bb0-4922-901f-40987c4bfe74.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
