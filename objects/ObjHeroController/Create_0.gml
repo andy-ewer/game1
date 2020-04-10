@@ -4,11 +4,14 @@
 #macro heroMove_maxAttack 20
 #macro heroMove_acceleration 4
 #macro heroMove_braking 2
+#macro heroMove_wallBufferX 4
+#macro heroMove_wallBufferTop 8
+#macro heroMove_wallBufferBottom 0
 
 #macro hero_roomBorderBlocking 10
 
 //create instance to control
-target = instance_create_layer(200, 100, "Instances", objHero);
+target = instance_create_layer(200, 300, "Instances", objHero);
 
 
 //init
