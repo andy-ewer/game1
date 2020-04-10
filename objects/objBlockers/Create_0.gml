@@ -1,6 +1,6 @@
 //used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 4
-#macro blockingTilesetHeight 16
+#macro blockingTilesetHeight 12
 
 //damage values per node
 #macro tileInfo_currentDamage 0
@@ -28,27 +28,22 @@ var maxDamageByRow = array_create(blockingTilesetHeight);
 maxDamageByRow[++cnt] = 0;
 maxDamageByRow[++cnt] = 1000;
 maxDamageByRow[++cnt] = 100;
-
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
-
-maxDamageByRow[++cnt] = 100;
-maxDamageByRow[++cnt] = 100;
-maxDamageByRow[++cnt] = 100;
-maxDamageByRow[++cnt] = 100;
-
-maxDamageByRow[++cnt] = 9999;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
 
 //some tiles can have special behaviour like doors
 var tileType = array_create(blockingTilesetHeight, tileType_default);
-tileType[9] = tileType_door;
-tileType[10] = tileType_door;
-tileType[11] = tileType_door;
-tileType[12] = tileType_door;
+//tileType[9] = tileType_door;
+//tileType[10] = tileType_door;
+//tileType[11] = tileType_door;
+//tileType[12] = tileType_door;
 
 //init tile damage grid
 for(var i=0; i< tilemap_get_width(blockingMapId); i++)
