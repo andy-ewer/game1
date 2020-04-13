@@ -199,22 +199,6 @@
             }
         },
         {
-            "Key": "3b99e3ed-1605-414a-89dc-5b061b69308c",
-            "Value": {
-                "id": "b94a642a-a24c-4661-944d-7041946b2b11",
-                "resourcePath": "sprites\\sprOver\\sprOver.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "3ba4268e-e63a-45a7-a1c0-a5f071ea807b",
-            "Value": {
-                "id": "12015055-9c82-490c-a637-191bc37375c7",
-                "resourcePath": "tilesets\\tsOver\\tsOver.yy",
-                "resourceType": "GMTileSet"
-            }
-        },
-        {
             "Key": "3c50288c-5374-4243-b763-08ffe709d40f",
             "Value": {
                 "id": "697bb129-865f-47f6-9724-93a48c431b2b",

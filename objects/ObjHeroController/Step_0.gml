@@ -55,26 +55,58 @@ if(moveSpeed > 0)
 	deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
+	//corner TL
 	var tileData1 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+	var gridX1 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+	var gridY1 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
+
 	var tileIndex1 = tile_get_index(tileData1);
 	var isDestroyed1 = ((tileIndex1+1) mod blockingTilesetWidth == 0);
-		
+	var tileDamage1 = root.blockers.tileDamage[# gridX1, gridY1];
+	var isDoor1 = (tileDamage1[tileInfo_type] == tileType_door);
+	
+	//corner BL
 	var tileData2 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+	var gridX2 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+	var gridY2 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
+	
 	var tileIndex2 = tile_get_index(tileData2);
 	var isDestroyed2 = ((tileIndex2+1) mod blockingTilesetWidth == 0);
+	var tileDamage2 = root.blockers.tileDamage[# gridX2, gridY2];
+	var isDoor2 = (tileDamage2[tileInfo_type] == tileType_door);
 
+	
+	//corner BR
 	var tileData3 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+	var gridX3 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+	var gridY3 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
+	
 	var tileIndex3 = tile_get_index(tileData3);
 	var isDestroyed3 = ((tileIndex3+1) mod blockingTilesetWidth == 0);
+	var tileDamage3 = root.blockers.tileDamage[# gridX3, gridY3];
+	var isDoor3 = (tileDamage3[tileInfo_type] == tileType_door);
 		
+	
+	//corner TR
 	var tileData4 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+	var gridX4 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+	var gridY4 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
+	
 	var tileIndex4 = tile_get_index(tileData4);
 	var isDestroyed4 = ((tileIndex4+1) mod blockingTilesetWidth == 0);
+	var tileDamage4 = root.blockers.tileDamage[# gridX4, gridY4];
+	var isDoor4 = (tileDamage4[tileInfo_type] == tileType_door);
+	
+	
+	//check all	
+	var isBlocked1 = tileData1 && !isDestroyed1 && !isDoor1;
+	var isBlocked2 = tileData2 && !isDestroyed2 && !isDoor2;
+	var isBlocked3 = tileData3 && !isDestroyed3 && !isDoor3;
+	var isBlocked4 = tileData4 && !isDestroyed4 && !isDoor4;
+	
+	var isBlocked = isBlocked1 || isBlocked2 || isBlocked3 || isBlocked4;
 		
-	var isDestroyed = isDestroyed1 && isDestroyed2 && isDestroyed3 && isDestroyed4;
-	var isTile = tileData1 || tileData2 || tileData3 || tileData4;
-		
-	if(!isTile || isDestroyed) 
+	if(!isBlocked) 
 	{
 		//apply movement to instance
 	    target.x += deltaX;
@@ -84,26 +116,55 @@ if(moveSpeed > 0)
 	{
 		//try to slide into an empty or destroyed tile
 
+		//corner TL
 		var tileData1 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
+		var gridX1 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
+		var gridY1 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y - heroMove_wallBufferTop);		
+		var tileDamage1 = root.blockers.tileDamage[# gridX1, gridY1];
+		var isDoor1 = (tileDamage1[tileInfo_type] == tileType_door);
+	
 		var tileIndex1 = tile_get_index(tileData1);
 		var isDestroyed1 = ((tileIndex1+1) mod blockingTilesetWidth == 0);
-		
+			
+		//corner BL
 		var tileData2 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
+		var gridX2 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
+		var gridY2 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);		
+		
 		var tileIndex2 = tile_get_index(tileData2);
 		var isDestroyed2 = ((tileIndex2+1) mod blockingTilesetWidth == 0);
-
+		var tileDamage2 = root.blockers.tileDamage[# gridX2, gridY2];
+		var isDoor2 = (tileDamage1[tileInfo_type] == tileType_door);
+	
+		//corner BR
 		var tileData3 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
+		var gridX3 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
+		var gridY3 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y - heroMove_wallBufferTop);		
+		
+		var tileDamage3 = root.blockers.tileDamage[# gridX3, gridY3];
+		var isDoor3 = (tileDamage3[tileInfo_type] == tileType_door);
 		var tileIndex3 = tile_get_index(tileData3);
 		var isDestroyed3 = ((tileIndex3+1) mod blockingTilesetWidth == 0);
 		
+		//corner TR
 		var tileData4 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
+		var gridX4 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
+		var gridY4 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);		
+		
+		var tileDamage4 = root.blockers.tileDamage[# gridX4, gridY4];
+		var isDoor4 = (tileDamage4[tileInfo_type] == tileType_door);
 		var tileIndex4 = tile_get_index(tileData4);
 		var isDestroyed4 = ((tileIndex4+1) mod blockingTilesetWidth == 0);
 		
-		var isDestroyed = isDestroyed1 && isDestroyed2 && isDestroyed3 && isDestroyed4;
-		var isTile = tileData1 || tileData2 || tileData3 || tileData4;
+		//check all	
+		var isBlocked1 = tileData1 && !isDestroyed1 && !isDoor1;
+		var isBlocked2 = tileData2 && !isDestroyed2 && !isDoor2;
+		var isBlocked3 = tileData3 && !isDestroyed3 && !isDoor3;
+		var isBlocked4 = tileData4 && !isDestroyed4 && !isDoor4;
+	
+		var isBlocked = isBlocked1 || isBlocked2 || isBlocked3 || isBlocked4;
 				
-		if(!isTile || isDestroyed)
+		if(!isBlocked)
 		{
 			//apply move
 			target.x += deltaX;	
@@ -111,26 +172,55 @@ if(moveSpeed > 0)
 		}
 		else 
 		{
+			//corner TL
 			var tileData1 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+			var gridX1 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+			var gridY1 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
+			
+			var tileDamage1 = root.blockers.tileDamage[# gridX1, gridY1];
+			var isDoor1 = (tileDamage1[tileInfo_type] == tileType_door);			
 			var tileIndex1 = tile_get_index(tileData1);
 			var isDestroyed1 = ((tileIndex1+1) mod blockingTilesetWidth == 0);
-		
+
+			//corner BL
 			var tileData2 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+			var gridX2 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+			var gridY2 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
+			
+			var tileDamage2 = root.blockers.tileDamage[# gridX2, gridY2];
+			var isDoor2 = (tileDamage2[tileInfo_type] == tileType_door);			
 			var tileIndex2 = tile_get_index(tileData2);
 			var isDestroyed2 = ((tileIndex2+1) mod blockingTilesetWidth == 0);
 
+			//corner BR
 			var tileData3 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+			var gridX3 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
+			var gridY3 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
+			
+			var tileDamage3 = root.blockers.tileDamage[# gridX3, gridY3];
+			var isDoor3 = (tileDamage3[tileInfo_type] == tileType_door);			
 			var tileIndex3 = tile_get_index(tileData3);
 			var isDestroyed3 = ((tileIndex3+1) mod blockingTilesetWidth == 0);
 		
+			//corner TR
 			var tileData4 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+			var gridX4 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
+			var gridY4 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
+			
+			var tileDamage4 = root.blockers.tileDamage[# gridX4, gridY4];
+			var isDoor4 = (tileDamage4[tileInfo_type] == tileType_door);			
 			var tileIndex4 = tile_get_index(tileData4);
 			var isDestroyed4 = ((tileIndex4+1) mod blockingTilesetWidth == 0);
 		
-			var isDestroyed = isDestroyed1 && isDestroyed2 && isDestroyed3 && isDestroyed4;
-			var isTile = tileData1 || tileData2 || tileData3 || tileData4;
+			//check all	
+			var isBlocked1 = tileData1 && !isDestroyed1 && !isDoor1;
+			var isBlocked2 = tileData2 && !isDestroyed2 && !isDoor2;
+			var isBlocked3 = tileData3 && !isDestroyed3 && !isDoor3;
+			var isBlocked4 = tileData4 && !isDestroyed4 && !isDoor4;
+	
+			var isBlocked = isBlocked1 || isBlocked2 || isBlocked3 || isBlocked4;
 
-			if(!isTile || isDestroyed)
+			if(!isBlocked)
 			{
 				//apply move
 				target.y += deltaY;	
