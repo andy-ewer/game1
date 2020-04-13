@@ -17,4 +17,9 @@ for (var i = 0; i < array_length_1d(heroKey); i++)
 isMovePressed = (point_distance(0, 0, moveXInput, moveYInput) > 0);
 isAttackPressed = keyboard_check(heroKeyAttack);
 
+//must release before press registers again
+var usePress = keyboard_check(heroKeyUse);
+isUsePressed = (usePress && !wasUsePressed)
+wasUsePressed = usePress;
+
 

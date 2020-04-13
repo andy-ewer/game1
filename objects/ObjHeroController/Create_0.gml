@@ -4,6 +4,7 @@
 #macro heroMove_maxAttack 20
 #macro heroMove_acceleration 4
 #macro heroMove_braking 2
+
 #macro heroMove_wallBufferX 4
 #macro heroMove_wallBufferTop 8
 #macro heroMove_wallBufferBottom 0

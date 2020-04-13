@@ -1,6 +1,7 @@
 //used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 4
 #macro blockingTilesetHeight 25
+#macro blockingTileSizePixels 16
 
 //damage values per node
 #macro tileInfo_currentDamage 0
