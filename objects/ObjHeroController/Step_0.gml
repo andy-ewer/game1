@@ -2,102 +2,123 @@
 //CONTROLS
 //************
 
+//clear the previous highlights
+tilemap_clear(root.blockers.overMapId, 0);
 
-//USE
-if(root.controls.isUsePressed)
+//get current hero blocking grid cell
+var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x, target.y);
+var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x, target.y);
+
+//show highlight for door when on it
+var tileMap = tilemap_get(root.blockers.blockingMapId, gridX, gridY);
+var tileIndex = tile_get_index(tileMap);
+var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
+if(!isDestroyed)
 {
-	//get current hero blocking grid cell
-	var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x, target.y);
-	var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x, target.y);
-	
-	//offsets for cells in 4 directions
-	var checkDirs = array_create(4);
-	
-	//left
-	var checkDir = array_create(2);
-	checkDir[0] = -1;
-	checkDir[1] = 0;	
-	checkDirs[0] = checkDir;
+		var tileDamage = root.blockers.tileDamage[# gridX, gridY];
+		if(tileDamage[tileInfo_type] == tileType_doorOpen)	
+		{		
+			//highlight as blocked by hero
+			var tileMap = tilemap_get(root.blockers.overMapId, gridX, gridY);
+			tileMap = tile_set_index(tileMap, 2);
+			tileMap = tilemap_set(root.blockers.overMapId, tileMap, gridX, gridY);
+		}
+}
 
-	//right
-	var checkDir = array_create(2);
-	checkDir[0] = +1;
-	checkDir[1] = 0;
-	checkDirs[1] = checkDir;
-
-	//up
-	var checkDir = array_create(2);
-	checkDir[0] = 0;
-	checkDir[1] = -1;
-	checkDirs[2] = checkDir;
-
-	//down
-	var checkDir = array_create(2);
-	checkDir[0] = 0;
-	checkDir[1] = +1;
-	checkDirs[3] = checkDir;
-
-	//check each direction
-	for(var i=0; i< array_length_1d(checkDirs); i++)
+//check each direction
+for(var i=0; i< array_length_1d(checkDirs); i++)
+{
+	//apply offsets
+	var checkDir = checkDirs[i];
+	var checkGridX = gridX + checkDir[0];
+	var checkGridY = gridY + checkDir[1];
+		
+	//get offset tile
+	var tileMap = tilemap_get(root.blockers.blockingMapId, checkGridX, checkGridY);
+		
+	//if not destroyed
+	var tileIndex = tile_get_index(tileMap);
+	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
+	if(!isDestroyed)
 	{
-		//apply offsets
-		var checkDir = checkDirs[i];
-		var checkGridX = gridX + checkDir[0];
-		var checkGridY = gridY + checkDir[1];
-		
-		//get offset tile
-		var tileMap = tilemap_get(root.blockers.blockingMapId, checkGridX, checkGridY);
-		
-		//if not destroyed
-		var tileIndex = tile_get_index(tileMap);
-		var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		if(!isDestroyed)
-		{
 
-			//grab the data for the cell
-			var tileDamage = root.blockers.tileDamage[# checkGridX, checkGridY];
+		//grab the data for the cell
+		var tileDamage = root.blockers.tileDamage[# checkGridX, checkGridY];
 			
-			//close open door
-			if(tileDamage[tileInfo_type] == tileType_doorOpen)	
-			{				
-
-				var checkUp = ((checkGridY) * blockingTileSizePixels - heroMove_wallBufferBottom);
-				var checkDown = ((checkGridY+1) * blockingTileSizePixels + heroMove_wallBufferTop);
-				var checkLeft = ((checkGridX) * blockingTileSizePixels - heroMove_wallBufferX);
-				var checkRight = ((checkGridX+1) * blockingTileSizePixels + heroMove_wallBufferX); 
-				
-				
-
-				//don't close door if it would block hero
-				if(
-					target.y < checkUp ||
-					target.y > checkDown ||
-					target.x < checkLeft ||
-					target.x > checkRight
-				)
+		//found an open door
+		if(tileDamage[tileInfo_type] == tileType_doorOpen)	
+		{
+			//don't close door if it would block hero
+			if(
+				target.y < ((checkGridY) * blockingTileSizePixels - heroMove_wallBufferBottom) 
+				||
+				target.y > ((checkGridY+1) * blockingTileSizePixels + heroMove_wallBufferTop) 
+				||
+				target.x < ((checkGridX) * blockingTileSizePixels - heroMove_wallBufferX) 
+				||
+				target.x > ((checkGridX+1) * blockingTileSizePixels + heroMove_wallBufferX)
+			)
+			{		
+				if(target.y < ((checkGridY+2) * blockingTileSizePixels + heroMove_wallBufferTop)) 
 				{
-					tileIndex -= blockingTilesetWidth;
-					tileMap = tile_set_index(tileMap, tileIndex);	
-					tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
+					//close door
+					if(root.controls.isUsePressed)
+					{
+						tileIndex -= blockingTilesetWidth;
+						tileMap = tile_set_index(tileMap, tileIndex);	
+						tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
 
-					tileDamage[tileInfo_type] = tileType_doorClosed;
-					root.blockers.tileDamage[# checkGridX, checkGridY] = tileDamage;
+						tileDamage[tileInfo_type] = tileType_doorClosed;
+						root.blockers.tileDamage[# checkGridX, checkGridY] = tileDamage;
+					}
+				
+					//highlight door
+					else
+					{
+						var tileMap = tilemap_get(root.blockers.overMapId, checkGridX, checkGridY);
+						tileMap = tile_set_index(tileMap, 1);
+						tileMap = tilemap_set(root.blockers.overMapId, tileMap, checkGridX, checkGridY);
+					}
 				}
 			}
-			
-			//open closed door
-			else if(tileDamage[tileInfo_type] == tileType_doorClosed)
-			{
-				tileIndex += blockingTilesetWidth;
-				tileMap = tile_set_index(tileMap, tileIndex);					
-				tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
-				
-				tileDamage[tileInfo_type] = tileType_doorOpen;
-				root.blockers.tileDamage[# checkGridX, checkGridY] = tileDamage;					
-			}	
+			else
+			{		
+				//highlight as blocked by hero
+				var tileMap = tilemap_get(root.blockers.overMapId, checkGridX, checkGridY);
+				tileMap = tile_set_index(tileMap, 2);
+				tileMap = tilemap_set(root.blockers.overMapId, tileMap, checkGridX, checkGridY);
+			}
 		}
+			
+		//found a closed door
+		else if(tileDamage[tileInfo_type] == tileType_doorClosed)
+		{
+			//limit the second upwards grid check
+			if(target.y < ((checkGridY+2) * blockingTileSizePixels + heroMove_wallBufferTop)) 
+			{				
+				//open door
+				if(root.controls.isUsePressed)
+				{			
+						tileIndex += blockingTilesetWidth;
+						tileMap = tile_set_index(tileMap, tileIndex);					
+						tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
+				
+						tileDamage[tileInfo_type] = tileType_doorOpen;
+						root.blockers.tileDamage[# checkGridX, checkGridY] = tileDamage;
+				}
+			
+				//highlight door
+				else
+				{
+					var tileMap = tilemap_get(root.blockers.overMapId, checkGridX, checkGridY);
+					tileMap = tile_set_index(tileMap, 1);
+					tileMap = tilemap_set(root.blockers.overMapId, tileMap, checkGridX, checkGridY);	
+				}
+			}
+		}	
 	}
 }
+
 
 
 //MOVE

@@ -26,3 +26,35 @@ deltaY = 0;
 audio_listener_orientation(0,1,0,0,0,1);
 audio_play_sound(sndDum, 1, false);
 
+
+//offsets for cells in 4 directions
+checkDirs = array_create(5);
+//left
+var checkDir = array_create(2);
+var checkDirCnt = -1;
+checkDir[0] = -1;
+checkDir[1] = 0;	
+checkDirs[++checkDirCnt] = checkDir;
+//right
+var checkDir = array_create(2);
+checkDir[0] = +1;
+checkDir[1] = 0;
+checkDirs[++checkDirCnt] = checkDir;
+//up
+var checkDir = array_create(2);
+checkDir[0] = 0;
+checkDir[1] = -1;
+checkDirs[++checkDirCnt] = checkDir;
+//up - due to the way the tileset works, add half the next tile
+var checkDir = array_create(2);
+checkDir[0] = 0;
+checkDir[1] = -2;
+checkDirs[++checkDirCnt] = checkDir;
+//down
+var checkDir = array_create(2);
+checkDir[0] = 0;
+checkDir[1] = +1;
+checkDirs[++checkDirCnt] = checkDir;
+
+//highlight tracking
+highlightList = ds_list_create();

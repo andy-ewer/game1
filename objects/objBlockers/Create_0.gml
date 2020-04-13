@@ -18,6 +18,10 @@
 blockingLayerId = layer_get_id("tilesBlocking");
 blockingMapId = layer_tilemap_get_id(blockingLayerId);
 
+//over layer
+overLayerId = layer_get_id("tilesOver");
+overMapId = layer_tilemap_get_id(overLayerId);
+
 //keeping track of tile damage
 tileDamage = ds_grid_create(
 	tilemap_get_width(blockingMapId), 
