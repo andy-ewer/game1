@@ -1,6 +1,6 @@
 //used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 4
-#macro blockingTilesetHeight 13
+#macro blockingTilesetHeight 25
 
 //damage values per node
 #macro tileInfo_currentDamage 0
@@ -9,7 +9,8 @@
 
 //tiletype
 #macro tileType_default 0
-#macro tileType_door 1
+#macro tileType_doorOpen 1
+#macro tileType_doorClosed 2
 
 
 //blocking layer
@@ -22,12 +23,19 @@ tileDamage = ds_grid_create(
 	tilemap_get_height(blockingMapId)
 );
 
+//some tiles can have special behaviour like doors
+var tileType = array_create(blockingTilesetHeight, tileType_default);
+
 //different HP for tiles
 var cnt = -1;
 var maxDamageByRow = array_create(blockingTilesetHeight);
+
+//
 maxDamageByRow[++cnt] = 0;
 maxDamageByRow[++cnt] = 1000;
 maxDamageByRow[++cnt] = 100;
+
+//walls
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
@@ -37,15 +45,29 @@ maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+
+//doors
 maxDamageByRow[++cnt] = 400;
-
-//some tiles can have special behaviour like doors
-var tileType = array_create(blockingTilesetHeight, tileType_default);
-//tileType[9] = tileType_door;
-//tileType[10] = tileType_door;
-//tileType[11] = tileType_door;
-
-tileType[12] = tileType_door;
+tileType[cnt] = tileType_doorClosed;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorOpen;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorClosed;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorOpen;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorClosed;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorOpen;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorClosed;
+maxDamageByRow[++cnt] = 400;
+tileType[cnt] = tileType_doorOpen;
 
 
 //init tile damage grid
