@@ -11,6 +11,8 @@
 
 #macro hero_roomBorderBlocking 10
 
+#macro heroAttack_range 10
+
 //create instance to control
 target = instance_create_layer(200, 300, "Instances", objHero);
 
@@ -21,11 +23,13 @@ target.depth = -target.y;
 moveDir = point_direction(0, 0, 0, 0);
 deltaX = 0;
 deltaY = 0;
+isControlEnabled = true;
+gridX = 0
+gridY = 0;
 
 //audio
 audio_listener_orientation(0,1,0,0,0,1);
 audio_play_sound(sndDum, 1, false);
-
 
 //offsets for cells in 4 directions plus here
 checkDirs = array_create(5);
@@ -56,10 +60,3 @@ checkDir[0] = 0;
 checkDir[1] = +1;
 checkDirs[++checkDirCnt] = checkDir;
 
-//highlight tracking
-//highlightList = ds_list_create();
-
-isControlEnabled = true;
-
-gridX = 0
-gridY = 0;

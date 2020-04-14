@@ -4,7 +4,7 @@
 #macro heroWeapon_numberAttacks 2
 
 weapons = array_create(0);
-weaponCurrent = 3;
+weaponCurrent = 0;
 weaponLast = -2;
 isAttacking = false;
 isAttackingLast = true;

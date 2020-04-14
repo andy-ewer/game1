@@ -6,13 +6,24 @@ if(root.heroController.moveSpeed > 0 )
 	centerCameraY = (cameraY + global.aspectViewHeight/2);
 
 	//if target outside middle area, camera follows
-	if(abs(target.x - centerCameraX) > camera_xBorder)
+	if((target.x - centerCameraX) > camera_xBorder)
 	{
-		cameraX	+= root.heroController.deltaX;
+		cameraX	+= (target.x - centerCameraX - camera_xBorder);
 	}
-	if(abs(target.y - centerCameraY) > camera_yBorder)
+
+	if((target.x - centerCameraX) < -camera_xBorder)
 	{
-		cameraY	+= root.heroController.deltaY;
+		cameraX	+= (target.x - centerCameraX + camera_xBorder);
+	}
+	
+	if((target.y - centerCameraY) > camera_yBorder)
+	{
+		cameraY	+= (target.y - centerCameraY - camera_yBorder);
+	}
+
+	if((target.y - centerCameraY) < -camera_yBorder)
+	{
+		cameraY	+= (target.y - centerCameraY + camera_yBorder);
 	}
 
 	//limit camera to room
@@ -22,3 +33,4 @@ if(root.heroController.moveSpeed > 0 )
     //actually move the camera
 	camera_set_view_pos(view_camera[0], limitedCameraX, limitedCameraY);	
 }
+

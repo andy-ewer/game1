@@ -19,6 +19,28 @@ if(isControlEnabled)
 }
 heroController_move();
 
+//ATTACK
+if(target.sprite_index == sprHeroAttack)
+{
+	var currentWeapon = target.weapon.weapons[target.weapon.weaponCurrent] 
+	var attacks = currentWeapon[heroWeapon_numberAttacks];
+	var numberFrames = sprite_get_number(sprHeroAttack)-1;
+	var attackEachFrames = round(numberFrames/attacks);
+	if((target.image_index+1) mod attackEachFrames == 0 && target.heroAttackCounter == heroAttack_frames)
+	{
+		var nearestBaddy = instance_nearest(target.x, target.y, objBaddy1);
+		if(nearestBaddy)
+		{
+			var distance = point_distance(target.x, target.y, nearestBaddy.x, nearestBaddy.y);
+			show_debug_message(distance);
+			if(distance < heroAttack_range)
+			{
+				instance_destroy(nearestBaddy);
+			}
+		}
+	}
+}
+		
 
 //************
 //AUDIO

@@ -2,9 +2,10 @@
 //get bumps with other zombies
 var list = ds_list_create();
 var qtyBumps = instance_place_list(x, y, objBaddy1, list, false);
+var qtyBumpsHero = instance_place_list(x, y, objHero, list, false);
 
 //iterate the bumps
-for(var i=0; i<qtyBumps; ++i) {
+for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 
 	if(mood == b1Mood_Idle)
 	{
