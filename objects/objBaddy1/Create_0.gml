@@ -66,6 +66,11 @@ lastDir = 0;
 finalLookCounter = 0;
 sightClear = false;
 sightCounter = 0;
+dist = 0;
+
+//movement
+deltaX = 0;
+deltaY = 0;
 
 //audio
 emitter = audio_emitter_create();
@@ -79,3 +84,4 @@ voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBa
 var pitch = b1Audio_pitchMin + ( random(1)*(b1Audio_pitchMax-b1Audio_pitchMin));
 audio_emitter_pitch(emitter, pitch);
 depth = round(-y);
+

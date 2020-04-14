@@ -55,6 +55,14 @@
             }
         },
         {
+            "Key": "0b17e892-3a5d-4695-99a0-26a66fbcd66d",
+            "Value": {
+                "id": "c8cede9d-2e2e-4f35-b772-c535efcaa621",
+                "resourcePath": "scripts\\baddy_animate\\baddy_animate.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "11a64f17-4f07-459a-b8c9-26c3491fd53d",
             "Value": {
                 "id": "5c5aec19-377b-4821-869b-4d8b2d701d7f",
@@ -303,6 +311,14 @@
             }
         },
         {
+            "Key": "4e72a5cb-3b7b-4d2b-9fcc-910be9ea6117",
+            "Value": {
+                "id": "3ddf9175-d9c8-4c6c-90e5-02bd278ba4a4",
+                "resourcePath": "scripts\\baddy_move\\baddy_move.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "50c10258-9a7b-4c3b-8809-af34066fd3eb",
             "Value": {
                 "id": "50723e34-63d6-406e-8d39-3ad212347abd",
@@ -372,6 +388,14 @@
                 "id": "4af9b44f-d021-4f09-b5f0-7ffd46a5238f",
                 "resourcePath": "views\\617bb0bc-e238-4987-9a7b-7b1759c7e0de.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "61ec2ce8-134f-42c3-9f4a-77482320fc9f",
+            "Value": {
+                "id": "f83a8749-db7f-47ab-a1cb-5c6aa6effc8f",
+                "resourcePath": "scripts\\baddy_lineOfSight\\baddy_lineOfSight.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -475,6 +499,14 @@
             "Value": {
                 "id": "e50d6a5b-b502-4d90-87d1-f1c715e6cc58",
                 "resourcePath": "scripts\\heroController_check4Points\\heroController_check4Points.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "986cdef8-8274-477f-986f-1296eb6ff63d",
+            "Value": {
+                "id": "5cbe0bf2-a48c-4ae3-9206-0cdfdb09a419",
+                "resourcePath": "scripts\\baddy_herd\\baddy_herd.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -711,7 +743,11 @@
         "9695adcd-8cce-4cb3-a593-532d938ccba0",
         "f6d97c97-1fa9-494c-9d91-882b6368b0ea",
         "ae874358-da51-4dcc-8247-43931690434b",
-        "124069a7-3c13-4163-aeb2-92861c81636e"
+        "124069a7-3c13-4163-aeb2-92861c81636e",
+        "986cdef8-8274-477f-986f-1296eb6ff63d",
+        "4e72a5cb-3b7b-4d2b-9fcc-910be9ea6117",
+        "0b17e892-3a5d-4695-99a0-26a66fbcd66d",
+        "61ec2ce8-134f-42c3-9f4a-77482320fc9f"
     ],
     "tutorial": ""
 }

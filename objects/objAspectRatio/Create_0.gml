@@ -5,10 +5,11 @@
 #macro menuRoomHeight 1080
 
 //*****************
+// TEST OPTIONS
+//
 // ==0 use current display
 // !=0 mock a different resolution
 //*****************
-
 var debugOption = 0;
 switch(debugOption)
 {	
