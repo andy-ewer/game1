@@ -57,5 +57,9 @@ checkDir[1] = +1;
 checkDirs[++checkDirCnt] = checkDir;
 
 //highlight tracking
-highlightList = ds_list_create();
+//highlightList = ds_list_create();
 
+isControlEnabled = true;
+
+gridX = 0
+gridY = 0;

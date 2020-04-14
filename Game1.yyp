@@ -63,6 +63,14 @@
             }
         },
         {
+            "Key": "124069a7-3c13-4163-aeb2-92861c81636e",
+            "Value": {
+                "id": "7e67e040-4fa7-4d03-80d4-0449ea1da4c8",
+                "resourcePath": "scripts\\heroController_move\\heroController_move.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1506dfe4-31ae-49d9-91b2-314020e0a8c6",
             "Value": {
                 "id": "51153277-a91c-42ee-bd1a-82c2b930a9bb",
@@ -466,7 +474,7 @@
             "Key": "9695adcd-8cce-4cb3-a593-532d938ccba0",
             "Value": {
                 "id": "e50d6a5b-b502-4d90-87d1-f1c715e6cc58",
-                "resourcePath": "scripts\\check4Points\\check4Points.yy",
+                "resourcePath": "scripts\\heroController_check4Points\\heroController_check4Points.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -524,6 +532,14 @@
                 "id": "8d6ece55-9ce6-4a87-acc0-5fbd68110d3e",
                 "resourcePath": "objects\\objBlockers\\objBlockers.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "ae874358-da51-4dcc-8247-43931690434b",
+            "Value": {
+                "id": "3a37de8f-d71a-47c6-b7de-7e59ca414eb8",
+                "resourcePath": "scripts\\heroController_controls\\heroController_controls.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -671,6 +687,14 @@
             }
         },
         {
+            "Key": "f6d97c97-1fa9-494c-9d91-882b6368b0ea",
+            "Value": {
+                "id": "74b95a60-f259-4aaf-923e-ff951040dbe2",
+                "resourcePath": "scripts\\heroController_handleDoors\\heroController_handleDoors.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f8093451-c47d-48e4-b7ce-e546e695e1a2",
             "Value": {
                 "id": "72cc0ced-7ced-408e-8328-3bde156bae42",
@@ -684,7 +708,10 @@
         "26525503-2ca3-45aa-a1d9-c3c1f4c2926f",
         "24d57e54-4442-4fd4-bc1d-375800cd564a",
         "3c50288c-5374-4243-b763-08ffe709d40f",
-        "9695adcd-8cce-4cb3-a593-532d938ccba0"
+        "9695adcd-8cce-4cb3-a593-532d938ccba0",
+        "f6d97c97-1fa9-494c-9d91-882b6368b0ea",
+        "ae874358-da51-4dcc-8247-43931690434b",
+        "124069a7-3c13-4163-aeb2-92861c81636e"
     ],
     "tutorial": ""
 }

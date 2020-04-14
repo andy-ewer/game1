@@ -1,13 +1,8 @@
 //I am used by the hero to check collision with the blocking tiles against 4 points 
-//I directly reference a bunch of hero macros so that would have to be sorted out to make me more general
-
 
 //ARGS
-var target = argument0;
-var deltaX = argument1;
-var deltaY = argument2;
-var isControlEnabled = argument3;
-
+var deltaX = argument0;
+var deltaY = argument1;
 
 //TILES AT 4 POINTS
 
