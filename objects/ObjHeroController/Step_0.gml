@@ -1,9 +1,6 @@
 //************
-//CONTROLS
+//INIT
 //************
-
-//clear the previous highlights
-tilemap_clear(root.blockers.overMapId, 0);
 
 //get current hero blocking grid cell
 var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x, target.y);
@@ -11,7 +8,14 @@ var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x, t
 
 var isControlEnabled = true;
 
+
+//************
 //DOORS
+//************
+
+//clear the previous highlights
+tilemap_clear(root.blockers.overMapId, 0);
+
 //check each direction
 for(var i=0; i< array_length_1d(checkDirs); i++)
 {
@@ -130,6 +134,11 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 	}
 }
 
+
+//************
+//CONTROLS
+//************
+
 if(isControlEnabled)
 {
 
@@ -188,190 +197,39 @@ if(moveSpeed > 0)
 	deltaX = (lengthdir_x(moveSpeedFrame, moveDir));
 	deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
-	//corner TL
-	var tileData1 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-	var gridX1 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-	var gridY1 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
-
-	var tileIndex1 = tile_get_index(tileData1);
-	var isDestroyed1 = ((tileIndex1+1) mod blockingTilesetWidth == 0);
-	var tileDamage1 = root.blockers.tileDamage[# gridX1, gridY1];
-	var isDoorOpen1 = (tileDamage1[tileInfo_type] == tileType_doorOpen);
-	var isDoorClosed1 = (tileDamage1[tileInfo_type] == tileType_doorClosed);
-	
-	//corner BL
-	var tileData2 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-	var gridX2 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-	var gridY2 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
-	
-	var tileIndex2 = tile_get_index(tileData2);
-	var isDestroyed2 = ((tileIndex2+1) mod blockingTilesetWidth == 0);
-	var tileDamage2 = root.blockers.tileDamage[# gridX2, gridY2];
-	var isDoorOpen2 = (tileDamage2[tileInfo_type] == tileType_doorOpen);
-	var isDoorClosed2 = (tileDamage2[tileInfo_type] == tileType_doorClosed);
-
-	
-	//corner BR
-	var tileData3 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-	var gridX3 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-	var gridY3 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
-	
-	var tileIndex3 = tile_get_index(tileData3);
-	var isDestroyed3 = ((tileIndex3+1) mod blockingTilesetWidth == 0);
-	var tileDamage3 = root.blockers.tileDamage[# gridX3, gridY3];
-	var isDoorOpen3 = (tileDamage3[tileInfo_type] == tileType_doorOpen);
-	var isDoorClosed3 = (tileDamage3[tileInfo_type] == tileType_doorClosed);
-	
-	
-	//corner TR
-	var tileData4 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-	var gridX4 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-	var gridY4 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
-	
-	var tileIndex4 = tile_get_index(tileData4);
-	var isDestroyed4 = ((tileIndex4+1) mod blockingTilesetWidth == 0);
-	var tileDamage4 = root.blockers.tileDamage[# gridX4, gridY4];
-	var isDoorOpen4 = (tileDamage4[tileInfo_type] == tileType_doorOpen);
-	var isDoorClosed4 = (tileDamage4[tileInfo_type] == tileType_doorClosed);
-	
-	
-	//check all	
-	var isBlocked1 = tileData1 && !isDestroyed1 && !isDoorOpen1 && !( isDoorClosed1 && !isControlEnabled );
-	var isBlocked2 = tileData2 && !isDestroyed2 && !isDoorOpen2 && !( isDoorClosed2 && !isControlEnabled );
-	var isBlocked3 = tileData3 && !isDestroyed3 && !isDoorOpen3 && !( isDoorClosed3 && !isControlEnabled );
-	var isBlocked4 = tileData4 && !isDestroyed4 && !isDoorOpen4 && !( isDoorClosed4 && !isControlEnabled );
-	
-	var isBlocked = isBlocked1 || isBlocked2 || isBlocked3 || isBlocked4;
-		
+	//try to move - XY
+	var isBlocked = check4Points(target, deltaX, deltaY, isControlEnabled);
 	if(!isBlocked) 
 	{
-		//apply movement to instance
+		//move
 	    target.x += deltaX;
 	    target.y += deltaY;
 	}
 	else 
 	{
-		//try to slide into an empty or destroyed tile - X
-
-		//corner TL
-		var tileData1 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
-		var gridX1 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
-		var gridY1 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y - heroMove_wallBufferTop);		
-		
-		var tileIndex1 = tile_get_index(tileData1);
-		var isDestroyed1 = ((tileIndex1+1) mod blockingTilesetWidth == 0);
-		var tileDamage1 = root.blockers.tileDamage[# gridX1, gridY1];
-		var isDoorOpen1 = (tileDamage1[tileInfo_type] == tileType_doorOpen);	
-		var isDoorClosed1 = (tileDamage1[tileInfo_type] == tileType_doorClosed);
-			
-		//corner BL
-		var tileData2 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
-		var gridX2 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
-		var gridY2 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX - heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);		
-		
-		var tileIndex2 = tile_get_index(tileData2);
-		var isDestroyed2 = ((tileIndex2+1) mod blockingTilesetWidth == 0);
-		var tileDamage2 = root.blockers.tileDamage[# gridX2, gridY2];
-		var isDoorOpen2 = (tileDamage2[tileInfo_type] == tileType_doorOpen);
-		var isDoorClosed2 = (tileDamage2[tileInfo_type] == tileType_doorClosed);
-	
-		//corner BR
-		var tileData3 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
-		var gridX3 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y - heroMove_wallBufferTop);
-		var gridY3 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y - heroMove_wallBufferTop);		
-		
-		var tileIndex3 = tile_get_index(tileData3);
-		var isDestroyed3 = ((tileIndex3+1) mod blockingTilesetWidth == 0);
-		var tileDamage3 = root.blockers.tileDamage[# gridX3, gridY3];
-		var isDoorOpen3 = (tileDamage3[tileInfo_type] == tileType_doorOpen);
-		var isDoorClosed3 = (tileDamage3[tileInfo_type] == tileType_doorClosed);
-		
-		//corner TR
-		var tileData4 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
-		var gridX4 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);
-		var gridY4 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + deltaX + heroMove_wallBufferX, target.y + heroMove_wallBufferBottom);		
-		
-		var tileIndex4 = tile_get_index(tileData4);
-		var isDestroyed4 = ((tileIndex4+1) mod blockingTilesetWidth == 0);
-		var tileDamage4 = root.blockers.tileDamage[# gridX4, gridY4];
-		var isDoorOpen4 = (tileDamage4[tileInfo_type] == tileType_doorOpen);
-		var isDoorClosed4 = (tileDamage4[tileInfo_type] == tileType_doorClosed);
-		
-		//check all	
-		var isBlocked1 = tileData1 && !isDestroyed1 && !isDoorOpen1 && !( isDoorClosed1 && !isControlEnabled );
-		var isBlocked2 = tileData2 && !isDestroyed2 && !isDoorOpen2 && !( isDoorClosed2 && !isControlEnabled );
-		var isBlocked3 = tileData3 && !isDestroyed3 && !isDoorOpen3 && !( isDoorClosed3 && !isControlEnabled );
-		var isBlocked4 = tileData4 && !isDestroyed4 && !isDoorOpen4 && !( isDoorClosed4 && !isControlEnabled );
-	
-		var isBlocked = isBlocked1 || isBlocked2 || isBlocked3 || isBlocked4;
-				
+		//try to slide into an empty or destroyed tile - X		
+		var isBlocked = check4Points(target, deltaX, 0, isControlEnabled);
 		if(!isBlocked)
 		{
-			//apply move
+			//move only along X
 			target.x += deltaX;	
 			deltaY = 0;
 		}
 		else 
 		{
 			//try to slide into an empty or destroyed tile - Y
-			
-			//corner TL
-			var tileData1 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-			var gridX1 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-			var gridY1 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
-			
-			var tileDamage1 = root.blockers.tileDamage[# gridX1, gridY1];
-			var isDoorOpen1 = (tileDamage1[tileInfo_type] == tileType_doorOpen);			
-			var isDoorClosed1 = (tileDamage1[tileInfo_type] == tileType_doorClosed);
-			var tileIndex1 = tile_get_index(tileData1);
-			var isDestroyed1 = ((tileIndex1+1) mod blockingTilesetWidth == 0);
-
-			//corner BL
-			var tileData2 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-			var gridX2 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-			var gridY2 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x - heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
-			
-			var tileDamage2 = root.blockers.tileDamage[# gridX2, gridY2];
-			var isDoorOpen2 = (tileDamage2[tileInfo_type] == tileType_doorOpen);			
-			var isDoorClosed2 = (tileDamage2[tileInfo_type] == tileType_doorClosed);
-			var tileIndex2 = tile_get_index(tileData2);
-			var isDestroyed2 = ((tileIndex2+1) mod blockingTilesetWidth == 0);
-
-			//corner BR
-			var tileData3 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-			var gridX3 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);
-			var gridY3 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY - heroMove_wallBufferTop);		
-			
-			var tileDamage3 = root.blockers.tileDamage[# gridX3, gridY3];
-			var isDoorOpen3 = (tileDamage3[tileInfo_type] == tileType_doorOpen);			
-			var isDoorClosed3 = (tileDamage3[tileInfo_type] == tileType_doorClosed);
-			var tileIndex3 = tile_get_index(tileData3);
-			var isDestroyed3 = ((tileIndex3+1) mod blockingTilesetWidth == 0);
-		
-			//corner TR
-			var tileData4 = tilemap_get_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-			var gridX4 = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);
-			var gridY4 = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, target.x + heroMove_wallBufferX, target.y + deltaY + heroMove_wallBufferBottom);		
-			
-			var tileDamage4 = root.blockers.tileDamage[# gridX4, gridY4];
-			var isDoorOpen4 = (tileDamage4[tileInfo_type] == tileType_doorOpen);			
-			var isDoorClosed4 = (tileDamage4[tileInfo_type] == tileType_doorClosed);
-			var tileIndex4 = tile_get_index(tileData4);
-			var isDestroyed4 = ((tileIndex4+1) mod blockingTilesetWidth == 0);
-		
-			//check all	
-			var isBlocked1 = tileData1 && !isDestroyed1 && !isDoorOpen1 && !( isDoorClosed1 && !isControlEnabled );
-			var isBlocked2 = tileData2 && !isDestroyed2 && !isDoorOpen2 && !( isDoorClosed2 && !isControlEnabled );
-			var isBlocked3 = tileData3 && !isDestroyed3 && !isDoorOpen3 && !( isDoorClosed3 && !isControlEnabled );
-			var isBlocked4 = tileData4 && !isDestroyed4 && !isDoorOpen4 && !( isDoorClosed4 && !isControlEnabled );
-	
-			var isBlocked = isBlocked1 || isBlocked2 || isBlocked3 || isBlocked4;
-
+			var isBlocked = check4Points(target, 0, deltaY, isControlEnabled);
 			if(!isBlocked)
 			{
-				//apply move
+				//move only along Y
 				target.y += deltaY;	
 				deltaX = 0;
+			}
+			else
+			{
+				//these values are still used to set audio velocity
+				deltaX = 0;
+				deltaY = 0;
 			}
 		}
 	}
