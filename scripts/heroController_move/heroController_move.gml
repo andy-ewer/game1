@@ -8,7 +8,7 @@ if(moveSpeed > 0)
 	deltaY = (lengthdir_y(moveSpeedFrame, moveDir)); 
 
 	//try to move - XY
-	var isBlocked = heroController_check4Points(deltaX, deltaY);
+	var isBlocked = heroController_check4Points(deltaX, deltaY, target, isControlEnabled);
 	if(!isBlocked) 
 	{
 		//move
@@ -18,7 +18,7 @@ if(moveSpeed > 0)
 	else 
 	{
 		//try to slide into an empty or destroyed tile - X		
-		var isBlocked = heroController_check4Points(deltaX, 0);
+		var isBlocked = heroController_check4Points(deltaX, 0, target, isControlEnabled);
 		if(!isBlocked)
 		{
 			//move only along X
@@ -28,7 +28,7 @@ if(moveSpeed > 0)
 		else 
 		{
 			//try to slide into an empty or destroyed tile - Y
-			var isBlocked = heroController_check4Points(0, deltaY);
+			var isBlocked = heroController_check4Points(0, deltaY, target, isControlEnabled);
 			if(!isBlocked)
 			{
 				//move only along Y

@@ -15,6 +15,7 @@ for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 
 	//get bump details
 	var bump = list[| i];
+	var isHero = (bump.object_index == objHero);
 	var dir = point_direction(x, y, bump.x, bump.y);
 	var dist = point_distance(x, y, bump.x, bump.y);
 	var distMultiplier = b1Behaviour_distMultiplierMax-max(min(dist, b1Behaviour_distMultiplierMax),1);
@@ -31,18 +32,32 @@ for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 	}
 	var deltaX = (lengthdir_x(bumpSpeedFrame * distMultiplier, dir));
 	var deltaY = (lengthdir_y(bumpSpeedFrame * distMultiplier, dir)); 
-	var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+	
+	if(!isHero)
+	{
+		var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
+		var isBlocked = tileData;
+	}
+	else
+	{
+		var isBlocked = heroController_check4Points(deltaX, deltaY, bump, true);
+	}
 
 	//no tile, go for it
-	if(!tileData)
+	if(!isBlocked)
 	{
 		//apply movement to instance
 		bump.x += deltaX;
 		bump.y += deltaY;
+		if(isHero)
+		{
+			bump.x = min( max(bump.x, hero_roomBorderBlocking), (room_width - hero_roomBorderBlocking));
+			bump.y = min( max(bump.y, hero_roomBorderBlocking), (room_height - hero_roomBorderBlocking));
+		}
 	}
 	
 	//there is a tile
-	else
+	else if(!isHero)
 	{
 		//tile damage
 		var tileIndex = tile_get_index(tileData);
@@ -54,6 +69,7 @@ for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 			//apply movement to instance
 			bump.x += deltaX;
 			bump.y += deltaY;
+		
 		}
 		
 		//there is a tile

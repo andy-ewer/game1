@@ -5,8 +5,8 @@
 //get this and the hero grid position
 thisX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, x, y);
 thisY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, x, y);
-heroX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, objHero.x, objHero.y);
-heroY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, objHero.x, objHero.y);
+heroX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, root.heroController.target.x, root.heroController.target.y);
+heroY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, root.heroController.target.x, root.heroController.target.y);
 dist = point_distance(thisX, thisY, heroX, heroY);
 
 
@@ -16,6 +16,7 @@ dist = point_distance(thisX, thisY, heroX, heroY);
 
 baddy_lineOfSight();
 baddy_animate();
+baddy_chase();
 baddy_move();
 baddy_herd();
 

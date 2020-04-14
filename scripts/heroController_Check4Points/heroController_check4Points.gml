@@ -3,6 +3,8 @@
 //ARGS
 var deltaX = argument0;
 var deltaY = argument1;
+var target = argument2;
+var isControlEnabled = argument3;
 
 //TILES AT 4 POINTS
 
@@ -53,7 +55,7 @@ var isDoorClosed4 = (tileDamage4[tileInfo_type] == tileType_doorClosed);
 
 //RESULTS
 
-//work out if any of the 4 points are blovked
+//work out if any of the 4 points are blocked
 var isBlocked1 = tileData1 && !isDestroyed1 && !isDoorOpen1 && !( isDoorClosed1 && !isControlEnabled );
 var isBlocked2 = tileData2 && !isDestroyed2 && !isDoorOpen2 && !( isDoorClosed2 && !isControlEnabled );
 var isBlocked3 = tileData3 && !isDestroyed3 && !isDoorOpen3 && !( isDoorClosed3 && !isControlEnabled );

@@ -21,8 +21,8 @@ if(sightCounter<0)
 		//update the last seen position of the hero
 		if(sightClear)
 		{
-			lastSeenX = objHero.x;
-			lastSeenY = objHero.y;
+			lastSeenX = root.heroController.target.x;
+			lastSeenY = root.heroController.target.y;
 		}
 	}
 }

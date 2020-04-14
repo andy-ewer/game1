@@ -9,7 +9,7 @@
 #macro heroMove_wallBufferTop 8
 #macro heroMove_wallBufferBottom 0
 
-#macro hero_roomBorderBlocking 10
+#macro hero_roomBorderBlocking 20
 
 #macro heroAttack_range 10
 
