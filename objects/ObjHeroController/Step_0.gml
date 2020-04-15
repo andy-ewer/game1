@@ -32,9 +32,11 @@ if(target.sprite_index == sprHeroAttack)
 		if(nearestBaddy)
 		{
 			var distance = point_distance(target.x, target.y, nearestBaddy.x, nearestBaddy.y);
-			show_debug_message(distance);
 			if(distance < heroAttack_range)
 			{
+				var baddyDeath = instance_create_layer(nearestBaddy.x, nearestBaddy.y, "Instances", objBaddy1Death);
+				baddyDeath.depth = nearestBaddy.depth;
+				baddyDeath.image_blend = nearestBaddy.image_blend;
 				instance_destroy(nearestBaddy);
 			}
 		}

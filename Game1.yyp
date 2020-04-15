@@ -455,6 +455,14 @@
             }
         },
         {
+            "Key": "769eeb4c-0f4e-48ef-94f2-4ca47cff0c13",
+            "Value": {
+                "id": "308b900a-2b67-4092-86c1-0599e3a4433a",
+                "resourcePath": "objects\\objBaddy1Death\\objBaddy1Death.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "7a30e33e-e1b5-4aca-b845-624e5cf1db2c",
             "Value": {
                 "id": "81979c3e-5eb9-4e33-9090-c0602223ae58",
@@ -508,6 +516,14 @@
                 "id": "5cbe0bf2-a48c-4ae3-9206-0cdfdb09a419",
                 "resourcePath": "scripts\\baddy_herd\\baddy_herd.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "9bb4702f-2d86-4800-a2b9-ae200234a344",
+            "Value": {
+                "id": "d20f7e8d-6e0d-449e-8dd3-0e886b5dbb1c",
+                "resourcePath": "views\\9bb4702f-2d86-4800-a2b9-ae200234a344.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -676,6 +692,14 @@
                 "id": "6275056a-e2f9-4750-9a16-69bb10ebe04c",
                 "resourcePath": "objects\\objMenuCamera\\objMenuCamera.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "e5131727-84b6-41c3-ad22-dfefcbf60827",
+            "Value": {
+                "id": "2ccf9d17-8b22-4513-bab1-b38710903fff",
+                "resourcePath": "sprites\\sprBaddy1Death\\sprBaddy1Death.yy",
+                "resourceType": "GMSprite"
             }
         },
         {

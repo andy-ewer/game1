@@ -24,7 +24,7 @@ else
 	var tileDamage = root.blockers.tileDamage[# gridX, gridY];
 	var tileIndex = tile_get_index(tileData);
 	
-	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);	
+	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
 	var isDoorOpen = (tileDamage[tileInfo_type] == tileType_doorOpen);
 
 	//destroyed tiles are passable
@@ -83,7 +83,6 @@ else
 				{
 					mood = b1Mood_FinalLook;
 					finalLookCounter = irandom(b1Final_lookCounterRandom) + b1Final_lookCounterPlus;
-					show_debug_message("********************* 1");
 				}
 				lastDirX = thisDirX;
 				lastDirY = 0;
@@ -112,7 +111,7 @@ else
 				if(!tileData || isDestroyed || isDoorOpen)
 				{
 					deltaX = 0;
-					
+
 					//apply move
 					y += deltaY;	
 					emitterVX = 0;
@@ -123,7 +122,6 @@ else
 					{
 						mood = b1Mood_FinalLook;
 						finalLookCounter = irandom(b1Final_lookCounterRandom) + b1Final_lookCounterPlus;
-						show_debug_message("********************* 2");
 					}
 					lastDirY = thisDirY;
 					lastDirX = 0;
@@ -148,4 +146,4 @@ else
 
 //update audio position
 audio_emitter_position(emitter,x,y,0);
-audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);	
+audio_emitter_velocity(emitter, emitterVX, emitterVY, 0);
