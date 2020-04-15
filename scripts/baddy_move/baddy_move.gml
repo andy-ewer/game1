@@ -21,11 +21,11 @@ else
 {	
 	var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, x + deltaX, y + deltaY);
 	var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, x + deltaX, y + deltaY);
-	var tileDamage = root.blockers.tileDamage[# gridX, gridY];
+	var tileInfo = root.blockers.tileInfo[# gridX, gridY];
 	var tileIndex = tile_get_index(tileData);
 	
 	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-	var isDoorOpen = (tileDamage[tileInfo_type] == tileType_doorOpen);
+	var isDoorOpen = (tileInfo[tileInfo_type] == tileType_doorOpen);
 
 	//destroyed tiles are passable
 	if(isDestroyed || isDoorOpen)
@@ -63,11 +63,11 @@ else
 			var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, x + deltaX, y);
 			var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, x + deltaX, y);
 			var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, x + deltaX, y);
-			var tileDamage = root.blockers.tileDamage[# gridX, gridY];
+			var tileInfo = root.blockers.tileInfo[# gridX, gridY];
 			var tileIndex = tile_get_index(tileData);
 			
 			var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-			var isDoorOpen = (tileDamage[tileInfo_type] == tileType_doorOpen);
+			var isDoorOpen = (tileInfo[tileInfo_type] == tileType_doorOpen);
 						
 			if(!tileData || isDestroyed || isDoorOpen)
 			{				
@@ -102,11 +102,11 @@ else
 				var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, x, y + deltaY);
 				var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, x, y + deltaY);
 				var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, x, y + deltaY);
-				var tileDamage = root.blockers.tileDamage[# gridX, gridY];				
+				var tileInfo = root.blockers.tileInfo[# gridX, gridY];				
 				var tileIndex = tile_get_index(tileData);
 				
 				var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-				var isDoorOpen = (tileDamage[tileInfo_type] == tileType_doorOpen);				
+				var isDoorOpen = (tileInfo[tileInfo_type] == tileType_doorOpen);				
 				
 				if(!tileData || isDestroyed || isDoorOpen)
 				{

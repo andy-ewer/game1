@@ -19,10 +19,10 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 	if(!isDestroyed)
 	{
 		//grab the data for the cell
-		var tileDamage = root.blockers.tileDamage[# checkGridX, checkGridY];
+		var tileInfo = root.blockers.tileInfo[# checkGridX, checkGridY];
 			
 		//found an open door
-		if(tileDamage[tileInfo_type] == tileType_doorOpen)	
+		if(tileInfo[tileInfo_type] == tileType_doorOpen)	
 		{			
 			//close door
 			if(root.controls.isUsePressed)
@@ -31,8 +31,8 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 				tileMap = tile_set_index(tileMap, tileIndex);	
 				tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
 
-				tileDamage[tileInfo_type] = tileType_doorClosed;
-				root.blockers.tileDamage[# checkGridX, checkGridY] = tileDamage;
+				tileInfo[tileInfo_type] = tileType_doorClosed;
+				root.blockers.tileInfo[# checkGridX, checkGridY] = tileInfo;
 			}
 				
 			//highlight door
@@ -46,7 +46,7 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 		}
 			
 		//found a closed door
-		else if(tileDamage[tileInfo_type] == tileType_doorClosed)
+		else if(tileInfo[tileInfo_type] == tileType_doorClosed)
 		{
 			//open door
 			if(root.controls.isUsePressed)
@@ -55,8 +55,8 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 					tileMap = tile_set_index(tileMap, tileIndex);					
 					tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
 				
-					tileDamage[tileInfo_type] = tileType_doorOpen;
-					root.blockers.tileDamage[# checkGridX, checkGridY] = tileDamage;
+					tileInfo[tileInfo_type] = tileType_doorOpen;
+					root.blockers.tileInfo[# checkGridX, checkGridY] = tileInfo;
 			}
 			
 			//highlight door
@@ -88,8 +88,8 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 					isControlEnabled = false;
 					moveSpeed = heroMove_max;
 					
-					var tileDamage = root.blockers.tileDamage[# checkGridX, checkGridY];
-					var tileOrient = tileDamage[tileInfo_orient];
+					var tileInfo = root.blockers.tileInfo[# checkGridX, checkGridY];
+					var tileOrient = tileInfo[tileInfo_orient];
 					if(tileOrient == tileOrient_vert)
 					{
 						if(target.y < vertCenter)

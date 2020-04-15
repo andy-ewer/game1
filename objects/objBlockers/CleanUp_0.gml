@@ -1,1 +1,1 @@
-ds_grid_destroy(tileDamage);
+ds_grid_destroy(tileInfo);

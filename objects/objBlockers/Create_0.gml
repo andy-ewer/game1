@@ -28,7 +28,7 @@ overLayerId = layer_get_id("tilesOver");
 overMapId = layer_tilemap_get_id(overLayerId);
 
 //keeping track of tile damage
-tileDamage = ds_grid_create(
+tileInfo = ds_grid_create(
 	tilemap_get_width(blockingMapId), 
 	tilemap_get_height(blockingMapId)
 );
@@ -110,6 +110,6 @@ for(var i=0; i< tilemap_get_width(blockingMapId); i++)
 		damageItem[tileInfo_orient] = tileOrient[row];
 
 		//apply to grid
-		tileDamage[# i,j] = damageItem;
+		tileInfo[# i,j] = damageItem;
 	}	
 }

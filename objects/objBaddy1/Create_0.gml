@@ -52,7 +52,7 @@
 
 //tracking mood behaviour
 mood = b1Mood_Idle;
-idleDirection = 0;
+idleDirection = irandom(360);
 idleDirectionCounter = 0;
 lastDirX = 0;
 lastDirY = 0;
