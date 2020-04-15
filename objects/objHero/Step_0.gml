@@ -5,6 +5,7 @@
 
 if(root.controls.isAttackPressed || isAttacking)
 {
+	//new attack this frame
 	if(sprite_index != sprHeroAttack)
 	{
 		//start a new attack
@@ -13,13 +14,16 @@ if(root.controls.isAttackPressed || isAttacking)
 		heroAttackCounter = heroAttack_frames;
 		isAttacking = true;
 	}
+	
+	//continue existing attack
 	else
 	{
 		heroAttackCounter -= root.timing.ticksPassed;
 		if(heroAttackCounter <= 0)
 		{
+			var isEnd = image_index==image_number-1;
 			image_index++;
-			if(image_index==image_number)
+			if(isEnd)
 			{
 				isAttacking = root.controls.isAttackPressed;
 			}
