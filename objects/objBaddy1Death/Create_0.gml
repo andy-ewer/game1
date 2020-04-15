@@ -1,0 +1,1 @@
+sprite_index = choose(sprBaddy1Death1, sprBaddy1Death2);

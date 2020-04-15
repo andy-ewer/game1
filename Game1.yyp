@@ -463,6 +463,14 @@
             }
         },
         {
+            "Key": "80d5e820-1d07-4783-9a6b-313f81542e75",
+            "Value": {
+                "id": "9ba2006e-8e9a-4d64-9dff-97decce9bb2e",
+                "resourcePath": "sprites\\sprBaddy1Death2\\sprBaddy1Death2.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "83b6d4dd-0bb0-4922-901f-40987c4bfe74",
             "Value": {
                 "id": "336dd51d-8aec-4f05-a894-98d0db5e56a4",
@@ -690,7 +698,7 @@
             "Key": "e5131727-84b6-41c3-ad22-dfefcbf60827",
             "Value": {
                 "id": "2ccf9d17-8b22-4513-bab1-b38710903fff",
-                "resourcePath": "sprites\\sprBaddy1Death\\sprBaddy1Death.yy",
+                "resourcePath": "sprites\\sprBaddy1Death1\\sprBaddy1Death1.yy",
                 "resourceType": "GMSprite"
             }
         },
