@@ -3,6 +3,7 @@
 var list = ds_list_create();
 var qtyBumps = instance_place_list(x, y, objBaddy1, list, false);
 var qtyBumpsHero = instance_place_list(x, y, objHero, list, false);
+//list = ds_list_shuffle(list);
 
 //iterate the bumps
 for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
@@ -19,6 +20,7 @@ for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 	var dir = point_direction(x, y, bump.x, bump.y);
 	var dist = point_distance(x, y, bump.x, bump.y);
 	var distMultiplier = b1Behaviour_distMultiplierMax-max(min(dist, b1Behaviour_distMultiplierMax),1);
+	
 				
 	//calculate attempted shove
 	var bumpSpeedFrame;

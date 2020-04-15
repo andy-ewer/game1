@@ -12,11 +12,6 @@ if(root.controls.isAttackPressed || isAttacking)
 		image_index = 0;
 		heroAttackCounter = heroAttack_frames;
 		isAttacking = true;
-		
-		if(weapon.weaponCurrent != -1)
-		{
-			
-		}
 	}
 	else
 	{
@@ -24,7 +19,7 @@ if(root.controls.isAttackPressed || isAttacking)
 		if(heroAttackCounter <= 0)
 		{
 			image_index++;
-			if(image_index==1)
+			if(image_index==image_number)
 			{
 				isAttacking = root.controls.isAttackPressed;
 			}
