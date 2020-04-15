@@ -13,11 +13,19 @@ for(var i=0; i<array_length_1d(tiles);i++)
 {
 	var tile = tiles[i];
 	var tileData = tilemap_get(root.blockers.blockingMapId, tile[0], tile[1]);
+	var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, x + deltaX, y + deltaY);
+	var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, x + deltaX, y + deltaY);
+	var tileDamage = root.blockers.tileDamage[# gridX, gridY];
 	var tileIndex = tile_get_index(tileData);
+
 	var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-	if(tileIndex && !isDestroyed)
+	var isDoorOpen = (tileDamage[tileInfo_type] == tileType_doorOpen);
+
+	if(tileIndex && !isDestroyed && !isDoorOpen)
 	{
 		cnt++;
 	}
 }
 return cnt;
+
+

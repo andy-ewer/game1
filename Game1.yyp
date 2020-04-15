@@ -399,14 +399,6 @@
             }
         },
         {
-            "Key": "61ec2ce8-134f-42c3-9f4a-77482320fc9f",
-            "Value": {
-                "id": "f83a8749-db7f-47ab-a1cb-5c6aa6effc8f",
-                "resourcePath": "scripts\\baddy_lineOfSight\\baddy_lineOfSight.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "61f338b6-59ad-481c-9ebd-013b3dbb6360",
             "Value": {
                 "id": "cb93e8ca-b543-4973-9235-9bb78ae44b52",
@@ -755,7 +747,6 @@
         "986cdef8-8274-477f-986f-1296eb6ff63d",
         "4e72a5cb-3b7b-4d2b-9fcc-910be9ea6117",
         "0b17e892-3a5d-4695-99a0-26a66fbcd66d",
-        "61ec2ce8-134f-42c3-9f4a-77482320fc9f",
         "2a5ed605-8cb3-4a66-a0ce-b4ce8a37790d"
     ],
     "tutorial": ""

@@ -14,7 +14,6 @@ dist = point_distance(thisX, thisY, heroX, heroY);
 //DO EVERYTHING
 //**********************
 
-baddy_lineOfSight();
 baddy_animate();
 baddy_chase();
 baddy_move();

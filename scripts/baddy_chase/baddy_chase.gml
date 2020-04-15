@@ -1,4 +1,41 @@
-//idle state - scan for the hero to chase	
+//***********
+// LINE OF SIGHT
+//***********
+
+//update line of sight occasionally for performance
+sightCounter -= root.timing.ticksPassed;
+if(sightCounter<0)
+{
+	//don't check if out of range
+	if(
+		(mood == b1Mood_Idle && dist>b1Behaviour_idleSightDistance)
+		||
+		(mood != b1Mood_Idle && dist>b1Behaviour_alertSightDistance)
+	)
+	{
+		sightClear = false;
+	}
+
+	//in range, so check
+	else
+	{
+		sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
+		sightCounter = b1Behaviour_updateSightTicks;
+
+		//update the last seen position of the hero
+		if(sightClear)
+		{
+			lastSeenX = root.heroController.target.x;
+			lastSeenY = root.heroController.target.y;
+		}
+	}
+}
+
+
+//***********
+// IDLE
+//***********
+
 if(mood == b1Mood_Idle)
 {
 	//change direction randomly
@@ -9,7 +46,7 @@ if(mood == b1Mood_Idle)
 		idleDirection = fixAngle(idleDirection);
 		idleDirectionCounter = irandom(b1Idle_directionCounterRandom + b1Idle_directionCounterPlus);
 	}
-	
+
 	//look for hero
 	if(sightClear) {
 			
@@ -27,6 +64,12 @@ if(mood == b1Mood_Idle)
 	deltaX = (lengthdir_x(moveSpeedFrame, idleDirection));
 	deltaY = (lengthdir_y(moveSpeedFrame, idleDirection));
 }
+
+
+
+//***********
+// CHASE
+//***********
 
 //chase state
 else if(mood == b1Mood_Chase || mood == b1Mood_LastSeen || mood == b1Mood_FinalLook)
@@ -79,12 +122,12 @@ else if(mood == b1Mood_Chase || mood == b1Mood_LastSeen || mood == b1Mood_FinalL
 				//return to idle
 				mood = b1Mood_Idle
 				image_index = b1Frames_idleStart;
-				var dir = lastDir;
+				var dir = lastSeenDir;
 			}
 			else
 			{
 				//keep going
-				var dir = lastDir;
+				var dir = lastSeenDir;
 			}		
 		}
 		
@@ -95,8 +138,8 @@ else if(mood == b1Mood_Chase || mood == b1Mood_LastSeen || mood == b1Mood_FinalL
 			if( abs(y-lastSeenY) < b1Behaviour_lastSeenArrivedRange && abs(x-lastSeenX) < b1Behaviour_lastSeenArrivedRange)
 			{
 				mood = b1Mood_FinalLook;
-				lastDir += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));
-				var dir = lastDir;
+				lastSeenDir += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));
+				var dir = lastSeenDir;
 				finalLookCounter = irandom(b1Final_lookCounterRandom) + b1Final_lookCounterPlus;
 			}
 		
@@ -105,7 +148,7 @@ else if(mood == b1Mood_Chase || mood == b1Mood_LastSeen || mood == b1Mood_FinalL
 			{
 				mood = b1Mood_LastSeen;	
 				var dir = point_direction(x, y, lastSeenX, lastSeenY);
-				lastDir = dir;
+				lastSeenDir = dir;
 			}
 		}
 	}

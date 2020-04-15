@@ -1,5 +1,5 @@
 //behaviour values
-#macro b1Behaviour_lastSeenArrivedRange 60 //stops herd jostling over a destination. in blocking tile grid units
+#macro b1Behaviour_lastSeenArrivedRange 2 //stops herd jostling over a destination. in blocking tile grid units
 #macro b1Behaviour_updateSightTicks 30 //in ticks
 #macro b1Behaviour_idleSightDistance 6 //in blocking tile grid units
 #macro b1Behaviour_alertSightDistance 60  //in blocking tile grid units
@@ -54,6 +54,8 @@
 mood = b1Mood_Idle;
 idleDirection = 0;
 idleDirectionCounter = 0;
+lastDirX = 0;
+lastDirY = 0;
 
 //tracking animations
 stepCounter=0;
@@ -62,7 +64,7 @@ mouthCounter=0;
 //tracking last position hero was visible at
 lastSeenX = 0;
 lastSeenY = 0;
-lastDir = 0;
+lastSeenDir = 0;
 finalLookCounter = 0;
 sightClear = false;
 sightCounter = 0;

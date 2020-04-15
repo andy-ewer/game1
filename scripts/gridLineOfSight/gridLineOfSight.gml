@@ -1,5 +1,8 @@
 /* 
 gridLineOfSight(target1X, target1Y, target2X, target2Y)
+
+this is Bresenham's line algorithm which I found in javascript and just ported over.
+don't ask me how it works.
 */
 
 _x0 = argument0;
