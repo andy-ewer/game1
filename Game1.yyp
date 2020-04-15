@@ -695,6 +695,14 @@
             }
         },
         {
+            "Key": "e9b535f5-25ac-4e9d-9213-6d9b046909d5",
+            "Value": {
+                "id": "93c18ee2-be0e-4f32-80e1-22eea83b25ea",
+                "resourcePath": "scripts\\baddy_door\\baddy_door.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ea16aab3-0277-49b1-a3a9-b4c10f5905ef",
             "Value": {
                 "id": "bbc14f94-4ff8-4f11-99d2-85d9c58aa735",
@@ -762,7 +770,8 @@
         "986cdef8-8274-477f-986f-1296eb6ff63d",
         "4e72a5cb-3b7b-4d2b-9fcc-910be9ea6117",
         "0b17e892-3a5d-4695-99a0-26a66fbcd66d",
-        "2a5ed605-8cb3-4a66-a0ce-b4ce8a37790d"
+        "2a5ed605-8cb3-4a66-a0ce-b4ce8a37790d",
+        "e9b535f5-25ac-4e9d-9213-6d9b046909d5"
     ],
     "tutorial": ""
 }

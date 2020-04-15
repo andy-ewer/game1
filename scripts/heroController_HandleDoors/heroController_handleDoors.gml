@@ -51,12 +51,12 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 			//open door
 			if(root.controls.isUsePressed)
 			{			
-					tileIndex += blockingTilesetWidth;
-					tileMap = tile_set_index(tileMap, tileIndex);					
-					tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
+				tileIndex += blockingTilesetWidth;
+				tileMap = tile_set_index(tileMap, tileIndex);					
+				tileMap = tilemap_set(root.blockers.blockingMapId, tileMap, checkGridX, checkGridY);
 				
-					tileInfo[tileInfo_type] = tileType_doorOpen;
-					root.blockers.tileInfo[# checkGridX, checkGridY] = tileInfo;
+				tileInfo[tileInfo_type] = tileType_doorOpen;
+				root.blockers.tileInfo[# checkGridX, checkGridY] = tileInfo;
 			}
 			
 			//highlight door
