@@ -7,7 +7,7 @@ thisX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, x, y);
 thisY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, x, y);
 heroX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, root.heroController.target.x, root.heroController.target.y);
 heroY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, root.heroController.target.x, root.heroController.target.y);
-//dist = point_distance(thisX, thisY, heroX, heroY);
+dist = point_distance(thisX, thisY, heroX, heroY);
 
 //if baddy on a closed door we need to bounce them out
 tileInfo = root.blockers.tileInfo[# thisX, thisY];
