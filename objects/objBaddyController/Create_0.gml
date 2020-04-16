@@ -1,4 +1,4 @@
-for(i=0; i<100; i++)
+for(i=0; i<1000; i++)
 {
 	var tryX = irandom(room_width/5);
 	var tryY = irandom(room_height/5);

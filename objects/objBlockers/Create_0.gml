@@ -63,6 +63,8 @@ maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 
+maxDamageByRow[++cnt] = 800;
+
 //doors
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorClosed;
