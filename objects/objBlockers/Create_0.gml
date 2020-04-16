@@ -1,6 +1,6 @@
 //used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 4
-#macro blockingTilesetHeight 21
+#macro blockingTilesetHeight 20
 #macro blockingTileSizePixels 16
 
 //damage values per node
@@ -43,8 +43,6 @@ var maxDamageByRow = array_create(blockingTilesetHeight);
 
 //
 maxDamageByRow[++cnt] = 0;
-maxDamageByRow[++cnt] = 1000;
-maxDamageByRow[++cnt] = 100;
 
 //walls
 maxDamageByRow[++cnt] = 800;
@@ -52,16 +50,18 @@ maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
+
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
+maxDamageByRow[++cnt] = 800;
 
 //doors
 maxDamageByRow[++cnt] = 400;

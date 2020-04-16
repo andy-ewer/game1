@@ -6,8 +6,8 @@
 #macro heroMove_braking 2
 
 #macro heroMove_wallBufferX 4
-#macro heroMove_wallBufferTop 7
-#macro heroMove_wallBufferBottom 1
+#macro heroMove_wallBufferTop 5
+#macro heroMove_wallBufferBottom 2
 
 #macro hero_roomBorderBlocking 20
 
