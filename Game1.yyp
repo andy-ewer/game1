@@ -114,7 +114,7 @@
             "Key": "1a594f42-ddbe-4f0c-a45a-1ce8b567a9ab",
             "Value": {
                 "id": "b05b4c63-1d08-4671-be99-566241472f21",
-                "resourcePath": "tilesets\\tsOver\\tsOver.yy",
+                "resourcePath": "tilesets\\tsHighlight\\tsHighlight.yy",
                 "resourceType": "GMTileSet"
             }
         },
@@ -399,6 +399,14 @@
             }
         },
         {
+            "Key": "6273e555-2cb9-4da2-af7e-88bc4a204b73",
+            "Value": {
+                "id": "8a5ba829-e08b-494e-b98f-01d7f96fb1be",
+                "resourcePath": "scripts\\damageTile\\damageTile.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "6458321a-c843-4f3b-8126-a89ff3d53761",
             "Value": {
                 "id": "4265649c-5f7f-4157-a1b8-9d28ebdc753a",
@@ -538,7 +546,7 @@
             "Key": "a110df10-a0a2-4b3d-ac3e-4462ff1719aa",
             "Value": {
                 "id": "8884f820-ab18-4b4e-a21a-9a3046bc4a51",
-                "resourcePath": "sprites\\sprOver\\sprOver.yy",
+                "resourcePath": "sprites\\sprHighlight\\sprHighlight.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -779,7 +787,8 @@
         "4e72a5cb-3b7b-4d2b-9fcc-910be9ea6117",
         "0b17e892-3a5d-4695-99a0-26a66fbcd66d",
         "2a5ed605-8cb3-4a66-a0ce-b4ce8a37790d",
-        "e9b535f5-25ac-4e9d-9213-6d9b046909d5"
+        "e9b535f5-25ac-4e9d-9213-6d9b046909d5",
+        "6273e555-2cb9-4da2-af7e-88bc4a204b73"
     ],
     "tutorial": ""
 }

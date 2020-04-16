@@ -1,6 +1,6 @@
 //used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 4
-#macro blockingTilesetHeight 25
+#macro blockingTilesetHeight 21
 #macro blockingTileSizePixels 16
 
 //damage values per node
@@ -20,12 +20,12 @@
 #macro tileOrient_hori 2
 
 //blocking layer
-blockingLayerId = layer_get_id("tilesBlocking");
+var blockingLayerId = layer_get_id("tilesBlocking");
 blockingMapId = layer_tilemap_get_id(blockingLayerId);
 
 //over layer
-overLayerId = layer_get_id("tilesOver");
-overMapId = layer_tilemap_get_id(overLayerId);
+var highlightLayerId = layer_get_id("tilesHighlight");
+highlightMapId = layer_tilemap_get_id(highlightLayerId);
 
 //keeping track of tile damage
 tileInfo = ds_grid_create(
@@ -62,31 +62,24 @@ maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 
+
 //doors
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorClosed;
 tileOrient[cnt] = tileOrient_hori;
+
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorOpen;
 tileOrient[cnt] = tileOrient_hori;
-maxDamageByRow[++cnt] = 400;
-tileType[cnt] = tileType_doorClosed;
-tileOrient[cnt] = tileOrient_hori;
-maxDamageByRow[++cnt] = 400;
-tileType[cnt] = tileType_doorOpen;
-tileOrient[cnt] = tileOrient_hori;
+
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorClosed;
 tileOrient[cnt] = tileOrient_vert;
+
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorOpen;
 tileOrient[cnt] = tileOrient_vert;
-maxDamageByRow[++cnt] = 400;
-tileType[cnt] = tileType_doorClosed;
-tileOrient[cnt] = tileOrient_vert;
-maxDamageByRow[++cnt] = 400;
-tileType[cnt] = tileType_doorOpen;
-tileOrient[cnt] = tileOrient_vert;
+
 
 //init tile damage grid
 for(var i=0; i< tilemap_get_width(blockingMapId); i++)

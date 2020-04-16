@@ -1,12 +1,14 @@
 
+
+
 //clear the previous highlights
-tilemap_clear(root.blockers.overMapId, 0);
+tilemap_clear(root.blockers.highlightMapId, 0);
 
 //check each direction
-for(var i=0; i< array_length_1d(checkDirs); i++)
+for(var i=0; i< array_length_1d(root.dirOffsets); i++)
 {
 	//apply offsets
-	var checkDir = checkDirs[i];
+	var checkDir = root.dirOffsets[i];
 	var checkGridX = gridX + checkDir[0];
 	var checkGridY = gridY + checkDir[1];
 		
@@ -20,7 +22,28 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 	{
 		//grab the data for the cell
 		var tileInfo = root.blockers.tileInfo[# checkGridX, checkGridY];
-			
+
+		//highlight door
+		if(tileInfo[tileInfo_type] == tileType_doorOpen || tileInfo[tileInfo_type] == tileType_doorClosed)	
+		{
+			var tileInfo = root.blockers.tileInfo[# checkGridX, checkGridY];
+			var tileOrient = tileInfo[tileInfo_orient];
+
+			var overTileIndex = 1;
+			if(tileOrient == tileOrient_vert)
+			{
+				overTileIndex = 2;
+			}
+			if(tileOrient == tileOrient_hori)
+			{
+				overTileIndex = 3;
+			}				
+				
+			var tileMap = tilemap_get(root.blockers.highlightMapId, checkGridX, checkGridY);
+			tileMap = tile_set_index(tileMap, overTileIndex);
+			tileMap = tilemap_set(root.blockers.highlightMapId, tileMap, checkGridX, checkGridY);		
+		}
+
 		//found an open door
 		if(tileInfo[tileInfo_type] == tileType_doorOpen)	
 		{			
@@ -34,15 +57,6 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 				tileInfo[tileInfo_type] = tileType_doorClosed;
 				root.blockers.tileInfo[# checkGridX, checkGridY] = tileInfo;
 			}
-				
-			//highlight door
-			else
-			{
-				var tileMap = tilemap_get(root.blockers.overMapId, checkGridX, checkGridY);
-				tileMap = tile_set_index(tileMap, 1);
-				tileMap = tilemap_set(root.blockers.overMapId, tileMap, checkGridX, checkGridY);
-			}
-		
 		}
 			
 		//found a closed door
@@ -59,13 +73,10 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 				root.blockers.tileInfo[# checkGridX, checkGridY] = tileInfo;
 			}
 			
-			//highlight door
+			//bounce out of closed door
 			else
 			{
-				var tileMap = tilemap_get(root.blockers.overMapId, checkGridX, checkGridY);
-				tileMap = tile_set_index(tileMap, 1);
-				tileMap = tilemap_set(root.blockers.overMapId, tileMap, checkGridX, checkGridY);
-				
+			
 				var top = (checkGridY) * blockingTileSizePixels - heroMove_wallBufferBottom;
 				var bottom = (checkGridY+1) * blockingTileSizePixels + heroMove_wallBufferTop;
 				var left = (checkGridX) * blockingTileSizePixels - heroMove_wallBufferX;
@@ -88,8 +99,6 @@ for(var i=0; i< array_length_1d(checkDirs); i++)
 					isControlEnabled = false;
 					moveSpeed = heroMove_max;
 					
-					var tileInfo = root.blockers.tileInfo[# checkGridX, checkGridY];
-					var tileOrient = tileInfo[tileInfo_orient];
 					if(tileOrient == tileOrient_vert)
 					{
 						if(target.y < vertCenter)

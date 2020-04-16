@@ -2,7 +2,7 @@
     "id": "1a594f42-ddbe-4f0c-a45a-1ce8b567a9ab",
     "modelName": "GMTileSet",
     "mvc": "1.11",
-    "name": "tsOver",
+    "name": "tsHighlight",
     "auto_tile_sets": [
         
     ],

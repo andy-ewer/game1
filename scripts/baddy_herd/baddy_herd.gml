@@ -1,11 +1,10 @@
 //get bumps with other zombies, hero
 var list = ds_list_create();
-var qtyBumps = instance_place_list(x, y, objBaddy1, list, false);
-var qtyBumpsHero = instance_place_list(x, y, objHero, list, false);
-
+instance_place_list(x, y, objBaddy1, list, false);
+instance_place_list(x, y, objHero, list, false);
 
 //iterate the bumps
-for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
+for(var i=0; i< ds_list_size(list); ++i) {
 
 
 	//**********************************************
@@ -33,9 +32,9 @@ for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 	//**********************************************
 	//check for tile collision
 	var tileData = tilemap_get_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
-	var tileIndex = tile_get_index(tileData);
 	var gridX = tilemap_get_cell_x_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);
 	var gridY = tilemap_get_cell_y_at_pixel(root.blockers.blockingMapId, bump.x + deltaX, bump.y + deltaY);		
+	var tileIndex = tile_get_index(tileData);
 	var tileInfo = root.blockers.tileInfo[# gridX, gridY];		
 	if(!isHero)
 	{
@@ -73,38 +72,8 @@ for(var i=0; i< (qtyBumps + qtyBumpsHero); ++i) {
 		//blocker damage is caused when a baddy pushes another baddy into a blocker
 		if(!isHero)
 		{
-			tileInfo[tileInfo_currentDamage] += root.timing.ticksPassed; //1 damage per tick at target frame rate, scaled to the actual frame rate
-
-			//if we have gone over max damage, increment to next damage step and reset damage done to 0.
-			if(tileInfo[tileInfo_currentDamage] >= tileInfo[tileInfo_maxDamage])
-			{
-				tileIndex++;
-				tileData = tile_set_index(tileData, tileIndex);	
-					
-				//if this is the final destroyed step
-				if((tileIndex+1) mod blockingTilesetWidth == 0)
-				{
-					//randomly flips rubble texture for more variety
-					if(irandom(1)==0)
-					{
-						tileData = tile_set_flip(tileData, true);
-					}
-					audio_play_sound_on(emitter, sndTileBreak, 0, round(b1Audio_falloffDist-dist));
-				}
-				else
-				{
-					audio_play_sound_on(emitter, sndTileDamage, 0, round(b1Audio_falloffDist-dist));
-				}
-				tileInfo[tileInfo_currentDamage] = 0;					
-			}
-				
-			//apply changes to the tile
-			tileData = tilemap_set(root.blockers.blockingMapId, tileData, gridX, gridY);
-				
-			//apply change to the damage on this tile
-			root.blockers.tileInfo[# gridX, gridY] = tileInfo;
-		}
-			
+			damageTile(tileData, gridX, gridY, emitter, dist);			
+		}			
 			
 		//*****
 		//slide X or Y

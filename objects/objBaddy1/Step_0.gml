@@ -11,7 +11,10 @@ dist = point_distance(thisX, thisY, heroX, heroY);
 
 //if baddy on a closed door we need to bounce them out
 tileInfo = root.blockers.tileInfo[# thisX, thisY];
-isOnClosedDoor = (tileInfo[tileInfo_type] == tileType_doorClosed);
+var tileData = tilemap_get(root.blockers.blockingMapId, thisX, thisY);
+var tileIndex = tile_get_index(tileData);
+var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);	
+isOnClosedDoor = (!isDestroyed && tileInfo[tileInfo_type] == tileType_doorClosed);
 
 
 //**********************
