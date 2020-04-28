@@ -27,7 +27,8 @@ blockingMapId = layer_tilemap_get_id(blockingLayerId);
 var highlightLayerId = layer_get_id("tilesHighlight");
 highlightMapId = layer_tilemap_get_id(highlightLayerId);
 
-//keeping track of tile damage
+
+//keeping track of tile damage for every blocking tile in the map
 tileInfo = ds_grid_create(
 	tilemap_get_width(blockingMapId), 
 	tilemap_get_height(blockingMapId)
@@ -41,10 +42,10 @@ var tileOrient = array_create(blockingTilesetHeight, tileOrient_none);
 var cnt = -1;
 var maxDamageByRow = array_create(blockingTilesetHeight);
 
-//
+//top row not being used currently
 maxDamageByRow[++cnt] = 0;
 
-//walls
+//wall rows
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
 maxDamageByRow[++cnt] = 800;
@@ -65,7 +66,7 @@ maxDamageByRow[++cnt] = 800;
 
 maxDamageByRow[++cnt] = 800;
 
-//doors
+//door rows
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorClosed;
 tileOrient[cnt] = tileOrient_hori;
