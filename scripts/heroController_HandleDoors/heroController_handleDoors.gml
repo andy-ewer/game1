@@ -5,10 +5,10 @@
 tilemap_clear(root.blockers.highlightMapId, 0);
 
 //check each direction
-for(var i=0; i< array_length_1d(root.dirOffsets); i++)
+for(var i=0; i< array_length_1d(root.blockers.dirOffsets); i++)
 {
 	//apply offsets
-	var checkDir = root.dirOffsets[i];
+	var checkDir = root.blockers.dirOffsets[i];
 	var checkGridX = gridX + checkDir[0];
 	var checkGridY = gridY + checkDir[1];
 		

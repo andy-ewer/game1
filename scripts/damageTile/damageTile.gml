@@ -18,42 +18,7 @@ if(tileInfo[tileInfo_currentDamage] >= tileInfo[tileInfo_maxDamage])
 	//tile destroyed!
 	if((tileIndex+1) mod blockingTilesetWidth == 0)
 	{
-		//randomly flips rubble texture for more variety
-		if(irandom(1)==0)
-		{
-			tileData = tile_set_flip(tileData, true);
-		}
-		audio_play_sound_on(emitter, sndTileBreak, 0, round(b1Audio_falloffDist-dist));
-
-		//if a tile is destroyed that is supporting either side of a door, the door is also destroyed. because this makes doors a lot simpler.				
-		//check each direction
-		for(var j=1; j< array_length_1d(root.dirOffsets); j++)
-		{
-			//apply offsets
-			var checkDir = root.dirOffsets[j];
-			var checkGridX = gridX + checkDir[0];
-			var checkGridY = gridY + checkDir[1];
-		
-			//get offset tile	
-			var checkTileData = tilemap_get(root.blockers.blockingMapId, checkGridX, checkGridY);
-			var checkTileIndex = tile_get_index(checkTileData);
-						
-			var checkIsDestroyed = ((checkTileIndex+1) mod blockingTilesetWidth == 0);
-			if(!checkIsDestroyed)
-			{
-				//grab the data for the cell
-				var checkTileInfo = root.blockers.tileInfo[# checkGridX, checkGridY];
-				if(checkTileInfo[tileInfo_type]==tileType_doorOpen || checkTileInfo[tileInfo_type]==tileType_doorClosed)
-				{
-					//set to destroyed (last) frame in row
-					checkTileIndex = checkTileIndex - (checkTileIndex mod blockingTilesetWidth) + blockingTilesetWidth-1;
-								
-					//apply changes to the tile
-					checkTileData = tile_set_index(checkTileData, checkTileIndex);
-					checkTileData = tilemap_set(root.blockers.blockingMapId, checkTileData, checkGridX, checkGridY);								
-				}
-			}
-		}					
+		destroyTile(tileData, gridX, gridY, emitter, dist);
 	}
 	else
 	{

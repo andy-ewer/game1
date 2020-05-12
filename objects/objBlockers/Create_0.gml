@@ -8,11 +8,13 @@
 #macro tileInfo_maxDamage 1
 #macro tileInfo_type 2
 #macro tileInfo_orient 3
+#macro tileInfo_wallIndexOffset 4
 
 //tiletype
 #macro tileType_default 0
 #macro tileType_doorOpen 1
 #macro tileType_doorClosed 2
+#macro tileType_wall 3
 
 //tile orientation
 #macro tileOrient_none 0
@@ -27,7 +29,6 @@ blockingMapId = layer_tilemap_get_id(blockingLayerId);
 var highlightLayerId = layer_get_id("tilesHighlight");
 highlightMapId = layer_tilemap_get_id(highlightLayerId);
 
-
 //keeping track of tile damage for every blocking tile in the map
 tileInfo = ds_grid_create(
 	tilemap_get_width(blockingMapId), 
@@ -37,6 +38,7 @@ tileInfo = ds_grid_create(
 //some tiles can have special behaviour like doors
 var tileType = array_create(blockingTilesetHeight, tileType_default);
 var tileOrient = array_create(blockingTilesetHeight, tileOrient_none);
+var tileWallIndexOffset = array_create(blockingTilesetHeight, 0);
 
 //different HP for tiles
 var cnt = -1;
@@ -47,24 +49,68 @@ maxDamageByRow[++cnt] = 0;
 
 //wall rows
 maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
 
 maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
 
 maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
-maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
 
 maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
+
+maxDamageByRow[++cnt] = 800;
+tileType[cnt] = tileType_wall;
+tileWallIndexOffset[cnt] = 1;
 
 //door rows
 maxDamageByRow[++cnt] = 400;
@@ -105,7 +151,41 @@ for(var i=0; i< tilemap_get_width(blockingMapId); i++)
 		//set value for tile orientation
 		damageItem[tileInfo_orient] = tileOrient[row];
 
+		//set value wall set offset
+		damageItem[tileInfo_wallIndexOffset] = tileWallIndexOffset[row];
+
 		//apply to grid
 		tileInfo[# i,j] = damageItem;
 	}	
 }
+
+//offsets for cells in 4 directions plus here
+var dirs = array_create(5);
+var dirCnt = -1;
+//here
+var dir = array_create(2);
+dir[0] = 0;
+dir[1] = 0;	
+dirs[++dirCnt] = dir;
+//n
+var dir = array_create(2);
+dir[0] = 0;
+dir[1] = -1;	
+dirs[++dirCnt] = dir;
+//e
+var dir = array_create(2);
+dir[0] = -1;
+dir[1] = 0;
+dirs[++dirCnt] = dir;
+//s
+var dir = array_create(2);
+dir[0] = 0;
+dir[1] = 1;
+dirs[++dirCnt] = dir;
+//w
+var dir = array_create(2);
+dir[0] = 1;
+dir[1] = 0;
+dirs[++dirCnt] = dir;
+
+dirOffsets = dirs;
