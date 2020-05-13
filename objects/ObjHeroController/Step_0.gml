@@ -33,10 +33,14 @@ if(target.sprite_index == sprHeroAttack)
 		{
 			var distance = point_distance(target.x, target.y, nearestBaddy.x, nearestBaddy.y);
 			if(distance < heroAttack_range)
-			{
-				var baddyDeath = instance_create_layer(nearestBaddy.x, nearestBaddy.y, "Instances", objBaddy1Death);
-				baddyDeath.depth = nearestBaddy.depth;
-				baddyDeath.image_blend = nearestBaddy.image_blend;
+			{				
+				with(instance_create_layer(nearestBaddy.x, nearestBaddy.y, "Instances", objBaddy1Death))
+				{
+					sprite_index = nearestBaddy.sprite_index;
+					depth = nearestBaddy.depth;
+					image_blend = nearestBaddy.image_blend;
+					event_user(0);
+				}
 				instance_destroy(nearestBaddy);
 			}
 		}

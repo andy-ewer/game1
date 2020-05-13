@@ -47,6 +47,14 @@
             }
         },
         {
+            "Key": "04fca105-3499-4dba-a8ba-6919154405e7",
+            "Value": {
+                "id": "87c78188-ae14-40d3-b25a-9bf718470c90",
+                "resourcePath": "sprites\\sprBaddy2\\sprBaddy2.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "088e54da-38f4-481e-9f8f-b0a8ac678532",
             "Value": {
                 "id": "6ada0be9-4f21-4d60-bfbb-8a19428a9dc1",
@@ -415,6 +423,14 @@
             }
         },
         {
+            "Key": "6bf41aba-4587-4260-aa3f-fadd1f36e1c1",
+            "Value": {
+                "id": "8f0eecbd-394a-4e6b-8c2d-2ab8073c0988",
+                "resourcePath": "sprites\\sprBaddy2Death1\\sprBaddy2Death1.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "6c35cabf-c2e5-4a3f-9b34-ac2aba42ea8a",
             "Value": {
                 "id": "015b12db-a377-446e-9bf5-3d24c7702d23",
@@ -748,6 +764,14 @@
                 "id": "2fc8e6fa-2249-443d-b217-82423af2c625",
                 "resourcePath": "objects\\objBaddyController\\objBaddyController.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "eedcb192-e0d6-44f5-a464-19dc377bb391",
+            "Value": {
+                "id": "e0d4137a-e060-459a-86d5-1b58eb193a35",
+                "resourcePath": "sprites\\sprBaddy2Death2\\sprBaddy2Death2.yy",
+                "resourceType": "GMSprite"
             }
         },
         {

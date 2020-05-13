@@ -81,6 +81,7 @@ audio_emitter_falloff(emitter, 0, b1Audio_falloffDist, b1Audio_falloffFactor);
 audio_falloff_set_model(audio_falloff_linear_distance);
 
 //customise this instance of the baddy
+sprite_index = choose(sprBaddy1, sprBaddy2);
 image_blend = make_colour_hsv(random(255), random(255), 255); //apply random color filter to each instance
 voiceSound = choose(sndBaddy1, sndBaddy2, sndBaddy3, sndBaddy4, sndBaddy5, sndBaddy6, sndBaddy7, sndBaddy8);
 var pitch = b1Audio_pitchMin + ( random(1)*(b1Audio_pitchMax-b1Audio_pitchMin));
