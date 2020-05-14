@@ -46,6 +46,9 @@ if(target.sprite_index == sprHeroAttack)
 		}
 	}
 }
+
+
+
 		
 
 //************

@@ -16,7 +16,6 @@
 //create instance to control
 target = instance_create_layer(200, 300, "Instances", objHero);
 
-
 //init
 moveSpeed = heroMove_min;
 target.depth = -target.y;
@@ -26,6 +25,9 @@ deltaY = 0;
 isControlEnabled = true;
 gridX = 0
 gridY = 0;
+
+//init health system
+health = 100;
 
 //audio
 audio_listener_orientation(0,1,0,0,0,1);

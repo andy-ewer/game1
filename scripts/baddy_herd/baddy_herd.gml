@@ -1,3 +1,5 @@
+#macro heroBasicDamage 0.5
+
 //get bumps with other zombies, hero
 var list = ds_list_create();
 instance_place_list(x, y, objBaddy1, list, false);
@@ -14,7 +16,15 @@ for(var i=0; i< ds_list_size(list); ++i) {
 	var dir = point_direction(x, y, bump.x, bump.y);
 	var dist = point_distance(x, y, bump.x, bump.y);
 	var distMultiplier = b1Behaviour_distMultiplierMax-max(min(dist, b1Behaviour_distMultiplierMax),1);
-				
+
+	//**********************************************
+	//health
+	if(isHero)
+	{
+		bump.stamina -= (heroBasicDamage * root.timing.ticksPassed);
+		bump.staminaDelay = staminaDelayInit;
+	}
+
 	//calculate attempted shove
 	var bumpSpeedFrame;
 	if(mood == b1Mood_Idle)

@@ -33,6 +33,12 @@ isBlinking = false;
 poseCounter = heroInit_poseCounter;
 heroAttackCounter = 0;
 
+//health
+stamina = 100;
+#macro staminaDelayInit 100
+staminaDelay = 0;
+#macro staminaRegainRate 2
+
 //update appearance
 image_index = heroIdle_regular;
 var scale = 1;

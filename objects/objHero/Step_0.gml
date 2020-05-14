@@ -56,7 +56,8 @@ else
 		image_index = heroIdle_regular;		
 		blinkCounter = heroInit_blinkCounter;
 		poseCounter = heroInit_poseCounter;
-		isBlinking = false;		
+		isBlinking = false;
+		staminaDelay = staminaDelayInit;
 	}
 	
 	//continue existing idle state
@@ -65,6 +66,7 @@ else
 		//counting down
 		blinkCounter -= root.timing.ticksPassed;
 		poseCounter -= root.timing.ticksPassed;
+		staminaDelay -= root.timing.ticksPassed;
 
 		//start blink
 		if(blinkCounter <= 0)
@@ -88,6 +90,11 @@ else
 		{
 			image_index = choose(heroIdle_regular, heroIdle_smile, heroIdle_left, heroIdle_right, heroIdle_down); //random pose
 			poseCounter = irandom(heroPose_random)+heroPose_randomPlus;
+		}
+		
+		if(staminaDelay <= 0 && stamina < 100)
+		{
+			stamina += staminaRegainRate * root.timing.ticksPassed;
 		}
 	}
 }
