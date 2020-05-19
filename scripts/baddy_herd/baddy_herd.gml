@@ -49,7 +49,7 @@ for(var i=0; i< ds_list_size(list); ++i) {
 	if(!isHero)
 	{
 		var isDestroyed = ((tileIndex+1) mod blockingTilesetWidth == 0);
-		var isDoorOpen = (tileInfo[tileInfo_type] == tileType_doorOpen);
+		var isDoorOpen = (tileInfo[tileInfo_type] == tileType_doorOpen); //TODO: BUG HERE SOMETIMES
 		var isBlocked = tileData && !isDestroyed && !isDoorOpen;
 	}
 	else

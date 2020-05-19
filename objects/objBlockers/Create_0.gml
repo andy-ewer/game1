@@ -1,6 +1,6 @@
 //used to keep track of damage (cols) for rows.
 #macro blockingTilesetWidth 4
-#macro blockingTilesetHeight 20
+#macro blockingTilesetHeight 22
 #macro blockingTileSizePixels 16
 
 //damage values per node
@@ -15,6 +15,7 @@
 #macro tileType_doorOpen 1
 #macro tileType_doorClosed 2
 #macro tileType_wall 3
+#macro tileType_indestructable 4
 
 //tile orientation
 #macro tileOrient_none 0
@@ -128,6 +129,9 @@ tileOrient[cnt] = tileOrient_vert;
 maxDamageByRow[++cnt] = 400;
 tileType[cnt] = tileType_doorOpen;
 tileOrient[cnt] = tileOrient_vert;
+
+maxDamageByRow[++cnt] = 0;
+tileType[cnt] = tileType_indestructable;
 
 
 //init tile damage grid

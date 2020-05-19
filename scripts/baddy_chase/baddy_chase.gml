@@ -20,7 +20,6 @@ if(sightCounter<0)
 	else
 	{
 		sightClear = gridLineOfSightClear(thisX, thisY, heroX, heroY);
-		sightCounter = b1Behaviour_updateSightTicks;
 
 		//update the last seen position of the hero
 		if(sightClear)
@@ -29,6 +28,7 @@ if(sightCounter<0)
 			lastSeenY = root.heroController.target.y;
 		}
 	}
+	sightCounter = b1Behaviour_updateSightTicks;
 }
 
 
@@ -39,16 +39,19 @@ if(sightCounter<0)
 if(mood == b1Mood_Idle)
 {
 	//change direction randomly
-	idleDirectionCounter -= root.timing.ticksPassed;
-	if(idleDirectionCounter < 0)
+	if(!sightClear)
 	{
-		idleDirection += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));	
-		idleDirection = fixAngle(idleDirection);
-		idleDirectionCounter = irandom(b1Idle_directionCounterRandom + b1Idle_directionCounterPlus);
+		idleDirectionCounter -= root.timing.ticksPassed;
+		if(idleDirectionCounter < 0)
+		{
+			idleDirection += (irandom(b1Idle_directionAngleRandom) - (b1Idle_directionAngleRandom/2));	
+			idleDirection = fixAngle(idleDirection);
+			idleDirectionCounter = irandom(b1Idle_directionCounterRandom + b1Idle_directionCounterPlus);
+		}
 	}
-
 	//look for hero
-	if(sightClear) {
+	else 
+	{
 			
 		//can see the hero - give chase
 		mood = b1Mood_Chase;
@@ -57,6 +60,8 @@ if(mood == b1Mood_Idle)
 			
 		//make a noise
 		audio_play_sound_on(emitter, voiceSound, 0, round(b1Audio_falloffDist-dist));
+
+		baddy_yell(x, y);
 	}
 	
 	//get potential move point 

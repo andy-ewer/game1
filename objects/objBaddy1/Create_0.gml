@@ -67,7 +67,7 @@ lastSeenY = 0;
 lastSeenDir = 0;
 finalLookCounter = 0;
 sightClear = false;
-sightCounter = 0;
+sightCounter = random(b1Behaviour_updateSightTicks);
 dist = 0;
 
 //movement
